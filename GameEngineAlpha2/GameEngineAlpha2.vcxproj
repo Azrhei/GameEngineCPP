@@ -80,6 +80,7 @@
     <ClCompile Include="MainTester.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="ModelTexture.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="RawModel.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="ModelTexture.h" />
+    <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="RawModel.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ShaderProgram.h" />

@@ -16,6 +16,8 @@ Loader* loader;
 #include "Camera.h"
 Camera* camera;
 
+#include "KeyEvents.h"
+
 int main(int argc, char ** argv, char ** argnv)
 {
 	vector<GLfloat> vertices 
@@ -123,12 +125,15 @@ int main(int argc, char ** argv, char ** argnv)
 	//TexturedModel* texturedModel{ new TexturedModel(*model, *texture) };
 	TexturedModel staticModel{ model, texture };
 	Entity entity{ staticModel, glm::vec3{ 0, 0, -1 }, 0, 0, 0, 1 };
+	
+	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
 	while (!display->shouldClose())
 	{
 		/* Poll for and process events */
 		glfwPollEvents();
+		handleKeyEvents();
 		//entity.increasePosition(0.002f, -0.002f, 0.002f);
 		entity.increaseRotation(0.002f, -0.002f, 0.002f);
 		renderer.prepare();
