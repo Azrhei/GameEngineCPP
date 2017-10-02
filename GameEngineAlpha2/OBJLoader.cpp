@@ -1,6 +1,8 @@
 #include "OBJLoader.h"
 #include <string>
+#include <boost/algorithm/string/split.hpp>
 
+using namespace glm;
 
 OBJLoader::OBJLoader()
 {
@@ -11,86 +13,122 @@ OBJLoader::~OBJLoader()
 {
 }
 
-bool OBJLoader::loadOBJ(
+void OBJLoader::loadOBJ(
 	const char * path,
-	std::vector < glm::vec3 > & out_vertices,
-	std::vector < glm::vec2 > & out_uvs,
-	std::vector < glm::vec3 > & out_normals
+	vector<vec3> & out_vertices,
+	vector<vec2> & out_uvs,
+	vector<vec3> & out_normals
 	)
 {
-	std::vector<glm::vec3> vertices;//to store vertex information of 3D model started with v
-	std::vector<glm::vec3> meshVertices;//to store all 3D model face vertices
-	std::vector<int> faceIndex;
-	std::vector<glm::vec3> normals;
 
-	std::ifstream in(path, std::ios::in);
+	vector<vec3> vertices;
+	vector<vec2> textures;
+	vector<vec3> normals;
+	vector<GLuint> vertexIndex;
+	vector<GLuint> textureIndex;
+	vector<GLuint> normalsIndex;
+	
+	ifstream in(path, ios::in);
 	if (!in)
 	{
-		std::cerr << "Cannot open " << path << std::endl;
+		wcerr << L"Cannot open " << path << endl;
 		exit(1);
-
 	}
-	std::string line;
-	while (std::getline(in, line))
+
+	string line;
+	
+	while (getline(in, line))
 	{
-		//check v for vertices
-		if (line.substr(0, 2) == "v "){
-			std::istringstream v(line.substr(2));
-			glm::vec3 vert;
-			double x, y, z;
-			v >> x; v >> y; v >> z;
-			vert = glm::vec3(x, y, z);
+		//check v for vertices	
+		if (line.substr(0, 2) == "v ")
+		{
+			auto v(line.substr(2));
+			vec3 vert;
+			vector<GLfloat> c;
+			boost::split(c, v, [](char n) { return n == ' '; });
+			vert = vec3(c[0], c[1], c[2]);
 			vertices.push_back(vert);
 		}
 		//check for texture co-ordinate
-		else if (line.substr(0, 2) == "vt"){
-
-			std::istringstream v(line.substr(3));
-			glm::vec2 tex;
-			int U, V;
-			v >> U; v >> V;
-			tex = glm::vec2(U, V);
-			texture.push_back(tex);
-
+		else if (line.substr(0, 2) == "vt")
+		{
+			auto v(line.substr(3));
+			vec2 tex;
+			vector<GLuint> c;
+			boost::split(c, v, [](char n) { return n == ' '; });
+			tex = vec2(c[0], c[1]);
+			textures.push_back(tex);
 		}
-		else if (line.substr(0, 2) == "vn"){
-			std::istringstream v(line.substr(2));
-			glm::vec3 norm;
-			double x, y, z;
-			v >> x; v >> y; v >> z;
-			norm = glm::vec3(x, y, z);
-			normals.push_back(norm);
 
+		//check for texture normals
+		else if (line.substr(0, 2) == "vn")
+		{
+			auto v(line.substr(2));
+			vec3 norm;
+			vector<GLfloat> c;
+			boost::split(c, v, [](char n) { return n == ' '; });
+			norm = vec3(c[0], c[1], c[2]);
+			normals.push_back(norm);
 		}
 
 		//check for faces
-		else if (line.substr(0, 2) == "f "){
-			int a, b, c; //to store mesh index
-			int A, B, C; //to store texture index
-			//std::istringstream v;
-			//v.str(line.substr(2));
-			const char* chh = line.c_str();
-			sscanf(chh, "f %i/%i %i/%i %i/%i", &a, &A, &b, &B, &c, &C); //here it read the line start with f and store the corresponding values in the variables
+		else if (line.substr(0, 2) == "f ")
+		{
+			auto v(line.substr(2));
+			vector<string> st;
+			vector<vector<GLuint>> t;
+			vector<GLuint> c;
+			boost::split(st, v, [](char n) { return n == ' '; });
+			for (auto s : st)
+			{
+				boost::split(c, s, [](char n) { return n == '/'; });
+				t.push_back(c);
+			}
+		
+			// t[0][0] first vertice index
+			// t[1][0] first vertice texture uv index
+			// t[2][0] first vertice normal index
 
-			//v>>a;v>>b;v>>c;
-			a--; b--; c--;
-			A--; B--; C--;
-			//std::cout<<a<<b<<c<<A<<B<<C;
-			faceIndex.push_back(a); textureIndex.push_back(A);
-			faceIndex.push_back(b); textureIndex.push_back(B);
-			faceIndex.push_back(c); textureIndex.push_back(C);
+			// t[0][1] second vertice index
+			// t[1][1] second vertice texture uv index
+			// t[2][1] second vertice normal index
+
+			// t[0][2] third vertice index
+			// t[1][2] third vertice texture uv index
+			// t[2][2] third vertice normal index
+
+			//Adjust indices to align with vector arrays
+			for (auto a : t)
+			{
+				for (GLuint b : a)
+				{
+					b--;
+				}
+			}
+
+			for (auto a : t)
+			{
+				vertexIndex.push_back(a[0]); textureIndex.push_back(a[1]); normalsIndex.push_back(a[2]);
+			}
 		}
-
 	}
+
+	// Close file, we're done with it now.
+	in.close();
+	
 	//the mesh data is finally calculated here
-	for (unsigned int i = 0; i<faceIndex.size(); i++)
+	for (UINT i = 0; i<vertexIndex.size(); i++)
 	{
-		glm::vec3 meshData;
-		glm::vec2 texData;
-		meshData = glm::vec3(vertices[faceIndex[i]].x, vertices[faceIndex[i]].y, vertices[faceIndex[i]].z);
-		texData = glm::vec2(texture[textureIndex[i]].x, texture[textureIndex[i]].y);
-		meshVertices.push_back(meshData);
-		texCoord.push_back(texData);
-	}
+		vec3 verticesData;
+		vec2 texturesData;
+		vec3 normalsData;
 
+		verticesData = vec3(vertices[vertexIndex[i]].x, vertices[vertexIndex[i]].y, vertices[vertexIndex[i]].z);
+		texturesData = vec2(textures[textureIndex[i]].x, textures[textureIndex[i]].y);
+		normalsData = vec3(normals[normalsIndex[i]].x, normals[normalsIndex[i]].y, normals[normalsIndex[i]].z);
+
+		out_vertices.push_back(verticesData);
+		out_uvs.push_back(texturesData);
+		out_normals.push_back(normalsData);
+	}
 }
