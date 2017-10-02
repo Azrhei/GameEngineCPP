@@ -1,6 +1,6 @@
 #include "OBJLoader.h"
 #include <string>
-#include <boost/algorithm/string/split.hpp>
+#include <sstream>
 
 using namespace glm;
 
@@ -42,73 +42,38 @@ void OBJLoader::loadOBJ(
 		//check v for vertices	
 		if (line.substr(0, 2) == "v ")
 		{
-			auto v(line.substr(2));
-			vec3 vert;
-			vector<GLfloat> c;
-			boost::split(c, v, [](char n) { return n == ' '; });
-			vert = vec3(c[0], c[1], c[2]);
-			vertices.push_back(vert);
+			istringstream v{ line.substr(2) };
+			GLfloat a, b, c;
+			v >> a; v >> b; v >> c;
+			vertices.push_back(vec3(a, b, c));
 		}
 		//check for texture co-ordinate
 		else if (line.substr(0, 2) == "vt")
 		{
-			auto v(line.substr(3));
-			vec2 tex;
-			vector<GLuint> c;
-			boost::split(c, v, [](char n) { return n == ' '; });
-			tex = vec2(c[0], c[1]);
-			textures.push_back(tex);
+			istringstream v{ line.substr(2) };
+			GLfloat a, b, c;
+			v >> a; v >> b; v >> c;
+			textures.push_back(vec2(a, b));
 		}
 
 		//check for texture normals
 		else if (line.substr(0, 2) == "vn")
 		{
-			auto v(line.substr(2));
-			vec3 norm;
-			vector<GLfloat> c;
-			boost::split(c, v, [](char n) { return n == ' '; });
-			norm = vec3(c[0], c[1], c[2]);
-			normals.push_back(norm);
+			istringstream v{ line.substr(2) };
+			GLfloat a, b, c;
+			v >> a; v >> b; v >> c;
+			normals.push_back(vec3(a, b, c));
 		}
 
 		//check for faces
 		else if (line.substr(0, 2) == "f ")
 		{
-			auto v(line.substr(2));
-			vector<string> st;
-			vector<vector<GLuint>> t;
-			vector<GLuint> c;
-			boost::split(st, v, [](char n) { return n == ' '; });
-			for (auto s : st)
+			istringstream v{ line.substr(2) };
+			GLuint a, b, c;
+			for (UINT i = 0; i < 3; i++)
 			{
-				boost::split(c, s, [](char n) { return n == '/'; });
-				t.push_back(c);
-			}
-		
-			// t[0][0] first vertice index
-			// t[1][0] first vertice texture uv index
-			// t[2][0] first vertice normal index
-
-			// t[0][1] second vertice index
-			// t[1][1] second vertice texture uv index
-			// t[2][1] second vertice normal index
-
-			// t[0][2] third vertice index
-			// t[1][2] third vertice texture uv index
-			// t[2][2] third vertice normal index
-
-			//Adjust indices to align with vector arrays
-			for (auto a : t)
-			{
-				for (GLuint b : a)
-				{
-					b--;
-				}
-			}
-
-			for (auto a : t)
-			{
-				vertexIndex.push_back(a[0]); textureIndex.push_back(a[1]); normalsIndex.push_back(a[2]);
+				v >> a; v >> b; v >> c;
+				vertexIndex.push_back(a); textureIndex.push_back(b); normalsIndex.push_back(c);
 			}
 		}
 	}
