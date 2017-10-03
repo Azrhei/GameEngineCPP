@@ -12,8 +12,8 @@ public:
 	RawModel(GLuint vaoID, GLuint vertexCount);
 	~RawModel();
 
-	 GLuint getID() { return vaoID; } ; 
-	 GLuint getVertexCount() { return vertexCount; } ;
+	 GLuint getID() const { return vaoID; }  ; 
+	 GLuint getVertexCount() const { return vertexCount; }  ;
 
 };
 

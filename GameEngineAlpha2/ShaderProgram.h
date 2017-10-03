@@ -1,5 +1,6 @@
 #pragma once
 #include "SharedIncludes.h"
+#include "Light.h"
 
 class ShaderProgram
 {

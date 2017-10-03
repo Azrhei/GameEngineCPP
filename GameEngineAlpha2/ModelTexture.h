@@ -4,13 +4,13 @@
 class ModelTexture
 {
 private:
-	GLuint textureId;
+	GLint textureId;
 
 public:
 	ModelTexture();
-	ModelTexture(GLuint id);
+	ModelTexture(GLint id);
 	~ModelTexture();
 
-	GLuint getId() { return textureId; }
+	GLint getId() { return textureId; }
 };
 

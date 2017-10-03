@@ -76,6 +76,7 @@
     <ClCompile Include="DisplayManager.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="KeyEvents.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="MainTester.cpp" />
     <ClCompile Include="Maths.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="DisplayManager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="KeyEvents.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="ModelTexture.h" />

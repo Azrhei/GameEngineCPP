@@ -16,20 +16,20 @@ private:
 	vector<GLuint>* textures;
 
 	GLuint createVAO();
-	void storeDataInAttribList(GLuint attribNumber, GLuint coordinateSize, vector<GLfloat>* data);
+	void storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>* data);
 	void unbindVAO();
-	void bindIndicesVBO(vector<GLuint>* indices);
+	void bindIndicesVBO(vector<GLint>* indices);
 
 public:
 	Loader();
 	~Loader();
-	GLuint loadTexture(string fileName);
+	GLint loadTexture(string fileName);
 	RawModel loadToVao
 		(
 		vector<GLfloat>* positions, 
 		vector<GLfloat>* textureCoords, 
 		vector<GLfloat>* normals, 
-		vector<GLuint>* indices);
+		vector<GLint>* indices);
 	void cleanUp();
 
 };

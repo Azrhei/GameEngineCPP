@@ -30,12 +30,12 @@ RawModel OBJLoader::loadOBJ(
 	vector<vec3>* vertices{ new vector<vec3> };
 	vector<vec2>* textures{ new vector<vec2> };
 	vector<vec3>* normals{ new vector<vec3> };
-	vector<GLuint>* indices{ new vector<GLuint> };
+	vector<GLint>* indices{ new vector<GLint> };
 
 	vector<GLfloat>* out_vertices{ new vector<GLfloat> };
 	vector<GLfloat>* out_uvs{ new vector<GLfloat> };
 	vector<GLfloat>* out_normals{ new vector<GLfloat> };
-	vector<GLuint>* out_indices{ new vector<GLuint> };
+	vector<GLint>* out_indices{ new vector<GLint> };
 
 	cout << "Opening OBJ File..." << "res/" + fileName + ".obj" << endl;
 	ifstream in(("res/" + fileName + ".obj").c_str(), ios::in);
@@ -179,41 +179,46 @@ RawModel OBJLoader::loadOBJ(
 void OBJLoader::processVertex
 	(
 	ivec3 vertex, 
-	vector<GLuint>* ind, 
+	vector<GLint>* ind, 
 	vector<vec2>* tex, 
 	vector<vec3>* norm, 
 	vector<GLfloat>* texArray, 
 	vector<GLfloat>* normArray
 	)
 {
-	GLuint currentVertexPointer = 0;
-	GLuint xxx = 0;
+	GLint currentVertexPointer = 0;
+	GLint xxx = 0;
 
 	currentVertexPointer = vertex.x - 1; 
 	ind->push_back(currentVertexPointer);
 
-	if (texArray->size() < currentVertexPointer * 2 + 2)
+	// Pull textureCoordinate from tex and put it into array according to vertex.y order
+	if (vertex.y - 1 >= 0 && vertex.y - 1 < tex->size()) // Make sure we have texture data in the first place
 	{
-		texArray->resize(currentVertexPointer * 2 + 2);
-	}
-	
-	if (normArray->size() < (currentVertexPointer * 3 + 3))
-	{
-		normArray->resize(currentVertexPointer * 3 + 3);
-	}
-
-	vec2 currentTex = tex->at(vertex.y - 1);
+		if (texArray->size() < currentVertexPointer * 2 + 2)
+		{
+			texArray->resize(currentVertexPointer * 2 + 2);
+		}
 		
-	xxx = (currentVertexPointer * 2);
+		vec2 currentTex = tex->at(vertex.y - 1);		
+		xxx = (currentVertexPointer * 2);
+		texArray->at(xxx) = currentTex.x; 
+		texArray->at(xxx + 1) = (1 - currentTex.y);
+	}
 
-	texArray->at(xxx) = currentTex.x; 
-	texArray->at(xxx + 1) = (1 - currentTex.y);
-
-	vec3 currentNorm = norm->at(vertex.z - 1);
-	xxx = currentVertexPointer * 3;
-	normArray->at(xxx) = currentNorm.x;
-	normArray->at(xxx + 1) = currentNorm.y;
-	normArray->at(xxx + 2) = currentNorm.z;
-
+	// Pull normal data from norm and put it into array according to vertex.z order
+	if (vertex.z - 1 >= 0 && vertex.z - 1 < norm->size())
+	{
+		if (normArray->size() < currentVertexPointer * 3 + 3)
+		{
+			normArray->resize(currentVertexPointer * 3 + 3);
+		}
+		
+		vec3 currentNorm = norm->at(vertex.z - 1);
+		xxx = currentVertexPointer * 3;
+		normArray->at(xxx) = currentNorm.x;
+		normArray->at(xxx + 1) = currentNorm.y;
+		normArray->at(xxx + 2) = currentNorm.z;
+	}
 
 }

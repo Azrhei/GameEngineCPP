@@ -5,7 +5,7 @@ ModelTexture::ModelTexture()
 
 }
 
-ModelTexture::ModelTexture(GLuint id) : textureId(id)
+ModelTexture::ModelTexture(GLint id) : textureId(id)
 {
 }
 

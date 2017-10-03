@@ -44,13 +44,15 @@ int main(int argc, char ** argv, char ** argnv)
 		return -1;
 	}
 	camera = { new Camera() };
-	RawModel model{ OBJLoader::loadOBJ("dragon", loader) };
+	RawModel model{ OBJLoader::loadOBJ("stall", loader) };
 	StaticShader shader{ StaticShader() };
 	Renderer renderer{ shader };
 	ModelTexture texture{ loader->loadTexture("image") };
-	//TexturedModel* texturedModel{ new TexturedModel(*model, *texture) };
+	
+
 	TexturedModel staticModel{ model, texture };
 	Entity entity{ staticModel, glm::vec3{ 0, 0, -1 }, 0, 0, 0, 1 };
+	Light light{ { 0, 0, -20 }, { 1, 1, 1 }, 1 };
 	
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
@@ -64,6 +66,7 @@ int main(int argc, char ** argv, char ** argnv)
 		entity.increaseRotation(0.002f, -0.002f, 0.002f);
 		renderer.prepare();
 		shader.start();
+		shader.loadLight(light);
 		shader.loadViewMatrix(*camera);
 		renderer.render(entity, shader);
 		display->updateDisplay();

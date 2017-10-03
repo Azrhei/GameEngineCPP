@@ -44,6 +44,7 @@ void Renderer::render(Entity entity, StaticShader shader)
 	glBindVertexArray(rawModel.getID());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
 	glm::mat4 transformationMatrix = Maths::createTransformationMatrix
 		(
@@ -61,6 +62,7 @@ void Renderer::render(Entity entity, StaticShader shader)
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 	glBindVertexArray(0);
 
 #ifdef DEBUG

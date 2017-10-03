@@ -22,7 +22,7 @@ public:
 	static void OBJLoader::processVertex
 		(
 		ivec3 vertex,
-		vector<GLuint>* ind,
+		vector<GLint>* ind,
 		vector<vec2>* tex,
 		vector<vec3>* norm,
 		vector<GLfloat>* texArray,
