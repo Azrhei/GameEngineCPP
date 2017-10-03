@@ -4,19 +4,30 @@
 #include <glm\glm.hpp>
 #include <vector>
 #include <fstream>
+#include "Loader.h"
 
+using namespace glm;
 
 class OBJLoader
 {
 public:
 	OBJLoader();
 	~OBJLoader();
-private:
-	static void loadOBJ(
-		const char * path,
-		std::vector < glm::vec3 > & out_vertices,
-		std::vector < glm::vec2 > & out_uvs,
-		std::vector < glm::vec3 > & out_normals
+
+	static RawModel loadOBJ
+		(
+		string path,
+		Loader * loader
 		);
+	static void OBJLoader::processVertex
+		(
+		ivec3 vertex,
+		vector<GLuint>* ind,
+		vector<vec2>* tex,
+		vector<vec3>* norm,
+		vector<GLfloat>* texArray,
+		vector<GLfloat>* normArray
+		);
+private:
 };
 

@@ -13,30 +13,35 @@ OBJLoader::~OBJLoader()
 {
 }
 
-void OBJLoader::loadOBJ(
-	const char * path,
-	vector<vec3> & out_vertices,
-	vector<vec2> & out_uvs,
-	vector<vec3> & out_normals
+RawModel OBJLoader::loadOBJ(
+	string fileName,
+	Loader * loader
 	)
 {
+	vector<vec3>* vertices{ new vector<vec3> };
+	vector<vec2>* textures{ new vector<vec2> };
+	vector<vec3>* normals{ new vector<vec3> };
+	vector<GLuint>* indices{ new vector<GLuint> };
 
-	vector<vec3> vertices;
-	vector<vec2> textures;
-	vector<vec3> normals;
-	vector<GLuint> vertexIndex;
-	vector<GLuint> textureIndex;
-	vector<GLuint> normalsIndex;
-	
-	ifstream in(path, ios::in);
+	vector<GLfloat>* out_vertices{ new vector<GLfloat> };
+	vector<GLfloat>* out_uvs{ new vector<GLfloat> };
+	vector<GLfloat>* out_normals{ new vector<GLfloat> };
+	vector<GLuint>* out_indices{ new vector<GLuint> };
+
+	cout << "Opening OBJ File..." << "res/" + fileName + ".obj" << endl;
+	ifstream in(("res/" + fileName + ".obj").c_str(), ios::in);
 	if (!in)
 	{
-		wcerr << L"Cannot open " << path << endl;
+		cerr << "Cannot open " << fileName << endl;
 		exit(1);
 	}
 
 	string line;
-	
+	ivec3 vertex1;
+	ivec3 vertex2;
+	ivec3 vertex3;
+
+	bool tempflag = true;
 	while (getline(in, line))
 	{
 		//check v for vertices	
@@ -45,7 +50,7 @@ void OBJLoader::loadOBJ(
 			istringstream v{ line.substr(2) };
 			GLfloat a, b, c;
 			v >> a; v >> b; v >> c;
-			vertices.push_back(vec3(a, b, c));
+			vertices->push_back(vec3(a, b, c));
 		}
 		//check for texture co-ordinate
 		else if (line.substr(0, 2) == "vt")
@@ -53,7 +58,7 @@ void OBJLoader::loadOBJ(
 			istringstream v{ line.substr(2) };
 			GLfloat a, b, c;
 			v >> a; v >> b; v >> c;
-			textures.push_back(vec2(a, b));
+			textures->push_back(vec2(a, b));
 		}
 
 		//check for texture normals
@@ -62,38 +67,118 @@ void OBJLoader::loadOBJ(
 			istringstream v{ line.substr(2) };
 			GLfloat a, b, c;
 			v >> a; v >> b; v >> c;
-			normals.push_back(vec3(a, b, c));
+			normals->push_back(vec3(a, b, c));
 		}
 
 		//check for faces
 		else if (line.substr(0, 2) == "f ")
 		{
 			istringstream v{ line.substr(2) };
-			GLuint a, b, c;
-			for (UINT i = 0; i < 3; i++)
-			{
-				v >> a; v >> b; v >> c;
-				vertexIndex.push_back(a); textureIndex.push_back(b); normalsIndex.push_back(c);
-			}
+			GLuint a, b, c, d, e, f, g, h, j;
+
+			// Vertex 1
+			// Weird way, x = vertice index, y  = texture coordinate, z = normals index
+			sscanf_s(line.substr(2).c_str(), "%d/%d/%d %d/%d/%d %d/%d/%d\n", &a, &b, &c, &d, &e, &f, &g, &h, &j);
+			vertex1 = { a, b, c };
+			vertex2 = { d, e, f };
+			vertex3 = { g, h, j };
+
+			OBJLoader::processVertex(vertex1, indices, textures, normals, out_uvs, out_normals);
+			OBJLoader::processVertex(vertex2, indices, textures, normals, out_uvs, out_normals);
+			OBJLoader::processVertex(vertex3, indices, textures, normals, out_uvs, out_normals);
+		}
+		else if (line.substr(0, 2) == "# ")
+		{
+			// comment
+		}
+		else 
+		{
+
 		}
 	}
 
 	// Close file, we're done with it now.
+	cout << "Closing OBJ File" << endl;
 	in.close();
-	
-	//the mesh data is finally calculated here
-	for (UINT i = 0; i<vertexIndex.size(); i++)
+
+	//GLuint vertexPointer = 0;
+	for (vec3 v : *vertices)
 	{
-		vec3 verticesData;
-		vec2 texturesData;
-		vec3 normalsData;
-
-		verticesData = vec3(vertices[vertexIndex[i]].x, vertices[vertexIndex[i]].y, vertices[vertexIndex[i]].z);
-		texturesData = vec2(textures[textureIndex[i]].x, textures[textureIndex[i]].y);
-		normalsData = vec3(normals[normalsIndex[i]].x, normals[normalsIndex[i]].y, normals[normalsIndex[i]].z);
-
-		out_vertices.push_back(verticesData);
-		out_uvs.push_back(texturesData);
-		out_normals.push_back(normalsData);
+		out_vertices->push_back(v.x);
+		out_vertices->push_back(v.y);
+		out_vertices->push_back(v.z);
+		//out_vertices[vertexPointer++] = v.x;
+		//out_vertices[vertexPointer++] = v.y;
+		//out_vertices[vertexPointer++] = v.z;
 	}
+
+	//for (uint i=0; i < indices.size(); i++)
+	//{
+	//	out_indices[i] = indices[i];
+	//}
+	out_indices = indices;
+
+	cout << "OBJ Loader finished, sending data to VAO loader...." << endl;
+	
+
+	out_vertices->shrink_to_fit(); 
+	out_uvs->shrink_to_fit(); 
+	out_normals->shrink_to_fit();
+	out_indices->shrink_to_fit();
+
+	RawModel m{ loader->loadToVao(out_vertices, out_uvs, out_normals, out_indices) };
+
+	//delete vertices;
+	//delete textures;
+	//delete normals;
+	//delete indices;
+
+	//delete out_vertices;
+	//delete out_uvs;
+	//delete out_normals;
+	//delete out_indices;
+
+	return m;
+}
+
+void OBJLoader::processVertex
+	(
+	ivec3 vertex, 
+	vector<GLuint>* ind, 
+	vector<vec2>* tex, 
+	vector<vec3>* norm, 
+	vector<GLfloat>* texArray, 
+	vector<GLfloat>* normArray
+	)
+{
+	GLuint currentVertexPointer = 0;
+	GLuint xxx = 0;
+
+	currentVertexPointer = vertex.x - 1; 
+	ind->push_back(currentVertexPointer);
+
+	if (texArray->size() < currentVertexPointer * 2 + 2)
+	{
+		texArray->resize(currentVertexPointer * 2 + 2);
+	}
+	
+	if (normArray->size() < (currentVertexPointer * 3 + 3))
+	{
+		normArray->resize(currentVertexPointer * 3 + 3);
+	}
+
+	vec2 currentTex = tex->at(vertex.y - 1);
+		
+	xxx = (currentVertexPointer * 2);
+
+	texArray->at(xxx) = currentTex.x; 
+	texArray->at(xxx + 1) = (1 - currentTex.y);
+
+	vec3 currentNorm = norm->at(vertex.z - 1);
+	xxx = currentVertexPointer * 3;
+	normArray->at(xxx) = currentNorm.x;
+	normArray->at(xxx + 1) = currentNorm.y;
+	normArray->at(xxx + 2) = currentNorm.z;
+
+
 }

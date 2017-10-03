@@ -17,85 +17,10 @@ Loader* loader;
 Camera* camera;
 
 #include "KeyEvents.h"
+#include "OBJLoader.h"
 
 int main(int argc, char ** argv, char ** argnv)
 {
-	vector<GLfloat> vertices 
-	{
-	-0.5, 0.5, -0.5,
-	-0.5, -0.5, -0.5,
-	0.5, -0.5, -0.5,
-	0.5, 0.5, -0.5,
-
-	-0.5, 0.5, 0.5,
-	-0.5, -0.5, 0.5,
-	0.5, -0.5, 0.5,
-	0.5, 0.5, 0.5,
-
-	0.5, 0.5, -0.5,
-	0.5, -0.5, -0.5,
-	0.5, -0.5, 0.5,
-	0.5, 0.5, 0.5,
-
-	-0.5, 0.5, -0.5,
-	-0.5, -0.5, -0.5,
-	-0.5, -0.5, 0.5,
-	-0.5, 0.5, 0.5,
-
-	-0.5, 0.5, 0.5,
-	-0.5, 0.5, -0.5,
-	0.5, 0.5, -0.5,
-	0.5, 0.5, 0.5,
-
-	-0.5, -0.5, 0.5,
-	-0.5, -0.5, -0.5,
-	0.5, -0.5, -0.5,
-	0.5, -0.5, 0.5
-	};
-
-	vector<GLuint> indices
-	{
-		0, 1, 3,
-		3, 1, 2,
-		4, 5, 7,
-		7, 5, 6,
-		8, 9, 11,
-		11, 9, 10,
-		12, 13, 15,
-		15, 13, 14,
-		16, 17, 19,
-		19, 17, 18,
-		20, 21, 23,
-		23, 21, 22
-	};
-
-	vector<GLfloat> textureCoords
-	{
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0
-	};
 
 	wcout << L"Starting Engine" << endl;
 	glfwInit();
@@ -105,6 +30,7 @@ int main(int argc, char ** argv, char ** argnv)
 	loader = {new Loader() };
 	if (!display->doesExist())
 	{
+		wcerr << L"Could not start Display" << endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -118,7 +44,7 @@ int main(int argc, char ** argv, char ** argnv)
 		return -1;
 	}
 	camera = { new Camera() };
-	RawModel model{ loader->loadToVao(vertices, textureCoords, indices) };
+	RawModel model{ OBJLoader::loadOBJ("dragon", loader) };
 	StaticShader shader{ StaticShader() };
 	Renderer renderer{ shader };
 	ModelTexture texture{ loader->loadTexture("image") };
