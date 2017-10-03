@@ -13,6 +13,15 @@ OBJLoader::~OBJLoader()
 {
 }
 
+
+// OBJ specification 
+// https://www.cs.utah.edu/~boulos/cs3505/obj_spec.pdf
+// http://www.martinreddy.net/gfx/3d/OBJ.spec
+//http://paulbourke.net/dataformats/obj/
+//
+// MTL Specification
+//http://www.fileformat.info/format/material/
+//
 RawModel OBJLoader::loadOBJ(
 	string fileName,
 	Loader * loader
@@ -91,10 +100,36 @@ RawModel OBJLoader::loadOBJ(
 		{
 			// comment
 		}
-		else 
+		else if (line.substr(0, 2) == "p ") // Point data for curves (like V or triangles)
 		{
 
 		}
+		else if (line.substr(0, 4) == "curv") // we have curv data
+		{
+
+		}
+		else if (line.substr(0, 4) == "mat") // named material for mesh, texture file name?
+		{
+
+		}
+		else if (line.substr(0, 2) == "vp") // curve point?
+		{
+
+		}
+		else if (line.substr(0, 5) == "curv2") // another type of curve data
+		{
+
+		}
+		else if (line.substr(0, 4) == "surf")// surface data
+		{
+
+		}
+		else if (line.substr(0, 2) == "l ") // line data
+		{
+
+		}
+		// so much more.....for the future.....
+
 	}
 
 	// Close file, we're done with it now.
