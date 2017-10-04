@@ -27,7 +27,7 @@ int main(int argc, char ** argv, char ** argnv)
 
 	wcout << L"Creating Display" << endl;
 	display = {new DisplayManager() };
-	loader = {new Loader() };
+	
 	if (!display->doesExist())
 	{
 		wcerr << L"Could not start Display" << endl;
@@ -43,16 +43,31 @@ int main(int argc, char ** argv, char ** argnv)
 		wcerr << L"Could not start GLEW" << endl;
 		return -1;
 	}
-	camera = { new Camera() };
-	RawModel model{ OBJLoader::loadOBJ("stall", loader) };
-	StaticShader shader{ StaticShader() };
-	Renderer renderer{ shader };
-	ModelTexture texture{ loader->loadTexture("image") };
-	
 
-	TexturedModel staticModel{ model, texture };
-	Entity entity{ staticModel, glm::vec3{ 0, 0, -1 }, 0, 0, 0, 1 };
-	Light light{ { 0, 0, -20 }, { 1, 1, 1 }, 1 };
+	loader = { new Loader() };
+	camera = { new Camera() };	
+	StaticShader shader { StaticShader() };
+	Renderer renderer { shader };
+	
+	Entity entity
+	{ 
+		{
+			{ OBJLoader::loadOBJ("dragon", loader) },	// RawModel::model
+			{ loader->loadTexture("image") }			// RawModel::texture
+		},				// RawModel(model,texture)
+			glm::vec3{ 0, 0, -1 },		// Entity::Position 
+			0,							// Entity::x rotation	
+			0,							// Entity::y rotation
+			0,							// Entity::z rotation
+			1							// Entity::scale
+	};
+	
+	Light light
+	{ 
+		{ 0, 0, 0 },	// Position 
+		{ 1, 1, 1 },	// Color
+		1				// Itensity
+	};
 	
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
@@ -62,7 +77,7 @@ int main(int argc, char ** argv, char ** argnv)
 		/* Poll for and process events */
 		glfwPollEvents();
 		handleKeyEvents();
-		//entity.increasePosition(0.002f, -0.002f, 0.002f);
+		entity.increasePosition(0.002f, -0.002f, 0.002f);
 		entity.increaseRotation(0.002f, -0.002f, 0.002f);
 		renderer.prepare();
 		shader.start();

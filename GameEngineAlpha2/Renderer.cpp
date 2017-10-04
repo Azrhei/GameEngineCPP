@@ -55,6 +55,9 @@ void Renderer::render(Entity entity, StaticShader shader)
 		entity.getScale()
 		);
 	shader.loadTransformationMatrix(transformationMatrix);
+	
+	ModelTexture texture = model.getTexture();
+	shader.loadShineVariables(texture.getshineDampener(), texture.getreflectivity());
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, model.getTexture().getId());

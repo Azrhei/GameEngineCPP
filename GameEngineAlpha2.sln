@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineAlpha2", "GameEngineAlpha2\GameEngineAlpha2.vcxproj", "{A2255CB6-A805-4E74-A1DD-C63DA2C8F5F1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "GameEngineAlpha2\GameEngineAlpha2.vcxproj", "{A2255CB6-A805-4E74-A1DD-C63DA2C8F5F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGLWrap", "OpenGLWrap", "{2D879E41-F547-4462-9961-76281DB9C4D1}"
+	ProjectSection(SolutionItems) = preProject
+		GameEngineAlpha2\VAO.cpp = GameEngineAlpha2\VAO.cpp
+		GameEngineAlpha2\VAO.h = GameEngineAlpha2\VAO.h
+		GameEngineAlpha2\VBO.cpp = GameEngineAlpha2\VBO.cpp
+		GameEngineAlpha2\VBO.h = GameEngineAlpha2\VBO.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

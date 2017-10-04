@@ -7,13 +7,13 @@ class Light
 {
 private:
 	vec3 position;
-	vec3 facing;
 	vec3 color;
+	vec3 facing;
 	GLfloat intensity; // how bright or how far does it travel?
 	GLfloat storedItensity;
 public:
 	Light();
-	Light(vec3 pos, vec3 col, GLfloat inten) : position(pos), color(col), intensity(inten){}
+	Light(vec3 pos, vec3 col, GLfloat inten);
 	~Light();
 
 	const vec3 getPosition() { return position; }

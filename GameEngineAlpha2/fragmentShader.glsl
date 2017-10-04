@@ -9,6 +9,8 @@ out vec4 out_Color;
 uniform sampler2D modelTexture;
 uniform vec3 lightColor;
 uniform unsigned int lightIntensity;
+uniform float shineDamper;
+uniform float reflectivity;
 
 
 void main(void){
