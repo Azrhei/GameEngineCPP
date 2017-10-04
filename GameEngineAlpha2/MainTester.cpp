@@ -46,6 +46,7 @@ int main(int argc, char ** argv, char ** argnv)
 
 	loader = { new Loader() };
 	camera = { new Camera() };	
+
 	StaticShader shader { StaticShader() };
 	Renderer renderer { shader };
 	
@@ -68,7 +69,9 @@ int main(int argc, char ** argv, char ** argnv)
 		{ 1, 1, 1 },	// Color
 		1				// Itensity
 	};
-	
+	entity.getModel().getTexture().setShineDampener(10);
+	entity.getModel().getTexture().setReflectivity(1);
+
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
