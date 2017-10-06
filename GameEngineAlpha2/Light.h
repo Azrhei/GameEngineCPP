@@ -16,9 +16,9 @@ public:
 	Light(vec3 pos, vec3 col, GLfloat inten);
 	~Light();
 
-	const vec3 getPosition() { return position; }
-	const vec3 getColor() { return color; }
-	const GLfloat getIntensity() { return intensity; }
+	vec3 getPosition() { return position; }
+	vec3 getColor() { return color; }
+	GLfloat getIntensity() { return intensity; }
 	// void makeNegative();
 	// void applyEffect(Effect e);
 
@@ -29,7 +29,7 @@ public:
 	void setCOlor(vec3 newColor) { color = newColor; }
 	void turnOn() { intensity = storedItensity; }
 	void turnOff() { intensity = 0; }
-	const  bool isOn() const { return (intensity > 0); }
+	bool isOn() { return (intensity > 0); }
 
 };
 

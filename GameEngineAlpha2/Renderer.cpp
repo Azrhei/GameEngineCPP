@@ -5,12 +5,16 @@ Renderer::Renderer()
 }
 
 
-Renderer::Renderer(StaticShader shader)
+Renderer::Renderer(StaticShader* shader)
 {
+	this->shader = shader;
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+
 	createProjectionMatrix();
-	shader.start();
-	shader.loadProjectionMatrix(projectionMatrix);
-	shader.stop();
+	shader->start();
+	shader->loadProjectionMatrix(projectionMatrix);
+	shader->stop();
 }
 
 
@@ -20,63 +24,69 @@ Renderer::~Renderer()
 
 void Renderer::prepare()
 {
-#ifdef DEBUG
-	wcout << "Preparing to render" << endl;
-#endif
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0, 0, 0.4f, 0);
-
-
+	glClearColor(0.3f, 0, 0.0f, 0);
 }
 
-void Renderer::render(Entity entity, StaticShader shader)
+void Renderer::render(map<TexturedModel, vector<Entity>> e)
 {
-#ifdef DEBUG
-	wcout << L"Rendering Model" << endl;
-#endif
+	for (auto models : e)
+	{
+		prepareTeturedModel(models.first);
 
-	TexturedModel model = entity.getModel();
+		vector<Entity> batch = models.second;
+		for (Entity entity : batch)
+		{
+			prepareInstance(entity);
+				glDrawElements(GL_TRIANGLES, entity.getModel().getRawModel().getVertexCount(), GL_UNSIGNED_INT, 0);
+		}
+		unbindTexturedModel();
+	}
+}
+
+void Renderer::prepareTeturedModel(TexturedModel model)
+{
 	RawModel rawModel = model.getRawModel();
-	
 
 	glBindVertexArray(rawModel.getID());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	glm::mat4 transformationMatrix = Maths::createTransformationMatrix
-		(
-		entity.getPosition(), 
-		entity.getRX(), 
-		entity.getRY(), 
-		entity.getRZ(), 
-		entity.getScale()
-		);
-	shader.loadTransformationMatrix(transformationMatrix);
-	
 	ModelTexture texture = model.getTexture();
-	shader.loadShineVariables(texture.getshineDampener(), texture.getreflectivity());
+	shader->loadShineVariables(texture.getshineDampener(), texture.getreflectivity());
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, model.getTexture().getId());
-	glDrawElements(GL_TRIANGLES,rawModel.getVertexCount(), GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, texture.getId());
+}
 
+void Renderer::unbindTexturedModel()
+{
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
 	glBindVertexArray(0);
-
-#ifdef DEBUG
-	wcout << L"Model Rendered" << endl;
-#endif
 }
 
-void Renderer::createProjectionMatrix()
+void Renderer::prepareInstance(Entity entity)
 {
-	GLfloat aspectRatio = 720 / 1280;
-	GLfloat y_scale = (1 / glm::tan(glm::radians(FOV / 2))) * aspectRatio;
+	glm::mat4 transformationMatrix = Maths::createTransformationMatrix
+		(
+		entity.getPosition(),
+		entity.getRX(),
+		entity.getRY(),
+		entity.getRZ(),
+		entity.getScale()
+		);
+	shader->loadTransformationMatrix(transformationMatrix);
+}
+
+glm::mat4 Renderer::createProjectionMatrix()
+{
+	
+	GLfloat aspectRatio =  ::display->getWidth() / ::display->getHeight();
+	GLfloat y_scale = (1.0f / glm::tan(glm::radians(FOV / 2.0f))) * aspectRatio;
 	GLfloat x_scale = y_scale / aspectRatio;
 	GLfloat frustrum_length = F_Plane - N_Plane;
 	
@@ -87,4 +97,6 @@ void Renderer::createProjectionMatrix()
 	matrix[2][3] = -1;
 	matrix[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
 	matrix[3][3] = 0;
+
+	return matrix;
 }

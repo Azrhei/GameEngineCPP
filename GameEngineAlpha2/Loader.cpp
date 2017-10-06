@@ -30,8 +30,8 @@ RawModel Loader::loadToVao
 	if (textureCoords->size() > 0) storeDataInAttribList(1, 2, textureCoords);
 	if (normals->size() > 0) storeDataInAttribList(2, 3, normals);
 
-	unbindVAO();
 	model = { vaoID, indices->size() };
+	unbindVAO();
 	return model;
 }
 
@@ -44,13 +44,13 @@ GLuint Loader::createVAO()
 	return i;
 }
 
-void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>* data)
+void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize,vector<GLfloat>* data)
 {
 	GLuint i;
 	glGenBuffers(1, &i);
 	vbos->push_back(i);
 	glBindBuffer(GL_ARRAY_BUFFER, i);
-	glBufferData(GL_ARRAY_BUFFER, data->size() /** coordinateSize*/ * sizeof(GLfloat), &data->front(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, data->size() * sizeof(GLfloat), &(*data)[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(attribNumber, coordinateSize, GL_FLOAT, false, 0, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -73,7 +73,7 @@ void Loader::bindIndicesVBO(vector<GLint>* indices)
 	glGenBuffers(1, &i);
 	vbos->push_back(i);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, i);
- 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size()/* * 3 */* sizeof(GLuint), &indices->front(), GL_STATIC_DRAW);
+ 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size() * sizeof(GLuint), &(*indices)[0], GL_STATIC_DRAW);
 }
 
 GLint Loader::loadTexture(string fileName)

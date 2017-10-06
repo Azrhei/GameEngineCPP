@@ -50,7 +50,6 @@ RawModel OBJLoader::loadOBJ(
 	ivec3 vertex2;
 	ivec3 vertex3;
 
-	bool tempflag = true;
 	while (getline(in, line))
 	{
 		//check v for vertices	
@@ -82,96 +81,62 @@ RawModel OBJLoader::loadOBJ(
 		//check for faces
 		else if (line.substr(0, 2) == "f ")
 		{
-			istringstream v{ line.substr(2) };
-			GLuint a, b, c, d, e, f, g, h, j;
-
-			// Vertex 1
-			// Weird way, x = vertice index, y  = texture coordinate, z = normals index
-			sscanf_s(line.substr(2).c_str(), "%d/%d/%d %d/%d/%d %d/%d/%d\n", &a, &b, &c, &d, &e, &f, &g, &h, &j);
-			vertex1 = { a, b, c };
-			vertex2 = { d, e, f };
-			vertex3 = { g, h, j };
-
-			OBJLoader::processVertex(vertex1, indices, textures, normals, out_uvs, out_normals);
-			OBJLoader::processVertex(vertex2, indices, textures, normals, out_uvs, out_normals);
-			OBJLoader::processVertex(vertex3, indices, textures, normals, out_uvs, out_normals);
+			out_uvs->resize(vertices->size()*2);
+			out_normals->resize(vertices->size()*3);
+			break;
 		}
-		else if (line.substr(0, 2) == "# ")
+
+	}
+
+	while (1)
+	{
+		if (!(line.substr(0, 2) == "f "))
 		{
-			// comment
+			continue;
 		}
-		else if (line.substr(0, 2) == "p ") // Point data for curves (like V or triangles)
-		{
+	
+		GLuint a, b, c, d, e, f, g, h, j;
 
-		}
-		else if (line.substr(0, 4) == "curv") // we have curv data
-		{
+		sscanf_s(line.substr(2).c_str(), "%d/%d/%d %d/%d/%d %d/%d/%d\n", &a, &b, &c, &d, &e, &f, &g, &h, &j);
+		vertex1 = { a, b, c };
+		vertex2 = { d, e, f };
+		vertex3 = { g, h, j };
 
-		}
-		else if (line.substr(0, 4) == "mat") // named material for mesh, texture file name?
-		{
-
-		}
-		else if (line.substr(0, 2) == "vp") // curve point?
-		{
-
-		}
-		else if (line.substr(0, 5) == "curv2") // another type of curve data
-		{
-
-		}
-		else if (line.substr(0, 4) == "surf")// surface data
-		{
-
-		}
-		else if (line.substr(0, 2) == "l ") // line data
-		{
-
-		}
-		// so much more.....for the future.....
-
+		OBJLoader::processVertex(vertex1, indices, textures, normals, out_uvs, out_normals);
+		OBJLoader::processVertex(vertex2, indices, textures, normals, out_uvs, out_normals);
+		OBJLoader::processVertex(vertex3, indices, textures, normals, out_uvs, out_normals);
+		if (!getline(in, line)) break;
 	}
 
 	// Close file, we're done with it now.
 	cout << "Closing OBJ File" << endl;
 	in.close();
 
-	//GLuint vertexPointer = 0;
+
+	out_vertices->resize(vertices->size() * 3);
+	out_indices->resize(indices->size());
+
+	GLuint vertexPointer = 0;
 	for (vec3 v : *vertices)
 	{
-		out_vertices->push_back(v.x);
-		out_vertices->push_back(v.y);
-		out_vertices->push_back(v.z);
-		//out_vertices[vertexPointer++] = v.x;
-		//out_vertices[vertexPointer++] = v.y;
-		//out_vertices[vertexPointer++] = v.z;
+		out_vertices->at(vertexPointer++) = v.x;
+		out_vertices->at(vertexPointer++) = v.y;
+		out_vertices->at(vertexPointer++) = v.z;
 	}
 
-	//for (uint i=0; i < indices.size(); i++)
-	//{
-	//	out_indices[i] = indices[i];
-	//}
-	out_indices = indices;
-
 	cout << "OBJ Loader finished, sending data to VAO loader...." << endl;
-	
 
-	out_vertices->shrink_to_fit(); 
-	out_uvs->shrink_to_fit(); 
-	out_normals->shrink_to_fit();
-	out_indices->shrink_to_fit();
+	RawModel m{ loader->loadToVao(out_vertices, out_uvs, out_normals, indices) };
 
-	RawModel m{ loader->loadToVao(out_vertices, out_uvs, out_normals, out_indices) };
+	delete vertices;
+	delete textures;
+	delete normals;
+	delete indices;
 
-	//delete vertices;
-	//delete textures;
-	//delete normals;
-	//delete indices;
-
-	//delete out_vertices;
-	//delete out_uvs;
-	//delete out_normals;
-	//delete out_indices;
+	delete out_vertices;
+	delete out_uvs;
+	delete out_normals;
+	delete out_indices;
 
 	return m;
 }
@@ -187,38 +152,19 @@ void OBJLoader::processVertex
 	)
 {
 	GLint currentVertexPointer = 0;
-	GLint xxx = 0;
+	GLint xx1=0,xx2 = 0;
 
-	currentVertexPointer = vertex.x - 1; 
+	currentVertexPointer = vertex[0] - 1; 
 	ind->push_back(currentVertexPointer);
-
-	// Pull textureCoordinate from tex and put it into array according to vertex.y order
-	if (vertex.y - 1 >= 0 && vertex.y - 1 < tex->size()) // Make sure we have texture data in the first place
-	{
-		if (texArray->size() < currentVertexPointer * 2 + 2)
-		{
-			texArray->resize(currentVertexPointer * 2 + 2);
-		}
 		
-		vec2 currentTex = tex->at(vertex.y - 1);		
-		xxx = (currentVertexPointer * 2);
-		texArray->at(xxx) = currentTex.x; 
-		texArray->at(xxx + 1) = (1 - currentTex.y);
-	}
-
-	// Pull normal data from norm and put it into array according to vertex.z order
-	if (vertex.z - 1 >= 0 && vertex.z - 1 < norm->size())
-	{
-		if (normArray->size() < currentVertexPointer * 3 + 3)
-		{
-			normArray->resize(currentVertexPointer * 3 + 3);
-		}
+	vec2 currentTex = tex->at(vertex[1] - 1);		
+	xx1 = (currentVertexPointer * 2);
+	texArray->at(xx1) = currentTex.x; 
+	texArray->at(xx1 + 1) = (1 - currentTex.y);
 		
-		vec3 currentNorm = norm->at(vertex.z - 1);
-		xxx = currentVertexPointer * 3;
-		normArray->at(xxx) = currentNorm.x;
-		normArray->at(xxx + 1) = currentNorm.y;
-		normArray->at(xxx + 2) = currentNorm.z;
-	}
-
+	vec3 currentNorm = norm->at(vertex[2] - 1);
+	xx2 = currentVertexPointer * 3;
+	normArray->at(xx2) = currentNorm.x;
+	normArray->at(xx2 + 1) = currentNorm.y;
+	normArray->at(xx2 + 2) = currentNorm.z;
 }

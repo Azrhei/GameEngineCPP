@@ -21,12 +21,10 @@ public:
 	// Getters
 	TexturedModel getModel() { return _model; }
 	glm::vec3 getPosition() { return _position; }
-	const GLfloat getScale() const { return _scale; }
-	const GLfloat getRX() const { return _rx; }
-	const GLfloat getRY() const { return _ry; }
-	const GLfloat getRZ() const { return _rz; }
-
-	//   TexturedModel& operator=(const TexturedModel& tm);
+	GLfloat getScale() { return _scale; }
+	GLfloat getRX() { return _rx; }
+	GLfloat getRY() { return _ry; }
+	GLfloat getRZ() { return _rz; }
 
 	// Setters
 	void setModel( TexturedModel model) { _model = model; }
@@ -39,7 +37,6 @@ public:
 	// Mutators
 	void increasePosition(GLfloat dx, GLfloat dy, GLfloat dz) 
 	{ 
-		
 		_position.x += dx; 
 		_position.y += dy; 
 		_position.z += dz; 

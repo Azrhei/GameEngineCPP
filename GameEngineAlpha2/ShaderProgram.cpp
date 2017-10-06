@@ -6,7 +6,7 @@ ShaderProgram::ShaderProgram(string vertexFile, string fragmentFile)
 :
 vertexFileName(vertexFile), fragmentFileName(fragmentFile)
 {
-	
+	this->load();
 }
 
 void ShaderProgram::load()
@@ -21,7 +21,7 @@ void ShaderProgram::load()
 	glValidateProgram(programId);
 	this->getAllUniformLocations();
 }
-
+ 
 ShaderProgram::~ShaderProgram()
 {
 }

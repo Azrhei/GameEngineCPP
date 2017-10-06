@@ -12,12 +12,12 @@ public:
 	ModelTexture(GLint id);
 	~ModelTexture();
 
-	const GLint getId() const { return textureId; }
-	const GLint getshineDampener() const { return shineDamper; }
-	const GLint getreflectivity() const { return textureId; }
+	GLint getId() { return textureId; }
+	GLfloat getshineDampener() { return shineDamper; }
+	GLfloat getreflectivity() { return reflectivity; }
 
-	void setShineDampener(GLint newValue) { shineDamper = newValue; }
-	void setReflectivity(GLint newValue) { reflectivity = newValue; }
+	void setShineDampener(GLfloat newValue) { shineDamper = newValue; }
+	void setReflectivity(GLfloat newValue) { reflectivity = newValue; }
 
 };
 

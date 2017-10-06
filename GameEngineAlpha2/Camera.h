@@ -1,5 +1,8 @@
 #pragma once
 #include "SharedIncludes.h"
+#include "DisplayManager.h"
+
+extern DisplayManager* display;
 
 class Camera
 {
@@ -17,5 +20,6 @@ public:
 	GLfloat getPitch() { return pitch; }
 	GLfloat getYaw() { return yaw; }
 	GLfloat getRoll() { return roll; }
+	void move();
 };
 

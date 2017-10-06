@@ -5,11 +5,6 @@
 class ShaderProgram
 {
 private:
-	GLuint programId;
-	GLuint vertexShaderID;
-	GLuint fragmentShaderID;
-	string vertexFileName;
-	string fragmentFileName;
 
 	static GLuint loadShader(string file, GLuint type);
 	static string readFile(const char *filePath);
@@ -24,10 +19,15 @@ public:
 	void cleanUp();
 
 protected:
+	GLuint programId;
+	GLuint vertexShaderID;
+	GLuint fragmentShaderID;
+	string vertexFileName;
+	string fragmentFileName;
 	void load();
 	GLuint getUniformLocation(string uniformName);
-	virtual void bindAttributes() = 0;
-	virtual void getAllUniformLocations() = 0;
+	virtual void bindAttributes();
+	virtual void getAllUniformLocations();
 	void bindAttribute(GLuint attribute, string variableName);
 	void loadFloat(GLuint location, GLfloat value);
 	void loadInt(GLuint location, GLint value);

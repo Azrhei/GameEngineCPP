@@ -1,6 +1,7 @@
 
 #include "SharedIncludes.h"
 #include "DisplayManager.h"
+#include "MasterRenderer.h"
 
 DisplayManager* display;
 
@@ -14,6 +15,7 @@ Loader* loader;
 #include "TexturedModel.h"
 #include "Entity.h"
 #include "Camera.h"
+
 Camera* camera;
 
 #include "KeyEvents.h"
@@ -47,13 +49,13 @@ int main(int argc, char ** argv, char ** argnv)
 	loader = { new Loader() };
 	camera = { new Camera() };	
 
-	StaticShader shader { StaticShader() };
-	Renderer renderer { shader };
+	//StaticShader shader { StaticShader() };
+	//Renderer renderer { shader };
 	
 	Entity entity
 	{ 
 		{
-			{ OBJLoader::loadOBJ("dragon", loader) },	// RawModel::model
+			{ OBJLoader::loadOBJ("stall", loader) },	// RawModel::model
 			{ loader->loadTexture("image") }			// RawModel::texture
 		},				// RawModel(model,texture)
 			glm::vec3{ 0, 0, -1 },		// Entity::Position 
@@ -75,20 +77,28 @@ int main(int argc, char ** argv, char ** argnv)
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
+	//StaticShader* shader{ new StaticShader{} };
+	MasterRenderer renderer{ new StaticShader };
+
 	while (!display->shouldClose())
 	{
 		/* Poll for and process events */
 		glfwPollEvents();
 		handleKeyEvents();
-		entity.increasePosition(0.002f, -0.002f, 0.002f);
-		entity.increaseRotation(0.002f, -0.002f, 0.002f);
-		renderer.prepare();
-		shader.start();
-		shader.loadLight(light);
-		shader.loadViewMatrix(*camera);
-		renderer.render(entity, shader);
+		camera->move();
+
+		renderer.processEntity(entity);
+
+
+		renderer.render(light, *camera);
+
+		//renderer.prepare();
+		//shader.start();
+		//shader.loadLight(light);
+		//shader.loadViewMatrix(*camera);
+		//renderer.render(entity, shader);
+		//shader.stop();
 		display->updateDisplay();
-		shader.stop();
 	}
 
 	wcout << L"Removing Display" << endl;
@@ -96,8 +106,8 @@ int main(int argc, char ** argv, char ** argnv)
 	wcout << L"Terminating OpenGL system" << endl;
 	glfwTerminate();
 	loader->cleanUp();
-	shader.cleanUp();
-
+	//shader.cleanUp();
+	renderer.cleanUp();
 	delete display;
 	delete loader;
 #ifdef DEBUG

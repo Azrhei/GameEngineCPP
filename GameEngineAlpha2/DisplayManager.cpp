@@ -19,13 +19,14 @@ void DisplayManager::createDisplay()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	_window = glfwCreateWindow(WIDTH, HEIGHT, "Test Window", NULL, NULL);
+	_window = glfwCreateWindow(1280, 720, "Test Window", NULL, NULL);
 	if (!_window)
 	{
 		wcout << L"Window failed to create";
 		glfwTerminate();
 	}
-	
+	glfwSetFramebufferSizeCallback(_window, DisplayManager::framebufferResize_callBack);
+	glfwGetWindowSize(_window, &WIDTH, &HEIGHT);
 }
 
 void DisplayManager::showDisplay()
@@ -50,4 +51,10 @@ void DisplayManager::closeDisplay()
 void DisplayManager::updateDisplay()
 {
 	glfwSwapBuffers(_window);
+
+}
+
+void DisplayManager::framebufferResize_callBack(GLFWwindow* window, int width, int height)
+{	
+	glViewport(0, 0, width, height);
 }

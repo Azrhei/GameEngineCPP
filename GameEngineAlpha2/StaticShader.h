@@ -23,6 +23,7 @@ private:
 protected:
 	void getAllUniformLocations() override;
 	void bindAttributes() override;
+
 public:
 	StaticShader(string vertexFileName, string fragmentFileName);
 	StaticShader();
