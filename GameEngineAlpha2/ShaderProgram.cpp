@@ -3,33 +3,31 @@
 #include <vector>
 
 ShaderProgram::ShaderProgram(string vertexFile, string fragmentFile)
-:
-vertexFileName(vertexFile), fragmentFileName(fragmentFile)
+: vertexFileName(vertexFile), fragmentFileName(fragmentFile)
 {
-	this->load();
+
 }
 
-void ShaderProgram::load()
+void ShaderProgram::generateShaderProgram()
 {
 	vertexShaderID = loadShader(vertexFileName, GL_VERTEX_SHADER);
 	fragmentShaderID = loadShader(fragmentFileName, GL_FRAGMENT_SHADER);
 	programId = glCreateProgram();
 	glAttachShader(programId, vertexShaderID);
 	glAttachShader(programId, fragmentShaderID);
-	this->bindAttributes();
-	glLinkProgram(programId);
-	glValidateProgram(programId);
-	this->getAllUniformLocations();
 }
- 
+
+void ShaderProgram::buildShaderProgram()
+{
+	glAttachShader(programId, vertexShaderID);
+	glAttachShader(programId, fragmentShaderID);
+}
+
+
 ShaderProgram::~ShaderProgram()
 {
 }
 
-void ShaderProgram::bindAttributes()
-{
-	wcout << L"Calling wrong bindAttributes() method" << endl;
-}
 
 GLuint ShaderProgram::loadShader(string file, GLuint type)
 {
@@ -103,11 +101,6 @@ string ShaderProgram::readFile(const char *filePath) {
 GLuint ShaderProgram::getUniformLocation(string uniformName)
 {
 	return glGetUniformLocation(programId, uniformName.c_str());
-}
-
-void ShaderProgram::getAllUniformLocations()
-{
-	wcout << L"Calling wrong getAllUniformLocations() method" << endl;
 }
 
 void ShaderProgram::loadFloat(GLuint location, GLfloat value)

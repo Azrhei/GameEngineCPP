@@ -21,18 +21,20 @@ private:
 
 
 protected:
+	void load();
 	void getAllUniformLocations() override;
 	void bindAttributes() override;
 
 public:
-	StaticShader(string vertexFileName, string fragmentFileName);
 	StaticShader();
 	~StaticShader();
+	StaticShader(string vertexFileName, string fragmentFileName);
+
 	//GLuint StaticShader::getUniformLocation(string name);
-	void loadTransformationMatrix(glm::mat4 matrix);
-	void loadProjectionMatrix(glm::mat4 matrix);
-	void loadViewMatrix(Camera camera);
-	void loadLight(Light light);
-	void loadShineVariables(GLfloat damper, GLfloat reflectivity);
+	void loadTransformationMatrix(glm::mat4 matrix) override;
+	void loadProjectionMatrix(glm::mat4 matrix) override;
+	void loadViewMatrix(Camera camera )override;
+	void loadLight(Light light) override;
+	void loadShineVariables(GLfloat damper, GLfloat reflectivity) override;
 };
 

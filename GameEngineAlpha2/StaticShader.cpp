@@ -4,7 +4,7 @@
 StaticShader::StaticShader(string vertexShaderFile, string fragmentShaderFile)
 : ShaderProgram(vertexShaderFile, fragmentShaderFile)
 {
-	/*this->load();*/
+
 }
 
 StaticShader::StaticShader()
@@ -12,7 +12,15 @@ StaticShader::StaticShader()
 	ShaderProgram("vertexShader.glsl", "fragmentShader.glsl")
 {
 	wcout << L"Loading shaders" << endl;
-	/*this->load();*/
+	load();
+}
+
+void StaticShader::load()
+{
+	generateShaderProgram();
+	bindAttributes();
+	buildShaderProgram();
+	getAllUniformLocations();
 }
 
 StaticShader::~StaticShader()

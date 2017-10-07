@@ -87,12 +87,14 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityLiving.cpp" />
     <ClCompile Include="EntityNonLiving.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="IBreedable.cpp" />
     <ClCompile Include="ICamera.cpp" />
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="IEntityHostile.cpp" />
     <ClCompile Include="IEntityNeutral.cpp" />
     <ClCompile Include="IEntityPassive.cpp" />
+    <ClCompile Include="IGame.cpp" />
     <ClCompile Include="ILiving.cpp" />
     <ClCompile Include="ILocalPlayer.cpp" />
     <ClCompile Include="INonLiving.cpp" />
@@ -110,7 +112,7 @@
     <ClCompile Include="PlayerLocal.cpp" />
     <ClCompile Include="PlayerRemote.cpp" />
     <ClCompile Include="RawModel.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="EntityRenderer.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="TexturedModel.cpp" />
@@ -126,12 +128,14 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityLiving.h" />
     <ClInclude Include="EntityNonLiving.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="IBreedable.h" />
     <ClInclude Include="ICamera.h" />
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="IEntityHostile.h" />
     <ClInclude Include="IEntityNeutral.h" />
     <ClInclude Include="IEntityPassive.h" />
+    <ClInclude Include="IGame.h" />
     <ClInclude Include="ILiving.h" />
     <ClInclude Include="ILocalPlayer.h" />
     <ClInclude Include="INonLiving.h" />
@@ -148,7 +152,7 @@
     <ClInclude Include="PlayerLocal.h" />
     <ClInclude Include="PlayerRemote.h" />
     <ClInclude Include="RawModel.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="EntityRenderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="SharedIncludes.h" />

@@ -9,7 +9,7 @@ DisplayManager* display;
 
 Loader* loader;
 
-#include "Renderer.h"
+#include "MasterRenderer.h"
 #include "StaticShader.h"
 #include "ModelTexture.h"
 #include "TexturedModel.h"
@@ -29,6 +29,7 @@ int main(int argc, char ** argv, char ** argnv)
 
 	wcout << L"Creating Display" << endl;
 	display = {new DisplayManager() };
+
 	
 	if (!display->doesExist())
 	{
@@ -47,11 +48,7 @@ int main(int argc, char ** argv, char ** argnv)
 	}
 
 	loader = { new Loader() };
-	camera = { new Camera() };	
-
-	//StaticShader shader { StaticShader() };
-	//Renderer renderer { shader };
-	
+	camera = { new Camera() };
 	Entity entity
 	{ 
 		{
@@ -77,8 +74,8 @@ int main(int argc, char ** argv, char ** argnv)
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
-	//StaticShader* shader{ new StaticShader{} };
-	MasterRenderer renderer{ new StaticShader };
+	StaticShader* shader = new StaticShader;
+	MasterRenderer renderer{shader};
 
 	while (!display->shouldClose())
 	{
@@ -89,15 +86,12 @@ int main(int argc, char ** argv, char ** argnv)
 
 		renderer.processEntity(entity);
 
-
-		renderer.render(light, *camera);
-
-		//renderer.prepare();
-		//shader.start();
-		//shader.loadLight(light);
-		//shader.loadViewMatrix(*camera);
-		//renderer.render(entity, shader);
-		//shader.stop();
+		renderer.prepare();
+		shader->start();
+		shader->loadLight(light);
+		shader->loadViewMatrix(*camera);
+		//renderer.render(entity);
+		shader->stop();
 		display->updateDisplay();
 	}
 
@@ -106,7 +100,7 @@ int main(int argc, char ** argv, char ** argnv)
 	wcout << L"Terminating OpenGL system" << endl;
 	glfwTerminate();
 	loader->cleanUp();
-	//shader.cleanUp();
+	shader->cleanUp();
 	renderer.cleanUp();
 	delete display;
 	delete loader;
