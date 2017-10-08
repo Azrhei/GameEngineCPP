@@ -6,9 +6,11 @@ EntityRenderer::EntityRenderer()
 }
 
 
-EntityRenderer::EntityRenderer(StaticShader* shader, glm::mat4 projectionMatrix)
+EntityRenderer::EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix)
 {
 	this->shader = shader;
+
+	//createProjectionMatrix();
 
 	shader->start();
 	shader->loadProjectionMatrix(projectionMatrix);
@@ -53,7 +55,7 @@ void EntityRenderer::prepareTeturedModel(TexturedModel* model)
 	shader->loadShineVariables(texture->getshineDampener(), texture->getreflectivity());
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getId());
+	glBindTexture(GL_TEXTURE_2D, model->getTexture()->getId());
 }
 
 void EntityRenderer::unbindTexturedModel()
@@ -66,7 +68,7 @@ void EntityRenderer::unbindTexturedModel()
 
 void EntityRenderer::prepareInstance(Entity* entity)
 {
-	glm::mat4 transformationMatrix = Maths::createTransformationMatrix
+	glm::mat4 *transformationMatrix = Maths::createTransformationMatrix
 		(
 		entity->getPosition(),
 		entity->getRX(),

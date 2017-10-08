@@ -19,8 +19,8 @@ void ShaderProgram::generateShaderProgram()
 
 void ShaderProgram::buildShaderProgram()
 {
-	glAttachShader(programId, vertexShaderID);
-	glAttachShader(programId, fragmentShaderID);
+	glLinkProgram(programId);
+	glValidateProgram(programId);
 }
 
 
@@ -122,7 +122,7 @@ void ShaderProgram::loadVector(GLuint location, glm::vec3 value)
 	glUniform3f(location, value.x, value.y, value.z);
 }
 
-void ShaderProgram::loadMatrix(GLuint location, glm::mat4 value)
+void ShaderProgram::loadMatrix(GLuint location, glm::mat4* value)
 {
-	glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+	glUniformMatrix4fv(location, 1, GL_FALSE, &(*value)[0][0]);
 }

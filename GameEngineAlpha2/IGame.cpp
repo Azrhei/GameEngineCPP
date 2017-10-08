@@ -1,12 +1,13 @@
 #include "IGame.h"
+extern DisplayManager * display;
 
 IGame::IGame()
 {
 	ILocalPlayer* player = new ILocalPlayer;
 	MasterRenderer* renderer = new MasterRenderer;
 	StaticShader* shader = new StaticShader;
-	ICamera* camera = new ICamera;
-	DisplayManager *display = new DisplayManager;
+	ICamera* camera = new Camera;
+	DisplayManager *display = ::display;
 	Loader * loader = new Loader;
 
 	local_players = { new vector<ILocalPlayer *> };
@@ -27,12 +28,13 @@ IGame::IGame(DisplayManager* display)
 	ILocalPlayer* player = new ILocalPlayer;
 	MasterRenderer* renderer = new MasterRenderer;
 	StaticShader* shader = new StaticShader;
-	ICamera* camera = new ICamera;
+	Camera* camera = new Camera;
 	Loader * loader = new Loader;
 }
 
+
 IGame::IGame(ILocalPlayer* player, MasterRenderer* renderer, StaticShader* shader, ICamera* camera)
-: player(player), renderer(renderer), shader(shader), camera(camera), loader(loader), display(display)
+: player(player), renderer(renderer), shader(shader), camera(camera)
 {
 	local_players = { new vector<ILocalPlayer *> };
 	remote_players = { new vector<IRemotePlayer *> };
@@ -41,7 +43,7 @@ IGame::IGame(ILocalPlayer* player, MasterRenderer* renderer, StaticShader* shade
 	cameras = { new vector<ICamera *> };
 	
 	loader = { new Loader };
-	display = { new DisplayManager };
+	display = { ::display }; 
 
 	local_players->push_back(player);
 	renderers->push_back(renderer);
@@ -57,7 +59,6 @@ IGame::~IGame()
 	renderers->clear();
 	shaders->clear();
 	cameras->clear();
-
 
 	delete local_players;
 	delete remote_players;

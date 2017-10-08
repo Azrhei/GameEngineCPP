@@ -1,22 +1,11 @@
 #include "MasterRenderer.h"
 
-MasterRenderer::MasterRenderer(StaticShader * shader) : shader(shader) 
-{
-	this->entities = new map<TexturedModel*, vector<Entity*>>;
-	glCullFace(GL_BACK);
-	glEnable(GL_CULL_FACE);
-
-	createProjectionMatrix();
-
-	entity_renderer = new EntityRenderer{ shader, projectionMatrix };
-}
-
 MasterRenderer::MasterRenderer()
 : shader(new StaticShader)
 {
 	this->entities = new map<TexturedModel*, vector<Entity*>>;
-	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
 	createProjectionMatrix();
 
@@ -28,16 +17,19 @@ MasterRenderer::~MasterRenderer()
 {
 }
 
-void MasterRenderer::render(Light* sun, Camera* cam)
+void MasterRenderer::render(Light* sun, ICamera* cam)
 {
-	//prepare();
+	prepare();
 
 	shader->start();
+
 	shader->loadLight(sun);
 	shader->loadViewMatrix(cam);
 
 	entity_renderer->render(entities);
+
 	shader->stop();
+
 	entities->clear();
 }
 
@@ -85,22 +77,35 @@ void MasterRenderer::processEntity(Entity* entity)
 	}
 }
 
-glm::mat4 MasterRenderer::createProjectionMatrix()
+glm::mat4* MasterRenderer::createProjectionMatrix()
 {
-
+	//glm can do this for us, see glm::frustrum
+	// Generate a Frustum matrix for converting from orthogonal space
 	GLfloat aspectRatio = (GLfloat)::display->getWidth() / (GLfloat)::display->getHeight();
 	GLfloat y_scale = (1.0f / glm::tan(glm::radians(FOV / 2.0f))) * aspectRatio;
 	GLfloat x_scale = y_scale / aspectRatio;
 	GLfloat frustrum_length = F_Plane - N_Plane;
 
-	glm::mat4 matrix{ 1 };
-	matrix[0][0] = x_scale;
-	matrix[1][1] = y_scale;
-	matrix[2][2] = -((F_Plane + N_Plane) / frustrum_length);
-	matrix[2][3] = -1;
-	matrix[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
-	matrix[3][3] = 0;
+	glm::mat4* matrix = new glm::mat4{ 1 };
+	(*matrix)[0][0] = x_scale;
+	(*matrix)[1][1] = y_scale;
+	(*matrix)[2][2] = -((F_Plane + N_Plane) / frustrum_length);
+	(*matrix)[2][3] = -1;
+	(*matrix)[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
+	(*matrix)[3][3] = 0;
 
 	this->projectionMatrix = matrix;
 	return matrix;
+}
+
+void MasterRenderer::prepare()
+{
+	// Enable Depth testing
+	glEnable(GL_DEPTH_TEST);
+
+	// Clear color buffer and depth buffer for next frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Clear screen and set color before drawing frame
+	glClearColor(0.49f, .89f, 0.98f, 1);
 }

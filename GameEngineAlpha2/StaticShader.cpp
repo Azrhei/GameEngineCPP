@@ -12,11 +12,6 @@ StaticShader::StaticShader()
 	ShaderProgram("vertexShader.glsl", "fragmentShader.glsl")
 {
 	wcout << L"Loading shaders" << endl;
-	load();
-}
-
-void StaticShader::load()
-{
 	generateShaderProgram();
 	bindAttributes();
 	buildShaderProgram();
@@ -30,9 +25,9 @@ StaticShader::~StaticShader()
 void StaticShader::bindAttributes()
 {
 	wcout << L"Calling correct bindAttributes() method" << endl;
-	this->bindAttribute(0, "position");
-	this->bindAttribute(1, "textureCoords");
-	this->bindAttribute(2, "normals");
+	bindAttribute(0, "position");
+	bindAttribute(1, "textureCoords");
+	bindAttribute(2, "normals");
 }
 
 //GLuint StaticShader::getUniformLocation(string name)
@@ -43,15 +38,14 @@ void StaticShader::bindAttributes()
 void StaticShader::getAllUniformLocations()
 {
 	wcout << L"Calling correct getAllUniformLocations" << endl;
-	location_transformationMatrix = this->getUniformLocation("transformationMatrix");
-	location_projectionMatrix = this->getUniformLocation("projectionMatrix");
-	location_viewMatrix = this->getUniformLocation("viewMatrix");
-	location_lightPosition = this->getUniformLocation("lightPosition");
-	location_lightColor = this->getUniformLocation("lightColor");
-	location_lightIntensity = this->getUniformLocation("lightIntensity");
-	location_shineDamper = this->getUniformLocation("shineDamper");
-	location_reflectivity = this->getUniformLocation("reflectivity");
-
+	location_transformationMatrix = getUniformLocation("transformationMatrix");
+	location_projectionMatrix = getUniformLocation("projectionMatrix");
+	location_viewMatrix = getUniformLocation("viewMatrix");
+	location_lightPosition = getUniformLocation("lightPosition");
+	location_lightColor = getUniformLocation("lightColor");
+	location_lightIntensity = getUniformLocation("lightIntensity");
+	location_shineDamper = getUniformLocation("shineDamper");
+	location_reflectivity = getUniformLocation("reflectivity");
 	//locations["transformationMatrix"] = this->getUniformLocation("transformationMatrix");
 	//locations["projectionMatrix"] = this->getUniformLocation("projectionMatrix");
 	//locations["viewMatrix"] = this->getUniformLocation("viewMatrix");
@@ -64,18 +58,18 @@ void StaticShader::getAllUniformLocations()
 
 }
 
-void StaticShader::loadProjectionMatrix(glm::mat4 projection)
+void StaticShader::loadProjectionMatrix(glm::mat4* projection)
 {
 	//this->loadMatrix(locations["projectionMatrix"], projection);
 	this->loadMatrix(location_projectionMatrix, projection);
 }
 
-void StaticShader::loadTransformationMatrix(glm::mat4 matrix)
+void StaticShader::loadTransformationMatrix(glm::mat4* matrix)
 {
 	this->loadMatrix(location_transformationMatrix, matrix);
 }
 
-void StaticShader::loadViewMatrix(Camera* camera)
+void StaticShader::loadViewMatrix(ICamera* camera)
 {
 	this->loadMatrix(location_viewMatrix, Maths::createViewMatrix(camera));
 }

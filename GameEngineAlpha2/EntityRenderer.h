@@ -25,7 +25,7 @@ private:
 	void unbindTexturedModel();
 public:
 	EntityRenderer();
-	EntityRenderer(StaticShader* shader, glm::mat4 projectionMatrix);
+	EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix);
 	~EntityRenderer();
 
 	void render(map<TexturedModel*, vector<Entity*>>* entities);

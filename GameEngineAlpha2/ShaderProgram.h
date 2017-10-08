@@ -21,9 +21,9 @@ public:
 	void stop();
 	void cleanUp();
 
-	virtual void loadTransformationMatrix(glm::mat4 matrix) = 0;
-	virtual void loadProjectionMatrix(glm::mat4 matrix) = 0;
-	virtual void loadViewMatrix(Camera* camera) = 0;
+	virtual void loadTransformationMatrix(glm::mat4* matrix) = 0;
+	virtual void loadProjectionMatrix(glm::mat4* matrix) = 0;
+	virtual void loadViewMatrix(ICamera* camera) = 0;
 	virtual void loadLight(Light* light) = 0;
 	virtual void loadShineVariables(GLfloat damper, GLfloat reflectivity) = 0;
 
@@ -47,6 +47,6 @@ protected:
 	void loadInt(GLuint location, GLint value);
 	void loadBool(GLuint location, GLboolean value);
 	void loadVector(GLuint location, glm::vec3 value);
-	void loadMatrix(GLuint location, glm::mat4 value);
+	void loadMatrix(GLuint location, glm::mat4* value);
 };
 
