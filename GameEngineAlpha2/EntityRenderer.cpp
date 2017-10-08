@@ -21,7 +21,7 @@ EntityRenderer::~EntityRenderer()
 }
 
 
-void EntityRenderer::render(map<TexturedModel, vector<Entity>*> *e)
+void EntityRenderer::render(map<TexturedModel*, vector<Entity*>> *e)
 {
 	if (!e->empty())
 	{
@@ -29,31 +29,31 @@ void EntityRenderer::render(map<TexturedModel, vector<Entity>*> *e)
 		{
 			prepareTeturedModel(models.first);
 
-			vector<Entity>* batch = models.second;
-			for (Entity entity : *batch)
+			vector<Entity*> batch = models.second;
+			for (Entity* entity : batch)
 			{
 				prepareInstance(entity);
-				glDrawElements(GL_TRIANGLES, entity.getModel().getRawModel().getVertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, entity->getModel()->getRawModel()->getVertexCount(), GL_UNSIGNED_INT, 0);
 			}
 			unbindTexturedModel();
 		}
 	}
 }
 
-void EntityRenderer::prepareTeturedModel(TexturedModel model)
+void EntityRenderer::prepareTeturedModel(TexturedModel* model)
 {
-	RawModel rawModel = model.getRawModel();
+	RawModel* rawModel = model->getRawModel();
 
-	glBindVertexArray(rawModel.getID());
+	glBindVertexArray(rawModel->getID());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	ModelTexture texture = model.getTexture();
-	shader->loadShineVariables(texture.getshineDampener(), texture.getreflectivity());
+	ModelTexture* texture = model->getTexture();
+	shader->loadShineVariables(texture->getshineDampener(), texture->getreflectivity());
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture.getId());
+	glBindTexture(GL_TEXTURE_2D, texture->getId());
 }
 
 void EntityRenderer::unbindTexturedModel()
@@ -64,15 +64,15 @@ void EntityRenderer::unbindTexturedModel()
 	glBindVertexArray(0);
 }
 
-void EntityRenderer::prepareInstance(Entity entity)
+void EntityRenderer::prepareInstance(Entity* entity)
 {
 	glm::mat4 transformationMatrix = Maths::createTransformationMatrix
 		(
-		entity.getPosition(),
-		entity.getRX(),
-		entity.getRY(),
-		entity.getRZ(),
-		entity.getScale()
+		entity->getPosition(),
+		entity->getRX(),
+		entity->getRY(),
+		entity->getRZ(),
+		entity->getScale()
 		);
 	shader->loadTransformationMatrix(transformationMatrix);
 }

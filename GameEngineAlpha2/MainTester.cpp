@@ -15,7 +15,7 @@ Loader* loader;
 #include "TexturedModel.h"
 #include "Entity.h"
 #include "Camera.h"
-
+#include "Game.h"
 Camera* camera;
 
 #include "KeyEvents.h"
@@ -23,13 +23,16 @@ Camera* camera;
 
 int main(int argc, char ** argv, char ** argnv)
 {
+	// Create game object to store everything in
+	//IGame* game = new Game();
+
 
 	wcout << L"Starting Engine" << endl;
 	glfwInit();
 
 	wcout << L"Creating Display" << endl;
 	display = {new DisplayManager() };
-
+	//game->setDisplay(display);
 	
 	if (!display->doesExist())
 	{
@@ -49,33 +52,42 @@ int main(int argc, char ** argv, char ** argnv)
 
 	loader = { new Loader() };
 	camera = { new Camera() };
-	Entity entity
+	//game->setLoader(loader);
+	//game->setCamera(camera);
+
+	Entity* entity = new Entity
 	{ 
+		new TexturedModel
 		{
-			{ OBJLoader::loadOBJ("stall", loader) },	// RawModel::model
-			{ loader->loadTexture("image") }			// RawModel::texture
+			OBJLoader::loadOBJ("stall", loader),	// RawModel::model
+			new ModelTexture{
+				loader->loadTexture("image")
+			}// RawModel::texture
 		},				// RawModel(model,texture)
-			glm::vec3{ 0, 0, -1 },		// Entity::Position 
-			0,							// Entity::x rotation	
-			0,							// Entity::y rotation
-			0,							// Entity::z rotation
-			1							// Entity::scale
+		glm::vec3{ 0, 0, -1 },		// Entity::Position 
+		0,							// Entity::x rotation	
+		0,							// Entity::y rotation
+		0,							// Entity::z rotation
+		1							// Entity::scale
 	};
 	
-	Light light
+	Light* light = new Light
 	{ 
 		{ 0, 0, 0 },	// Position 
 		{ 1, 1, 1 },	// Color
 		1				// Itensity
 	};
-	entity.getModel().getTexture().setShineDampener(10);
-	entity.getModel().getTexture().setReflectivity(1);
+	
+	entity->getModel()->getTexture()->setShineDampener(10);
+	entity->getModel()->getTexture()->setReflectivity(1);
 
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
 	StaticShader* shader = new StaticShader;
-	MasterRenderer renderer{shader};
+	MasterRenderer* renderer = new MasterRenderer{shader};
+	//game->setShader(shader);
+	//game->setRenderer(renderer);
 
 	while (!display->shouldClose())
 	{
@@ -84,13 +96,11 @@ int main(int argc, char ** argv, char ** argnv)
 		handleKeyEvents();
 		camera->move();
 
-		renderer.processEntity(entity);
-
-		renderer.prepare();
+		renderer->processEntity(entity);
 		shader->start();
 		shader->loadLight(light);
-		shader->loadViewMatrix(*camera);
-		//renderer.render(entity);
+		shader->loadViewMatrix(camera);
+		renderer->render(light,camera);
 		shader->stop();
 		display->updateDisplay();
 	}
@@ -101,7 +111,7 @@ int main(int argc, char ** argv, char ** argnv)
 	glfwTerminate();
 	loader->cleanUp();
 	shader->cleanUp();
-	renderer.cleanUp();
+	renderer->cleanUp();
 	delete display;
 	delete loader;
 #ifdef DEBUG

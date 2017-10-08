@@ -6,14 +6,14 @@
 class TexturedModel
 {
 private:
-	RawModel _rawModel;
-	ModelTexture _texture;
+	RawModel* _rawModel;
+	ModelTexture* _texture;
 	
 public:
 	TexturedModel();
-	TexturedModel(RawModel model, ModelTexture texture);
-	RawModel getRawModel() { return _rawModel; }
-	ModelTexture getTexture(){ return _texture; }
+	TexturedModel(RawModel* model, ModelTexture* texture);
+	RawModel* getRawModel() { return _rawModel; }
+	ModelTexture* getTexture(){ return _texture; }
 	~TexturedModel();
 };
 

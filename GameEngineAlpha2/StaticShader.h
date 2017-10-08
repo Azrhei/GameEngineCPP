@@ -10,14 +10,14 @@ class StaticShader :
 private:
 	//map<string, GLuint> locations;
 
-	GLuint location_transformationMatrix;
-	GLuint location_projectionMatrix;
-	GLuint location_viewMatrix;
-	GLuint location_lightPosition;
-	GLuint location_lightColor;
-	GLuint location_lightIntensity;
-	GLuint location_shineDamper;
-	GLuint location_reflectivity;
+	GLuint location_transformationMatrix = 0;
+	GLuint location_projectionMatrix = 0;
+	GLuint location_viewMatrix = 0;
+	GLuint location_lightPosition = 0;
+	GLuint location_lightColor = 0;
+	GLuint location_lightIntensity = 0;
+	GLuint location_shineDamper = 0;
+	GLuint location_reflectivity = 0;
 
 
 protected:
@@ -33,8 +33,8 @@ public:
 	//GLuint StaticShader::getUniformLocation(string name);
 	void loadTransformationMatrix(glm::mat4 matrix) override;
 	void loadProjectionMatrix(glm::mat4 matrix) override;
-	void loadViewMatrix(Camera camera )override;
-	void loadLight(Light light) override;
+	void loadViewMatrix(Camera* camera )override;
+	void loadLight(Light* light) override;
 	void loadShineVariables(GLfloat damper, GLfloat reflectivity) override;
 };
 

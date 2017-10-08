@@ -14,7 +14,7 @@ Loader::~Loader()
 	delete textures;
 }
 
-RawModel Loader::loadToVao
+RawModel* Loader::loadToVao
 	(
 	vector<GLfloat>* positions, 
 	vector<GLfloat>* textureCoords, 
@@ -22,7 +22,7 @@ RawModel Loader::loadToVao
 	vector<GLint>* indices
 	)
 {
-	RawModel model;
+	RawModel* model;
 	GLuint vaoID = createVAO();
 	bindIndicesVBO(indices);
 
@@ -30,7 +30,7 @@ RawModel Loader::loadToVao
 	if (textureCoords->size() > 0) storeDataInAttribList(1, 2, textureCoords);
 	if (normals->size() > 0) storeDataInAttribList(2, 3, normals);
 
-	model = { vaoID, indices->size() };
+	model = new RawModel { vaoID, indices->size() };
 	unbindVAO();
 	return model;
 }

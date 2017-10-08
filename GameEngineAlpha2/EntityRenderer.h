@@ -20,15 +20,15 @@ private:
 	StaticShader * shader;
 
 
-	void prepareTeturedModel(TexturedModel model);
-	void prepareInstance(Entity entity);
+	void prepareTeturedModel(TexturedModel* model);
+	void prepareInstance(Entity* entity);
 	void unbindTexturedModel();
 public:
 	EntityRenderer();
 	EntityRenderer(StaticShader* shader, glm::mat4 projectionMatrix);
 	~EntityRenderer();
 
-	void render(map<TexturedModel, vector<Entity>*>* entities);
+	void render(map<TexturedModel*, vector<Entity*>>* entities);
 
 
 };

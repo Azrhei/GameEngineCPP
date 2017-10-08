@@ -2,9 +2,7 @@
 
 MasterRenderer::MasterRenderer(StaticShader * shader) : shader(shader) 
 {
-	this->entities = new map<TexturedModel, vector<Entity>*>{};
-	this->entity_renderer = new EntityRenderer;
-
+	this->entities = new map<TexturedModel*, vector<Entity*>>;
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 
@@ -16,7 +14,7 @@ MasterRenderer::MasterRenderer(StaticShader * shader) : shader(shader)
 MasterRenderer::MasterRenderer()
 : shader(new StaticShader)
 {
-	this->entities = new map<TexturedModel, vector<Entity>*>{};
+	this->entities = new map<TexturedModel*, vector<Entity*>>;
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 
@@ -30,27 +28,20 @@ MasterRenderer::~MasterRenderer()
 {
 }
 
-void MasterRenderer::render(Light sun, Camera cam)
+void MasterRenderer::render(Light* sun, Camera* cam)
 {
-	prepare();
+	//prepare();
 
 	shader->start();
 	shader->loadLight(sun);
 	shader->loadViewMatrix(cam);
 
-	//entity_renderer->render(*entities);
+	entity_renderer->render(entities);
 	shader->stop();
 	entities->clear();
 }
 
-void MasterRenderer::prepare()
-{
-	glEnable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.3f, 0, 0.0f, 0);
-}
-
-void MasterRenderer::processEntity(Entity entity)
+void MasterRenderer::processEntity(Entity* entity)
 {
 	/* 
 	is entity null ? break;
@@ -71,34 +62,33 @@ void MasterRenderer::processEntity(Entity entity)
 
 	if using point to vector then we also need to make certain to allocate the vector when creating the vector
 	*/
-
-	TexturedModel model = entity.getModel();
+	
+	TexturedModel* model = entity->getModel();
 	if (entities->empty())
 	{
-		vector<Entity>* t = new vector<Entity>;
+		vector<Entity*>* t = new vector<Entity*>();
 		t->push_back(entity);
-		//entities->insert(make_pair(model, t));
+		entities->insert(make_pair(model, *t));
 	}
 	else{
-		//auto it = entities->find(model);
-		//map<TexturedModel, vector<Entity>>::iterator  it = entities->find(model);
-		//if (it == entities->end()) )
-		//{
-		//	//entities[model].push_back(entity);
-		//}
-		//else
-		//{
-		//	vector<Entity> t;
-		//	t.push_back(entity);
-		//	//entities.insert(make_pair(model,t));
-		//}
+		auto it = entities->find(model);
+		if (it == entities->end())
+		{
+			(it->second).push_back(entity);
+		}
+		else
+		{
+			vector<Entity*>* t = new vector<Entity*>();
+			t->push_back(entity);
+			entities->insert(make_pair(model, *t));
+		}
 	}
 }
 
 glm::mat4 MasterRenderer::createProjectionMatrix()
 {
 
-	GLfloat aspectRatio = ::display->getWidth() / ::display->getHeight();
+	GLfloat aspectRatio = (GLfloat)::display->getWidth() / (GLfloat)::display->getHeight();
 	GLfloat y_scale = (1.0f / glm::tan(glm::radians(FOV / 2.0f))) * aspectRatio;
 	GLfloat x_scale = y_scale / aspectRatio;
 	GLfloat frustrum_length = F_Plane - N_Plane;
@@ -111,5 +101,6 @@ glm::mat4 MasterRenderer::createProjectionMatrix()
 	matrix[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
 	matrix[3][3] = 0;
 
+	this->projectionMatrix = matrix;
 	return matrix;
 }

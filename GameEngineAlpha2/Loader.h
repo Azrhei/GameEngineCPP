@@ -24,7 +24,7 @@ public:
 	Loader();
 	~Loader();
 	GLint loadTexture(string fileName);
-	RawModel loadToVao
+	RawModel * loadToVao
 		(
 		vector<GLfloat>* positions, 
 		vector<GLfloat>* textureCoords, 

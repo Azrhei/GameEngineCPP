@@ -22,7 +22,7 @@ OBJLoader::~OBJLoader()
 // MTL Specification
 //http://www.fileformat.info/format/material/
 //
-RawModel OBJLoader::loadOBJ(
+RawModel * OBJLoader::loadOBJ(
 	string fileName,
 	Loader * loader
 	)
@@ -126,7 +126,8 @@ RawModel OBJLoader::loadOBJ(
 
 	cout << "OBJ Loader finished, sending data to VAO loader...." << endl;
 
-	RawModel m{ loader->loadToVao(out_vertices, out_uvs, out_normals, indices) };
+	RawModel* m = loader->loadToVao(out_vertices, out_uvs, out_normals, indices);
+	
 
 	delete vertices;
 	delete textures;

@@ -17,7 +17,7 @@ private:
 
 	StaticShader* shader;
 	EntityRenderer* entity_renderer;
-	map<TexturedModel, vector<Entity>*>* entities;
+	map<TexturedModel*, vector<Entity*>>* entities;
 	glm::mat4 projectionMatrix;
 
 protected:
@@ -28,8 +28,8 @@ public:
 	MasterRenderer(StaticShader * shader);
 	~MasterRenderer();
 	void cleanUp() { shader->cleanUp(); }
-	void processEntity(Entity entity);
-	void render(Light sun, Camera camera);
-	void prepare();
+	void processEntity(Entity* entity);
+	void render(Light* sun, Camera* camera);
+	//void prepare();
 };
 

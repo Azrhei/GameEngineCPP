@@ -14,7 +14,7 @@ public:
 	OBJLoader();
 	~OBJLoader();
 
-	static RawModel loadOBJ
+	static RawModel * loadOBJ
 		(
 		string path,
 		Loader * loader

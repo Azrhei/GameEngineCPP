@@ -5,7 +5,7 @@ TexturedModel::TexturedModel()
 
 }
 
-TexturedModel::TexturedModel(RawModel model, ModelTexture texture)
+TexturedModel::TexturedModel(RawModel* model, ModelTexture* texture)
 : _rawModel(model), _texture(texture)
 {
 

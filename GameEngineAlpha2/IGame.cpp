@@ -6,6 +6,8 @@ IGame::IGame()
 	MasterRenderer* renderer = new MasterRenderer;
 	StaticShader* shader = new StaticShader;
 	ICamera* camera = new ICamera;
+	DisplayManager *display = new DisplayManager;
+	Loader * loader = new Loader;
 
 	local_players = { new vector<ILocalPlayer *> };
 	remote_players = { new vector<IRemotePlayer *> };
@@ -19,14 +21,27 @@ IGame::IGame()
 	cameras->push_back(camera);
 }
 
+IGame::IGame(DisplayManager* display)
+: display(display)
+{
+	ILocalPlayer* player = new ILocalPlayer;
+	MasterRenderer* renderer = new MasterRenderer;
+	StaticShader* shader = new StaticShader;
+	ICamera* camera = new ICamera;
+	Loader * loader = new Loader;
+}
+
 IGame::IGame(ILocalPlayer* player, MasterRenderer* renderer, StaticShader* shader, ICamera* camera)
-: player(player), renderer(renderer), shader(shader), camera(camera)
+: player(player), renderer(renderer), shader(shader), camera(camera), loader(loader), display(display)
 {
 	local_players = { new vector<ILocalPlayer *> };
 	remote_players = { new vector<IRemotePlayer *> };
 	renderers = { new vector<MasterRenderer *> };
 	shaders = { new vector<StaticShader *> };
 	cameras = { new vector<ICamera *> };
+	
+	loader = { new Loader };
+	display = { new DisplayManager };
 
 	local_players->push_back(player);
 	renderers->push_back(renderer);
@@ -43,11 +58,21 @@ IGame::~IGame()
 	shaders->clear();
 	cameras->clear();
 
+
 	delete local_players;
 	delete remote_players;
 	delete renderers;
 	delete shaders;
 	delete cameras;
+
+	// close display if not already
+	//display->closeDisplay();
+	//glfwDestroyWindow(display->getWindow());
+	//delete display;
+
+	//loader->cleanUp();
+	//delete loader;
+
 }
 
 //This will free the previous player instance!!!!!
@@ -62,16 +87,43 @@ void IGame::setShader(StaticShader * newShader)
 {
 	//shaders->erase(shader);
 	//delete shader;
-
+	shader = newShader;
 }
 
-void IGame::setRenderer(MasterRenderer * newRenderer){}
-void IGame::setCamera(ICamera * newCamera){}
+void IGame::setRenderer(MasterRenderer * newRenderer)
+{
+	// renderers->erase(renderer);
+	// delete renderer;
+	renderer = newRenderer;
+}
 
-ILocalPlayer * IGame::getLocalPlayer(){ return nullptr; }
+void IGame::setCamera(ICamera * newCamera)
+{
+	// cameras->erase(camera);
+	// delete camera;
+	camera = newCamera;
+}
+
+void IGame::setLoader(Loader * newLoader){}
+
+void IGame::setDisplaManager(DisplayManager* newDisplay)
+{
+	//display->closeDisplay();
+	//glfwDestroyWindow(display->getWindow());
+	//
+	//delete display;
+	display = newDisplay;
+}
+
+ILocalPlayer * IGame::getLocalPlayer(){ return player; }
 vector<IRemotePlayer *>* IGame::getRemotePlayers(){ return nullptr; }
-StaticShader * IGame::getShader(){ return nullptr; }
-ICamera * IGame::getCamera(){ return nullptr; }
+StaticShader * IGame::getShader(){ return shader; }
+ICamera * IGame::getCamera(){ return camera; }
+Loader * IGame::getLoader(){ return loader; }
+DisplayManager * IGame::getDisplayManager(){ return display; }
+GLFWwindow* IGame::getWindow(){ return window; }
+void IGame::setWindow(GLFWwindow* newWindow){ window = newWindow; }
+
 
 IRemotePlayer * IGame::findRemotePlayer(){ return nullptr; }
 
