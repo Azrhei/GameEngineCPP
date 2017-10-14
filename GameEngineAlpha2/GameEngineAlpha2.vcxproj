@@ -74,6 +74,8 @@
     <None Include="fragmentShader.glsl" />
     <None Include="packages.config" />
     <None Include="ReleaseNotes.css" />
+    <None Include="terrainFragmentShader.glsl" />
+    <None Include="terrainVertexShader.glsl" />
     <None Include="vertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +117,9 @@
     <ClCompile Include="EntityRenderer.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="StaticShader.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="TerrainRenderer.cpp" />
+    <ClCompile Include="TerrainShader.cpp" />
     <ClCompile Include="TexturedModel.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +162,9 @@
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="SharedIncludes.h" />
     <ClInclude Include="StaticShader.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="TerrainRenderer.h" />
+    <ClInclude Include="TerrainShader.h" />
     <ClInclude Include="TexturedModel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

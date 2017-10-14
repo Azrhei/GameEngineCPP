@@ -1,25 +1,30 @@
 #include "StaticShader.h"
 #include "Camera.h"
 
-StaticShader::StaticShader(string vertexShaderFile, string fragmentShaderFile)
+StaticShader::StaticShader(const char* vertexShaderFile, const char* fragmentShaderFile)
 : ShaderProgram(vertexShaderFile, fragmentShaderFile)
 {
-
+	load();
 }
 
 StaticShader::StaticShader()
-	: 
-	ShaderProgram("vertexShader.glsl", "fragmentShader.glsl")
+:VERTEX_FILE("vertexShader.glsl"), FRAGMENT_FILE("fragmentShader.glsl"), ShaderProgram("vertexShader.glsl", "fragmentShader.glsl")
 {
-	wcout << L"Loading shaders" << endl;
-	generateShaderProgram();
-	bindAttributes();
-	buildShaderProgram();
-	getAllUniformLocations();
+	load();
 }
 
 StaticShader::~StaticShader()
 {
+}
+
+void StaticShader::load()
+{
+	wcout << L"Loading Entity shaders" << endl;
+	generateShaderProgram();
+	bindAttributes();
+	buildShaderProgram();
+	getAllUniformLocations();
+	wcout << L"Entity shaders loaded" << endl;
 }
 
 void StaticShader::bindAttributes()

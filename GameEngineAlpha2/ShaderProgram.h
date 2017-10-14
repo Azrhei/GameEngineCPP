@@ -9,12 +9,12 @@ private:
 	GLuint programId;
 	GLuint vertexShaderID;
 	GLuint fragmentShaderID;
-	string vertexFileName;
-	string fragmentFileName;
+	const char* vertexFileName;
+	const char* fragmentFileName;
 
 public:
 	ShaderProgram() = delete;
-	ShaderProgram(string vertexFile, string fragmentFile);
+	ShaderProgram(const char* vertexFile, const char* fragmentFile);
 	~ShaderProgram();
 
 	void start();
@@ -35,7 +35,7 @@ protected:
 	void buildShaderProgram();
 
 	//  Reada and process a shader file.
-	static GLuint loadShader(string file, GLuint type);
+	static GLuint loadShader(const char* file, GLuint type);
 	static string readFile(const char *filePath);
 	
 	// Handle sending data to shader

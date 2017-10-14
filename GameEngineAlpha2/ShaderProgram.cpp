@@ -2,10 +2,10 @@
 #include "StaticShader.h"
 #include <vector>
 
-ShaderProgram::ShaderProgram(string vertexFile, string fragmentFile)
+ShaderProgram::ShaderProgram(const char* vertexFile, const char* fragmentFile)
 : vertexFileName(vertexFile), fragmentFileName(fragmentFile)
 {
-
+	
 }
 
 void ShaderProgram::generateShaderProgram()
@@ -29,11 +29,11 @@ ShaderProgram::~ShaderProgram()
 }
 
 
-GLuint ShaderProgram::loadShader(string file, GLuint type)
+GLuint ShaderProgram::loadShader(const char* file, GLuint type)
 {
 	GLuint shaderId = glCreateShader(type);
 
-	string fsrc = readFile(file.c_str());
+	string fsrc = readFile(file);
 	const char * src = fsrc.c_str();
 
 	GLint result = GL_FALSE;
@@ -81,8 +81,8 @@ void ShaderProgram::bindAttribute(GLuint attribute, string variableName)
 
 string ShaderProgram::readFile(const char *filePath) {
 	std::string content;
-	std::ifstream fileStream(filePath, std::ios::in);
-
+	std::ifstream fileStream{ filePath, std::ios::in };
+	
 	if (!fileStream.is_open()) {
 		std::cerr << "Could not read file " << filePath << ". File does not exist." << std::endl;
 		return "";

@@ -25,6 +25,8 @@ EntityRenderer::~EntityRenderer()
 
 void EntityRenderer::render(map<TexturedModel*, vector<Entity*>> *e)
 {
+	assert(e != NULL);
+
 	if (!e->empty())
 	{
 		for (auto models : *e)

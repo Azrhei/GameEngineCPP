@@ -32,4 +32,20 @@ void Camera::move()
 	{
 		this->position.x += .02f;
 	}
+	if (glfwGetKey(display->getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		this->pitch += .02f;
+	}
+	if (glfwGetKey(display->getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		this->pitch -= .02f;
+	}
+	if (glfwGetKey(display->getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		this->yaw += .02f;
+	}
+	if (glfwGetKey(display->getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		this->yaw -= .02f;
+	}
 }

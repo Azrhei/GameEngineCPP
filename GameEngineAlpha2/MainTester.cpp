@@ -13,7 +13,7 @@
 #include "Game.h"
 #include "KeyEvents.h"
 #include "OBJLoader.h"
-
+#include <random>
 DisplayManager * display;
 Loader* loader;
 ICamera* camera;
@@ -49,17 +49,20 @@ int main(int argc, char ** argv, char ** argnv)
 	{
 		new TexturedModel
 		{
-			OBJLoader::loadOBJ("dragon", loader),	// RawModel::model
-			new ModelTexture{
-				loader->loadTexture("image")
+			OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
+			new ModelTexture
+			{
+				loader->loadTexture("white")
 			}// RawModel::texture
-		},						// RawModel(model,texture)
+		},						// RawModel(model,texture)   
 			glm::vec3{ 0, 0, -1 },		// Entity::Position 
 			0,							// Entity::x rotation	
 			0,							// Entity::y rotation
 			0,							// Entity::z rotation
-			0.5							// Entity::scale
+			1							// Entity::scale
 	};
+	entity->getModel()->getTexture()->setShineDampener(10);
+	entity->getModel()->getTexture()->setReflectivity(1);
 
 	Light* light = new Light
 	{
@@ -68,22 +71,33 @@ int main(int argc, char ** argv, char ** argnv)
 		1				// Itensity
 	};
 
-	entity->getModel()->getTexture()->setShineDampener(10);
-	entity->getModel()->getTexture()->setReflectivity(1);
+
+	//TexturedModel *tm = new TexturedModel
+	//{
+	//	OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
+	//	new ModelTexture
+	//	{
+	//		loader->loadTexture("white")
+	//	}// RawModel::texture
+
+	//};
+
+#define LO 0.0f
+#define HI 180.0f
 
 	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
-	StaticShader* shader = new StaticShader;
+
 	MasterRenderer* renderer = new MasterRenderer;
 
-	IGame* game = new IGame
-	{
-		new ILocalPlayer,
-		renderer,
-		shader,
-		camera
-	};
+	//IGame* game = new IGame
+	//{
+	//	new ILocalPlayer,
+	//	new MasterRenderer,
+	//	new StaticShader,
+	//	camera
+	//};
 
 	while (!display->shouldClose())
 	{
@@ -91,9 +105,7 @@ int main(int argc, char ** argv, char ** argnv)
 		glfwPollEvents();
 		handleKeyEvents();
 		camera->move();
-
 		renderer->processEntity(entity);
-
 		renderer->render(light,camera);
 
 		display->updateDisplay();
@@ -104,7 +116,6 @@ int main(int argc, char ** argv, char ** argnv)
 	wcout << L"Terminating OpenGL system" << endl;
 	glfwTerminate();
 	loader->cleanUp();
-	shader->cleanUp();
 	renderer->cleanUp();
 
 	delete display;

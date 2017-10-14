@@ -18,8 +18,10 @@ private:
 	GLint location_lightIntensity = 0;
 	GLint location_shineDamper = 0;
 	GLint location_reflectivity = 0;
+	void load();
 
-
+	const char * VERTEX_FILE;
+	const char * FRAGMENT_FILE;
 protected:
 	void getAllUniformLocations() override;
 	void bindAttributes() override;
@@ -27,7 +29,7 @@ protected:
 public:
 	StaticShader();
 	~StaticShader();
-	StaticShader(string vertexFileName, string fragmentFileName);
+	StaticShader(const char* vertexFileName, const char* fragmentFileName);
 
 	//GLuint StaticShader::getUniformLocation(string name);
 	void loadTransformationMatrix(glm::mat4 *matrix) override;
@@ -36,4 +38,3 @@ public:
 	void loadLight(Light* light) override;
 	void loadShineVariables(GLfloat damper, GLfloat reflectivity) override;
 };
-

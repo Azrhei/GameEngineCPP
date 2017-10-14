@@ -1,7 +1,7 @@
 #include "MasterRenderer.h"
 
 MasterRenderer::MasterRenderer()
-: shader(new StaticShader)
+: shader(new StaticShader), terrain_shader(new TerrainShader)
 {
 	this->entities = new map<TexturedModel*, vector<Entity*>>;
 	glEnable(GL_CULL_FACE);
@@ -10,31 +10,60 @@ MasterRenderer::MasterRenderer()
 	createProjectionMatrix();
 
 	entity_renderer = new EntityRenderer{ shader, projectionMatrix };
+	terrain_renderer = new TerrainRenderer{ terrain_shader, projectionMatrix };
 }
 
 
 MasterRenderer::~MasterRenderer()
 {
+	delete entity_renderer;
+	delete terrain_renderer;
+	entities->clear();
+	delete entities;
+
 }
 
 void MasterRenderer::render(Light* sun, ICamera* cam)
 {
+	assert(cam != NULL);
+	assert(sun != NULL);
+	assert(this->shader != NULL);
+	assert(this->entity_renderer != NULL);
+
 	prepare();
 
-	shader->start();
+	if (!entities && !entities->empty())
+	{
+		shader->start();
 
-	shader->loadLight(sun);
-	shader->loadViewMatrix(cam);
+		shader->loadLight(sun);
+		shader->loadViewMatrix(cam);
 
-	entity_renderer->render(entities);
+		entity_renderer->render(entities);
 
-	shader->stop();
+		shader->stop();
+		entities->clear();
+	}
 
-	entities->clear();
+	if (terrains != NULL && !terrains->empty())
+	{
+		terrain_shader->start();
+
+		terrain_shader->loadLight(sun);
+		terrain_shader->loadViewMatrix(cam);
+
+		terrain_renderer->render(terrains);
+
+		terrain_shader->stop();
+		terrains->clear();
+	}
+
 }
 
+// Add an entity to be rendered during render cycle.
 void MasterRenderer::processEntity(Entity* entity)
 {
+	assert(entity != NULL);
 	/* 
 	is entity null ? break;
     is entities empty?
@@ -64,7 +93,7 @@ void MasterRenderer::processEntity(Entity* entity)
 	}
 	else{
 		auto it = entities->find(model);
-		if (it == entities->end())
+		if (it != entities->end())
 		{
 			(it->second).push_back(entity);
 		}
@@ -95,6 +124,7 @@ glm::mat4* MasterRenderer::createProjectionMatrix()
 	(*matrix)[3][3] = 0;
 
 	this->projectionMatrix = matrix;
+
 	return matrix;
 }
 
