@@ -18,7 +18,7 @@ DisplayManager * display;
 Loader* loader;
 ICamera* camera;
 
-int main(int argc, char ** argv, char ** argnv)
+int main(int argc, char ** argv, char ** argenv)
 {
 	wcout << L"Starting Engine" << endl;
 	glfwInit();
@@ -44,7 +44,7 @@ int main(int argc, char ** argv, char ** argnv)
 
 	loader = { new Loader() };
 	camera = { new Camera() };
-
+	
 	Entity* entity = new Entity
 	{
 		new TexturedModel
@@ -71,17 +71,6 @@ int main(int argc, char ** argv, char ** argnv)
 		1				// Itensity
 	};
 
-
-	//TexturedModel *tm = new TexturedModel
-	//{
-	//	OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
-	//	new ModelTexture
-	//	{
-	//		loader->loadTexture("white")
-	//	}// RawModel::texture
-
-	//};
-
 #define LO 0.0f
 #define HI 180.0f
 
@@ -99,13 +88,27 @@ int main(int argc, char ** argv, char ** argnv)
 	//	camera
 	//};
 
+	ModelTexture* mt = new ModelTexture{ loader->loadTexture("grass") };
+	Terrain* t1 = new Terrain{ 0, 0, loader, mt };
+	Terrain* t2 = new Terrain{ 0, 1, loader, mt };
+	Terrain* t3 = new Terrain{ 1, 0, loader, mt };
+	Terrain* t4 = new Terrain{ 1, 1, loader, mt };
+
 	while (!display->shouldClose())
 	{
 		/* Poll for and process events */
 		glfwPollEvents();
 		handleKeyEvents();
 		camera->move();
+
+		
 		renderer->processEntity(entity);
+		
+		renderer->processTerrain(t1);
+		renderer->processTerrain(t2);
+		renderer->processTerrain(t3);
+		renderer->processTerrain(t4);
+
 		renderer->render(light,camera);
 
 		display->updateDisplay();

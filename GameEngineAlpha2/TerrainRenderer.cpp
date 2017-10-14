@@ -37,7 +37,7 @@ void TerrainRenderer::prepareTerrain(Terrain* terrain)
 	glBindVertexArray(rawModel->getID());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(2); 
 	ModelTexture* texture = terrain->getTexture();
 
 	shader->loadShineVariables(texture->getshineDampener(), texture->getreflectivity());

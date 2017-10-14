@@ -1,10 +1,13 @@
 #include "Loader.h"
+#include "Error.h"
+
+string Loader::default_texture_filename = "default";
+GLint Loader::default_texture = 0;
 
 Loader::Loader()
 : vaos(new vector<GLuint>), vbos(new vector<GLuint>), textures(new vector<GLuint>)
 {
 }
-
 
 Loader::~Loader()
 {
@@ -92,6 +95,15 @@ GLint Loader::loadTexture(string fileName)
 	if (image == nullptr)
 	{
 		wcout << L"No texture loaded" << endl;
+		ifstream ifile(("res/" + default_texture_filename + ".obj").c_str());
+		if (ifile)
+		{
+			return getDefaultTexture();
+		}
+		else
+		{
+			exit(EXIT_CODES::DEFAULT_FILE_MISSING);
+		}
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
@@ -104,4 +116,13 @@ GLint Loader::loadTexture(string fileName)
 	textures->push_back(textureId);
 
 	return textureId;
+}
+
+GLint Loader::getDefaultTexture()
+{
+	if (!Loader::default_texture)
+	{
+		Loader::default_texture = loadTexture(Loader::default_texture_filename);
+	}
+	return Loader::default_texture;
 }

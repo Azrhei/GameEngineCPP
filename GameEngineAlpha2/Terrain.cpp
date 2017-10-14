@@ -10,8 +10,8 @@ Terrain::~Terrain()
 {
 }
 
-Terrain::Terrain(GLint gridX, GLint gridZ, Loader* loader, ModelTexture* texture){
-	texture = texture;
+Terrain::Terrain(GLint gridX, GLint gridZ, Loader* loader, ModelTexture* tex){
+	texture = tex;
 	x = gridX * SIZE;
 	z = gridZ * SIZE;
 	model = generateTerrain(loader);
@@ -53,11 +53,6 @@ RawModel* Terrain::generateTerrain(Loader* loader){
 	normals->resize(count * 3);
 	textureCoords->resize(count * 2);
 	indices->resize(6 * (VERTEX_COUNT - 1)*(VERTEX_COUNT - 1));
-	
-	//float[] vertices = new GLfloat[count * 3];
-	//float[] normals = new GLfloat[count * 3];
-	//float[] textureCoords = new GLfloat[count * 2];
-	//int[] indices = new GLint[6 * (VERTEX_COUNT - 1)*(VERTEX_COUNT - 1)];
 	
 	GLuint vertexPointer = 0;
 	for (GLuint i = 0; i<VERTEX_COUNT; i++){

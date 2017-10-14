@@ -8,7 +8,7 @@ MasterRenderer::MasterRenderer()
 	glCullFace(GL_BACK);
 
 	createProjectionMatrix();
-
+	terrains = new vector<Terrain*>();
 	entity_renderer = new EntityRenderer{ shader, projectionMatrix };
 	terrain_renderer = new TerrainRenderer{ terrain_shader, projectionMatrix };
 }
@@ -20,7 +20,13 @@ MasterRenderer::~MasterRenderer()
 	delete terrain_renderer;
 	entities->clear();
 	delete entities;
+	terrains->clear();
+	delete terrains;
+}
 
+void MasterRenderer::processTerrain(Terrain* terrain)
+{
+	terrains->push_back(terrain);
 }
 
 void MasterRenderer::render(Light* sun, ICamera* cam)
@@ -29,10 +35,25 @@ void MasterRenderer::render(Light* sun, ICamera* cam)
 	assert(sun != NULL);
 	assert(this->shader != NULL);
 	assert(this->entity_renderer != NULL);
+	assert(entities);
+	assert(terrains);
 
 	prepare();
 
-	if (!entities && !entities->empty())
+	if ( !(terrains->empty()) )
+	{
+		terrain_shader->start();
+
+		terrain_shader->loadLight(sun);
+		terrain_shader->loadViewMatrix(cam);
+
+		terrain_renderer->render(terrains);
+
+		terrain_shader->stop();
+		terrains->clear();
+	}
+
+	if ( !(entities->empty()) )
 	{
 		shader->start();
 
@@ -45,18 +66,6 @@ void MasterRenderer::render(Light* sun, ICamera* cam)
 		entities->clear();
 	}
 
-	if (terrains != NULL && !terrains->empty())
-	{
-		terrain_shader->start();
-
-		terrain_shader->loadLight(sun);
-		terrain_shader->loadViewMatrix(cam);
-
-		terrain_renderer->render(terrains);
-
-		terrain_shader->stop();
-		terrains->clear();
-	}
 
 }
 

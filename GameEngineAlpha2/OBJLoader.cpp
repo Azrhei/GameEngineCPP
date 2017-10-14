@@ -1,8 +1,23 @@
 #include "OBJLoader.h"
 #include <string>
 #include <sstream>
+#include <filesystem>
+#include "Error.h"
 
 using namespace glm;
+
+string OBJLoader::default_model_filename = "default";
+RawModel * OBJLoader::default_model=nullptr;
+
+RawModel * OBJLoader::getDefaultModel(Loader * loader)
+{
+	if (!OBJLoader::default_model)
+	{
+		OBJLoader::default_model = OBJLoader::loadOBJ(OBJLoader::default_model_filename, loader);
+	}
+	return OBJLoader::default_model;
+}
+
 
 OBJLoader::OBJLoader()
 {
@@ -12,7 +27,6 @@ OBJLoader::OBJLoader()
 OBJLoader::~OBJLoader()
 {
 }
-
 
 // OBJ specification 
 // https://www.cs.utah.edu/~boulos/cs3505/obj_spec.pdf
@@ -42,7 +56,16 @@ RawModel * OBJLoader::loadOBJ(
 	if (!in)
 	{
 		cerr << "Cannot open " << fileName << endl;
-		exit(1);
+
+		ifstream ifile(("res/" + default_model_filename + ".obj").c_str());
+		if (ifile)
+		{
+			return getDefaultModel(loader);
+		}
+		else
+		{
+			exit(EXIT_CODES::DEFAULT_FILE_MISSING);
+		}
 	}
 
 	string line;

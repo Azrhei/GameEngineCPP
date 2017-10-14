@@ -36,6 +36,7 @@ public:
 	MasterRenderer();
 	//MasterRenderer(StaticShader * shader);
 	~MasterRenderer();
+	void processTerrain(Terrain* terrain);
 	void cleanUp() { shader->cleanUp(); }
 	void processEntity(Entity* entity);
 

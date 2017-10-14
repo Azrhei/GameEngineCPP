@@ -10,6 +10,11 @@ using namespace glm;
 
 class OBJLoader
 {
+private:
+	static string default_model_filename;
+	static RawModel * default_model;
+	static RawModel * getDefaultModel(Loader *loader);
+
 public:
 	OBJLoader();
 	~OBJLoader();
@@ -19,6 +24,7 @@ public:
 		string path,
 		Loader * loader
 		);
+
 	static void OBJLoader::processVertex
 		(
 		ivec3 vertex,
