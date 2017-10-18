@@ -4,20 +4,28 @@
 class ModelTexture
 {
 private:
-	GLint textureId;
-	GLfloat shineDamper;
-	GLfloat reflectivity;
+	GLint _textureId;
+	GLfloat _shineDamper;
+	GLfloat  _reflectivity;
+	bool _hasTransparency;
+	bool _useFakeLighting;
+
 public:
 	ModelTexture();
-	ModelTexture(GLint id);
+	ModelTexture(GLint id); 
 	~ModelTexture();
+	bool hasTransparency() { return _hasTransparency; }
+	void hasTransparency(bool newVal){ _hasTransparency = newVal; }
+	
+	GLint id() { return _textureId; }
+	GLfloat shineDampener() { return _shineDamper; }
+	GLfloat reflectivity() { return _reflectivity; }
 
-	GLint getId() { return textureId; }
-	GLfloat getshineDampener() { return shineDamper; }
-	GLfloat getreflectivity() { return reflectivity; }
+	bool useFakeLighting() { return _useFakeLighting; }
+	void useFakeLighting(bool newVal) { _useFakeLighting = newVal; }
 
-	void setShineDampener(GLfloat newValue) { shineDamper = newValue; }
-	void setReflectivity(GLfloat newValue) { reflectivity = newValue; }
-
+	void transparency(bool newVal) { _hasTransparency = newVal; }
+	void shineDampener(GLfloat newValue) { _shineDamper = newValue; }
+	void reflectivity(GLfloat newValue) { _reflectivity = newValue; }
 };
 

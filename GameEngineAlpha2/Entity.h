@@ -6,44 +6,44 @@ class Entity
 {
 private:
 	TexturedModel* _model;
-	glm::vec3 _position;
+	vec3 _position;
 	GLfloat _rx;
 	GLfloat _ry;
 	GLfloat _rz;
 	GLfloat _scale;
 
 protected:
-	void setModel( TexturedModel *model) { _model = model; }
+	void model(TexturedModel *model) { _model = model; }
+	void position(vec3 val){ _position = val; }
+	void rx(GLfloat val){ _rx = val; }
+	void ry(GLfloat val){ _ry = val; }
+	void rz(GLfloat val){ _rz = val; }
+	void scale(GLfloat val){ _scale = val; }
+
 
 public:
 	Entity();
-	Entity(TexturedModel* model, glm::vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale );
+	Entity(TexturedModel* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale );
 	~Entity();
 
 	// Getters
-	TexturedModel* getModel() { return _model; }
-	glm::vec3 getPosition() { return _position; }
-	GLfloat getScale() { return _scale; }
-	GLfloat getRX() { return _rx; }
-	GLfloat getRY() { return _ry; }
-	GLfloat getRZ() { return _rz; }
+	TexturedModel* model() { return _model; }
+	vec3 position() { return _position; }
+	GLfloat scale() { return _scale; }
+	GLfloat rx() { return _rx; }
+	GLfloat ry() { return _ry; }
+	GLfloat rz() { return _rz; }
 
-	// Setters
-	void setPosition(glm::vec3 position){ _position = position; }
-	void setScale(GLfloat scale) { _scale = scale; }
-	void setRX(GLfloat rx) { _rx = rx; }
-	void setRY(GLfloat ry) { _ry = ry; }
-	void setRZ(GLfloat rz) { _rz = rz; }
 
 	// Mutators
-	void increasePosition(GLfloat dx, GLfloat dy, GLfloat dz) 
-	{ 
+	virtual void increasePosition(GLfloat dx, GLfloat dy, GLfloat dz) 
+ 	{ 
 		_position.x += dx; 
 		_position.y += dy; 
 		_position.z += dz; 
 	}
 
-	void increaseRotation(GLfloat dx, GLfloat dy, GLfloat dz)
+	virtual void increaseRotation(GLfloat dx, GLfloat dy, GLfloat dz)
 	{
 		_rx += dx;
 		_ry += dy;

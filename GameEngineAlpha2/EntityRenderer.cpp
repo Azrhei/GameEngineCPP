@@ -1,4 +1,5 @@
 #include "EntityRenderer.h"
+#include "MasterRenderer.h"
 
 EntityRenderer::EntityRenderer()
 {
@@ -8,13 +9,13 @@ EntityRenderer::EntityRenderer()
 
 EntityRenderer::EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix)
 {
-	this->shader = shader;
+	_shader = shader;
 
 	//createProjectionMatrix();
 
-	shader->start();
-	shader->loadProjectionMatrix(projectionMatrix);
-	shader->stop();
+	_shader->start();
+	_shader->loadProjectionMatrix(projectionMatrix);
+	_shader->stop();
 }
 
 
@@ -37,7 +38,7 @@ void EntityRenderer::render(map<TexturedModel*, vector<Entity*>> *e)
 			for (Entity* entity : batch)
 			{
 				prepareInstance(entity);
-				glDrawElements(GL_TRIANGLES, entity->getModel()->getRawModel()->getVertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, entity->model()->rawModel()->vertexCount(), GL_UNSIGNED_INT, 0);
 			}
 			unbindTexturedModel();
 		}
@@ -46,22 +47,31 @@ void EntityRenderer::render(map<TexturedModel*, vector<Entity*>> *e)
 
 void EntityRenderer::prepareTeturedModel(TexturedModel* model)
 {
-	RawModel* rawModel = model->getRawModel();
+	RawModel* rawModel = model->rawModel();
 
-	glBindVertexArray(rawModel->getID());
+	glBindVertexArray(rawModel->id());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	ModelTexture* texture = model->getTexture();
-	shader->loadShineVariables(texture->getshineDampener(), texture->getreflectivity());
+	ModelTexture* texture = model->texture();
+	if (texture->hasTransparency())
+	{
+		MasterRenderer::disableCulling();
+	}
+	if (texture->useFakeLighting())
+	{
+		_shader->loadFakeLighting(true);
+	}
+	_shader->loadShineVariables(texture->shineDampener(), texture->reflectivity());
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, model->getTexture()->getId());
+	glBindTexture(GL_TEXTURE_2D, model->texture()->id());
 }
 
 void EntityRenderer::unbindTexturedModel()
 {
+	MasterRenderer::enableCulling();
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
@@ -72,11 +82,11 @@ void EntityRenderer::prepareInstance(Entity* entity)
 {
 	glm::mat4 *transformationMatrix = Maths::createTransformationMatrix
 		(
-		entity->getPosition(),
-		entity->getRX(),
-		entity->getRY(),
-		entity->getRZ(),
-		entity->getScale()
+		entity->position(),
+		entity->rx(),
+		entity->ry(),
+		entity->rz(),
+		entity->scale()
 		);
-	shader->loadTransformationMatrix(transformationMatrix);
+	_shader->loadTransformationMatrix(transformationMatrix);
 }

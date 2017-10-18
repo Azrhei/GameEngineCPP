@@ -17,8 +17,7 @@ extern DisplayManager* display;
 class EntityRenderer
 {
 private:
-	StaticShader * shader;
-
+	StaticShader * _shader;
 
 	void prepareTeturedModel(TexturedModel* model);
 	void prepareInstance(Entity* entity);

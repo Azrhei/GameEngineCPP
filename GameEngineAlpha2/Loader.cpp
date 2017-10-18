@@ -5,16 +5,16 @@ string Loader::default_texture_filename = "default";
 GLint Loader::default_texture = 0;
 
 Loader::Loader()
-: vaos(new vector<GLuint>), vbos(new vector<GLuint>), textures(new vector<GLuint>)
+: _vaos(new vector<GLuint>), _vbos(new vector<GLuint>), _textures(new vector<GLuint>)
 {
 }
 
 Loader::~Loader()
 {
 	cleanUp();
-	delete vaos;
-	delete vbos;
-	delete textures;
+	delete _vaos;
+	delete _vbos;
+	delete _textures;
 }
 
 RawModel* Loader::loadToVao
@@ -42,7 +42,7 @@ GLuint Loader::createVAO()
 {
 	GLuint i;
 	glGenVertexArrays(1, &i);
-	vaos->push_back(i);
+	_vaos->push_back(i);
 	glBindVertexArray(i);
 	return i;
 }
@@ -51,7 +51,7 @@ void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize,vect
 {
 	GLuint i;
 	glGenBuffers(1, &i);
-	vbos->push_back(i);
+	_vbos->push_back(i);
 	glBindBuffer(GL_ARRAY_BUFFER, i);
 	glBufferData(GL_ARRAY_BUFFER, data->size() * sizeof(GLfloat), &(*data)[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(attribNumber, coordinateSize, GL_FLOAT, false, 0, 0);
@@ -60,9 +60,9 @@ void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize,vect
 
 void Loader::cleanUp()
 {
-	glDeleteVertexArrays(vaos->size(), &(*vaos)[0]);
-	glDeleteBuffers(vbos->size(), &(*vbos)[0]);
-	glDeleteTextures(textures->size(), &(*textures)[0]);
+	glDeleteVertexArrays(_vaos->size(), &(*_vaos)[0]);
+	glDeleteBuffers(_vbos->size(), &(*_vbos)[0]);
+	glDeleteTextures(_textures->size(), &(*_textures)[0]);
 }
 
 void Loader::unbindVAO()
@@ -74,7 +74,7 @@ void Loader::bindIndicesVBO(vector<GLint>* indices)
 {
 	GLuint i;
 	glGenBuffers(1, &i);
-	vbos->push_back(i);
+	_vbos->push_back(i);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, i);
  	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size() * sizeof(GLuint), &(*indices)[0], GL_STATIC_DRAW);
 }
@@ -113,7 +113,7 @@ GLint Loader::loadTexture(string fileName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	textures->push_back(textureId);
+	_textures->push_back(textureId);
 
 	return textureId;
 }

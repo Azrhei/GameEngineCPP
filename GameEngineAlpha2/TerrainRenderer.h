@@ -10,7 +10,7 @@
 class TerrainRenderer
 {
 private:
-	TerrainShader* shader;
+	TerrainShader* _shader;
 public:
 	TerrainRenderer();
 	~TerrainRenderer();
@@ -19,5 +19,6 @@ public:
 	void unbindTexturedModel();
 	void loadModelMatrix(Terrain* terrain);
 	void render(vector<Terrain*>* terrains);
+	void bindTextures(Terrain* terrain);
 };
 

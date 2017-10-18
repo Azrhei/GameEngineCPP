@@ -8,6 +8,10 @@
 #include <string>
 
 #include <fstream>
+
+#include "Error.h"
+
 //#define DEBUG 1
 
+using namespace glm;
 using namespace std;

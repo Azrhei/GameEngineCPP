@@ -3,24 +3,24 @@
 #include <vector>
 
 ShaderProgram::ShaderProgram(const char* vertexFile, const char* fragmentFile)
-: vertexFileName(vertexFile), fragmentFileName(fragmentFile)
+: _vertexFileName(vertexFile), _fragmentFileName(fragmentFile)
 {
 	
 }
 
 void ShaderProgram::generateShaderProgram()
 {
-	vertexShaderID = loadShader(vertexFileName, GL_VERTEX_SHADER);
-	fragmentShaderID = loadShader(fragmentFileName, GL_FRAGMENT_SHADER);
-	programId = glCreateProgram();
-	glAttachShader(programId, vertexShaderID);
-	glAttachShader(programId, fragmentShaderID);
+	_vertexShaderID = loadShader(_vertexFileName, GL_VERTEX_SHADER);
+	_fragmentShaderID = loadShader(_fragmentFileName, GL_FRAGMENT_SHADER);
+	_programId = glCreateProgram();
+	glAttachShader(_programId, _vertexShaderID);
+	glAttachShader(_programId, _fragmentShaderID);
 }
 
 void ShaderProgram::buildShaderProgram()
 {
-	glLinkProgram(programId);
-	glValidateProgram(programId);
+	glLinkProgram(_programId);
+	glValidateProgram(_programId);
 }
 
 
@@ -56,7 +56,7 @@ GLuint ShaderProgram::loadShader(const char* file, GLuint type)
 
 void ShaderProgram::start()
 {
-	glUseProgram(programId);
+	glUseProgram(_programId);
 }
 
 void ShaderProgram::stop()
@@ -67,30 +67,30 @@ void ShaderProgram::stop()
 void ShaderProgram::cleanUp()
 {
 	stop();
-	glDetachShader(programId, vertexShaderID);
-	glDetachShader(programId, fragmentShaderID);
-	glDeleteShader(vertexShaderID);
-	glDeleteShader(fragmentShaderID);
-	glDeleteProgram(programId);
+	glDetachShader(_programId, _vertexShaderID);
+	glDetachShader(_programId, _fragmentShaderID);
+	glDeleteShader(_vertexShaderID);
+	glDeleteShader(_fragmentShaderID);
+	glDeleteProgram(_programId);
 }
 
 void ShaderProgram::bindAttribute(GLuint attribute, string variableName)
 {
-	glBindAttribLocation(programId, attribute, variableName.c_str());
+	glBindAttribLocation(_programId, attribute, variableName.c_str());
 }
 
 string ShaderProgram::readFile(const char *filePath) {
-	std::string content;
-	std::ifstream fileStream{ filePath, std::ios::in };
+	string content;
+	ifstream fileStream{ filePath, ios::in };
 	
 	if (!fileStream.is_open()) {
-		std::cerr << "Could not read file " << filePath << ". File does not exist." << std::endl;
+		wcerr << L"Could not read file " << filePath << L". File does not exist." << endl;
 		return "";
 	}
 
-	std::string line = "";
+	string line = "";
 	while (!fileStream.eof()) {
-		std::getline(fileStream, line);
+		getline(fileStream, line);
 		content.append(line + "\n");
 	}
 
@@ -100,7 +100,7 @@ string ShaderProgram::readFile(const char *filePath) {
 
 GLuint ShaderProgram::getUniformLocation(string uniformName)
 {
-	return glGetUniformLocation(programId, uniformName.c_str());
+	return glGetUniformLocation(_programId, uniformName.c_str());
 }
 
 void ShaderProgram::loadFloat(GLuint location, GLfloat value)
@@ -122,7 +122,18 @@ void ShaderProgram::loadVector(GLuint location, glm::vec3 value)
 	glUniform3f(location, value.x, value.y, value.z);
 }
 
+void ShaderProgram::loadVector(GLuint location, glm::vec3* value)
+{
+	glUniform3f(location, value->x, value->y, value->z);
+}
+
 void ShaderProgram::loadMatrix(GLuint location, glm::mat4* value)
 {
 	glUniformMatrix4fv(location, 1, GL_FALSE, &(*value)[0][0]);
+}
+
+void loadMatrix(GLuint location, glm::mat4 value)
+{
+	glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+
 }

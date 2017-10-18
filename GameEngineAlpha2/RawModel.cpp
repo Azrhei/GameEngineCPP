@@ -6,7 +6,7 @@ RawModel::RawModel()
 }
 
 RawModel::RawModel(GLuint vaoID, GLuint vertexCount)
-: vaoID(vaoID), vertexCount(vertexCount)
+: _vaoID(vaoID), _vertexCount(vertexCount)
 {
 }
 

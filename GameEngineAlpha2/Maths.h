@@ -11,14 +11,14 @@ public:
 	Maths()=delete;
 	~Maths();
 
-	static glm::mat4* createTransformationMatrix(
-		glm::fvec3 translation,
+	static mat4* createTransformationMatrix(
+		vec3 translation,
 		GLfloat rx,
 		GLfloat ry,
 		GLfloat rz,
 		GLfloat scale
 		);
 
-	static glm::mat4* createViewMatrix(ICamera* camera);
+	static mat4* createViewMatrix(ICamera* camera);
 };
 

@@ -6,11 +6,11 @@
 class ShaderProgram
 {
 private:
-	GLuint programId;
-	GLuint vertexShaderID;
-	GLuint fragmentShaderID;
-	const char* vertexFileName;
-	const char* fragmentFileName;
+	GLuint _programId;
+	GLuint _vertexShaderID;
+	GLuint _fragmentShaderID;
+	const char* _vertexFileName;
+	const char* _fragmentFileName;
 
 public:
 	ShaderProgram() = delete;
@@ -26,6 +26,10 @@ public:
 	virtual void loadViewMatrix(ICamera* camera) = 0;
 	virtual void loadLight(Light* light) = 0;
 	virtual void loadShineVariables(GLfloat damper, GLfloat reflectivity) = 0;
+	virtual void loadFakeLighting(bool useFake) = 0;
+	virtual void loadSkyColor(vec3* color) = 0;
+	virtual void loadSkyColor(GLfloat r, GLfloat g, GLfloat b) = 0;
+
 
 protected:
 	virtual void bindAttributes() = 0;
@@ -46,7 +50,9 @@ protected:
 	void loadFloat(GLuint location, GLfloat value);
 	void loadInt(GLuint location, GLint value);
 	void loadBool(GLuint location, GLboolean value);
-	void loadVector(GLuint location, glm::vec3 value);
-	void loadMatrix(GLuint location, glm::mat4* value);
+	void loadVector(GLuint location, vec3 value);
+	void loadVector(GLuint location, vec3* value);
+	void loadMatrix(GLuint location, mat4 value);
+	void loadMatrix(GLuint location, mat4* value);
 };
 

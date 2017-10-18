@@ -73,6 +73,39 @@ RawModel * OBJLoader::loadOBJ(
 	ivec3 vertex2;
 	ivec3 vertex3;
 
+	// Idea, read entire file, split by line heading,
+	// work each part on it's own thread (except f_line)
+	//vector<string> v_line;
+	//vector<string> vt_line;
+	//vector<string> vn_line;
+	//vector<string> f_line;
+
+	//auto startTime = time;
+	//while (getline(in, line))
+	//{
+	//	//check v for vertices	
+	//	if (line.substr(0, 2) == "v ")
+	//	{
+	//		v_line.emplace_back( line.substr(2) );
+	//	}
+	//	//check for texture co-ordinate
+	//	if (line.substr(0, 2) == "vt")
+	//	{
+	//		vt_line.emplace_back(line.substr(2));
+	//	}
+	//	//check for texture normals
+	//	if (line.substr(0, 2) == "vn")
+	//	{
+	//		vn_line.emplace_back(line.substr(2));
+	//	}
+	//	//check for faces
+	//	if (line.substr(0, 2) == "f ")
+	//	{
+	//		f_line.emplace_back(line.substr(2));
+	//	}
+	//}
+	//in.close();
+
 	while (getline(in, line))
 	{
 		//check v for vertices	

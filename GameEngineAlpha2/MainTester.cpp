@@ -1,4 +1,6 @@
+#define DEBUG
 
+#include "Player.h"
 #include "SharedIncludes.h"
 #include "DisplayManager.h"
 #include "MasterRenderer.h"
@@ -17,6 +19,7 @@
 DisplayManager * display;
 Loader* loader;
 ICamera* camera;
+#define DEBUG 
 
 int main(int argc, char ** argv, char ** argenv)
 {
@@ -26,11 +29,11 @@ int main(int argc, char ** argv, char ** argenv)
 	wcout << L"Creating Display" << endl;
 	display = new DisplayManager;
 
-	if (!display->doesExist())
+	if (!display->exists())
 	{
 		wcerr << L"Could not start Display" << endl;
 		glfwTerminate();
-		return -1;
+		exit(EXIT_CODES::WINDOW_FAILED_TO_OPEN);
 	}
 
 	wcout << L"Showing Display" << endl;
@@ -39,30 +42,30 @@ int main(int argc, char ** argv, char ** argenv)
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 		wcerr << L"Could not start GLEW" << endl;
-		return -1;
+		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
 
 	loader = { new Loader() };
 	camera = { new Camera() };
 	
-	Entity* entity = new Entity
-	{
-		new TexturedModel
-		{
-			OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
-			new ModelTexture
-			{
-				loader->loadTexture("white")
-			}// RawModel::texture
-		},						// RawModel(model,texture)   
-			glm::vec3{ 0, 0, -1 },		// Entity::Position 
-			0,							// Entity::x rotation	
-			0,							// Entity::y rotation
-			0,							// Entity::z rotation
-			1							// Entity::scale
-	};
-	entity->getModel()->getTexture()->setShineDampener(10);
-	entity->getModel()->getTexture()->setReflectivity(1);
+	//Entity* entity = new Entity
+	//{
+	//	new TexturedModel
+	//	{
+	//		OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
+	//		new ModelTexture
+	//		{
+	//			loader->loadTexture("grass")
+	//		}// RawModel::texture
+	//	},						// RawModel(model,texture)   
+	//		vec3{ 0, 0, -1 },		// Entity::Position 
+	//		0,							// Entity::x rotation	
+	//		0,							// Entity::y rotation
+	//		0,							// Entity::z rotation
+	//		1							// Entity::scale
+	//};
+	//entity->model()->texture()->shineDampener(10);
+	//entity->model()->texture()->reflectivity(1);
 
 	Light* light = new Light
 	{
@@ -71,43 +74,50 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
-#define LO 0.0f
-#define HI 180.0f
-
-	glfwSetKeyCallback(display->getWindow(), keyEvent_CallBack);
+	glfwSetKeyCallback(display->window(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << endl;
 
 	MasterRenderer* renderer = new MasterRenderer;
 
-	//IGame* game = new IGame
-	//{
-	//	new ILocalPlayer,
-	//	new MasterRenderer,
-	//	new StaticShader,
-	//	camera
-	//};
-
 	ModelTexture* mt = new ModelTexture{ loader->loadTexture("grass") };
-	Terrain* t1 = new Terrain{ 0, 0, loader, mt };
-	Terrain* t2 = new Terrain{ 0, 1, loader, mt };
-	Terrain* t3 = new Terrain{ 1, 0, loader, mt };
-	Terrain* t4 = new Terrain{ 1, 1, loader, mt };
+	TerrainTexture* backgroundTexture = new TerrainTexture( loader->loadTexture("grassy") );
+	TerrainTexture* rTexture = new TerrainTexture( loader->loadTexture("dirt") );
+	TerrainTexture* gTexture = new TerrainTexture( loader->loadTexture("pinkFlowers") );
+	TerrainTexture* bTexture = new TerrainTexture( loader->loadTexture("path") );
+	TerrainTexture* blendMap = new TerrainTexture( loader->loadTexture("blendMap") );
+	TerrainTexturePack* tp = new TerrainTexturePack( backgroundTexture, rTexture, gTexture, bTexture );
+	
+	Terrain* t1 = new Terrain{ 0, -1, loader, tp, blendMap };
+	//Terrain* t2 = new Terrain{ -1, -1, loader, tp, blendMap };
+	//Terrain* t3 = new Terrain{ 0, 1, loader, tp, blendMap };
+	//Terrain* t4 = new Terrain{ 1, 1, loader, tp, blendMap };
+	
+	Player* p1 = new Player{ new TexturedModel
+	{
+		OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
+		new ModelTexture
+		{
+			loader->loadTexture("grass")
+		}// RawModel::texture
+	}, { 0, 0, 0 }, 0, 0, 0, 1 };
+
 
 	while (!display->shouldClose())
 	{
 		/* Poll for and process events */
 		glfwPollEvents();
 		handleKeyEvents();
-		camera->move();
 
+		//camera->move();
+		p1->move();
 		
-		renderer->processEntity(entity);
+		renderer->processEntity(p1);
 		
 		renderer->processTerrain(t1);
-		renderer->processTerrain(t2);
-		renderer->processTerrain(t3);
-		renderer->processTerrain(t4);
+		//renderer->processTerrain(t2);
+		//renderer->processTerrain(t3);
+		//renderer->processTerrain(t4);
 
 		renderer->render(light,camera);
 

@@ -1,36 +1,51 @@
 #pragma once
 #include "SharedIncludes.h"
+#include <ctime>
 
 class DisplayManager
 {
 private:
-	GLint WIDTH;
-	GLint HEIGHT;
-	GLint FPR_LIMIT = 60;
+	GLint _WIDTH;
+	GLint _HEIGHT;
+	GLint _FPS_LIMIT = 60;
 	GLFWwindow* _window;
-	
-	bool Shown;
-	bool ShouldClose;
+	long _lastFrameTime;
+	float _delta;
+	bool _shown;
+	bool _shouldClose; 
+
+protected:
+	void height(GLint val) { _HEIGHT = val; }
+	void width(GLint val){ _WIDTH = val; }
+	void exists(GLint) = delete;
+	void shown(bool val) { _shown = val; }
+	void delta(GLfloat val) { _delta = val; }
+	void shouldClose(bool) = delete;
 
 public:
+	//Constructors
 	DisplayManager();
+
+	//Destructors
 	~DisplayManager();
-	GLFWwindow * getWindow() { return _window; }
+
+	// Getters
+	GLFWwindow * window() { return _window; }
+	GLint height() { return _WIDTH; }
+	GLint width() { return _HEIGHT; }
+	bool exists(){ return (_window == nullptr) ? false : true; }
+	bool shown() { return _shown; }	
+	float delta()	{ return _delta; }
+	GLboolean shouldClose() { return glfwWindowShouldClose(_window); }
 	
-	void showDisplay();
-	void updateDisplay();
-	
+	// Member Functions
 	void hideDisplay();
 	void createDisplay();
 	void closeDisplay();
+	void showDisplay();
+	void updateDisplay();
 	
-	GLint getHeight() { return WIDTH; }
-	GLint getWidth() { return HEIGHT; }
-
-	bool doesExist(){ return (_window == nullptr) ? false : true; }
-	bool isShown() { return Shown; }
 	
-	GLboolean shouldClose() { return glfwWindowShouldClose(_window); }
-	
+	//event handler
 	static void framebufferResize_callBack(GLFWwindow* window, int width, int height);
 };

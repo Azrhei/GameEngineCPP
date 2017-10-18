@@ -1,5 +1,12 @@
+#pragma once
+
 enum EXIT_CODES
 {
-	DEFAULT_FILE_MISSING = -1
+	NO_GL_CONTEXT =				-1,
+	WINDOW_FAILED_TO_OPEN =		-2,
+	DEFAULT_FILE_MISSING =		-3,
+	GLEW_INIT_FAILED =			-4,
+	GLFW_INIT_FAILED =			-5
+
 
 } ;

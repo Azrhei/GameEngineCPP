@@ -29,10 +29,9 @@ void StaticShader::load()
 
 void StaticShader::bindAttributes()
 {
-	wcout << L"Calling correct bindAttributes() method" << endl;
 	bindAttribute(0, "position");
 	bindAttribute(1, "textureCoords");
-	bindAttribute(2, "normals");
+	bindAttribute(2, "normal");
 }
 
 //GLuint StaticShader::getUniformLocation(string name)
@@ -40,9 +39,13 @@ void StaticShader::bindAttributes()
 //	return locations[name];
 //}
 
+void StaticShader::loadFakeLighting(bool useFake)
+{
+	loadBool(location_useFakeLighting, useFake);
+}
+
 void StaticShader::getAllUniformLocations()
 {
-	wcout << L"Calling correct getAllUniformLocations" << endl;
 	location_transformationMatrix = getUniformLocation("transformationMatrix");
 	location_projectionMatrix = getUniformLocation("projectionMatrix");
 	location_viewMatrix = getUniformLocation("viewMatrix");
@@ -51,43 +54,45 @@ void StaticShader::getAllUniformLocations()
 	location_lightIntensity = getUniformLocation("lightIntensity");
 	location_shineDamper = getUniformLocation("shineDamper");
 	location_reflectivity = getUniformLocation("reflectivity");
-	//locations["transformationMatrix"] = this->getUniformLocation("transformationMatrix");
-	//locations["projectionMatrix"] = this->getUniformLocation("projectionMatrix");
-	//locations["viewMatrix"] = this->getUniformLocation("viewMatrix");
-	//locations["lightPosition"] = this->getUniformLocation("lightPosition");
-	//locations["lightColor"] = this->getUniformLocation("lightColor");
-	//locations["lightIntensity"] = this->getUniformLocation("lightIntensity");
-	//locations["shineDamper"] = this->getUniformLocation("shineDamper");
-	//locations["reflectivity"] = this->getUniformLocation("reflectivity");
-
-
+	location_useFakeLighting = getUniformLocation("useFakeLighting");
+	location_skyColor = getUniformLocation("skyColor");
 }
 
-void StaticShader::loadProjectionMatrix(glm::mat4* projection)
+void StaticShader::loadSkyColor(vec3* color)
+{
+	loadVector(location_skyColor, color);
+}
+
+void StaticShader::loadSkyColor(GLfloat r, GLfloat g, GLfloat b)
+{
+	loadVector(location_skyColor, vec3{ r, g, b });
+}
+
+void StaticShader::loadProjectionMatrix(mat4* projection)
 {
 	//this->loadMatrix(locations["projectionMatrix"], projection);
-	this->loadMatrix(location_projectionMatrix, projection);
+	loadMatrix(location_projectionMatrix, projection);
 }
 
-void StaticShader::loadTransformationMatrix(glm::mat4* matrix)
+void StaticShader::loadTransformationMatrix(mat4* matrix)
 {
-	this->loadMatrix(location_transformationMatrix, matrix);
+	loadMatrix(location_transformationMatrix, matrix);
 }
 
 void StaticShader::loadViewMatrix(ICamera* camera)
 {
-	this->loadMatrix(location_viewMatrix, Maths::createViewMatrix(camera));
+	loadMatrix(location_viewMatrix, Maths::createViewMatrix(camera));
 }
 
 void StaticShader::loadLight(Light* light)
 {
-	this->loadVector(location_lightPosition, light->getPosition());
-	this->loadVector(location_lightColor, light->getColor());
-	this->loadFloat(location_lightIntensity, light->getIntensity());
+	loadVector(location_lightPosition, light->position());
+	loadVector(location_lightColor, light->color());
+	loadFloat(location_lightIntensity, light->intensity());
 }
 
 void StaticShader::loadShineVariables(GLfloat damper, GLfloat reflectivity)
 {
-	this->loadFloat(location_shineDamper, damper);
-	this->loadFloat(location_reflectivity, reflectivity);
+	loadFloat(location_shineDamper, damper);
+	loadFloat(location_reflectivity, reflectivity);
 }

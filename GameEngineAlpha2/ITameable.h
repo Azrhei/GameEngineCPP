@@ -7,12 +7,12 @@ private:
 protected:
 	void tame() { _tamed = true; }
 	void untame() { _tamed = false; }
-	void setTamed(bool t) { _tamed = t; }
+	void tamed(bool t) { _tamed = t; }
 
 public:
 	ITameable();
 	~ITameable();
-	bool isTamed() { return _tamed; }
+	bool tamed() { return _tamed; }
 
 };
 

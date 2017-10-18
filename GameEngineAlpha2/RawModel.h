@@ -4,16 +4,19 @@
 class RawModel
 {
 private:
-	GLuint vaoID;
-	GLuint vertexCount;
+	GLuint _vaoID;
+	GLuint _vertexCount;
+protected:
+	void id(GLuint) = delete;
+	void vertexCount(GLuint) = delete;
 
 public:
 	RawModel();
 	RawModel(GLuint vaoID, GLuint vertexCount);
 	~RawModel();
 
-	 GLuint getID() { return vaoID; }  ; 
-	 GLuint getVertexCount() { return vertexCount; }  ;
+	 GLuint id() { return _vaoID; }  ; 
+	 GLuint vertexCount() { return _vertexCount; }  ;
 
 };
 

@@ -121,6 +121,8 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TerrainRenderer.cpp" />
     <ClCompile Include="TerrainShader.cpp" />
+    <ClCompile Include="TerrainTexture.cpp" />
+    <ClCompile Include="TerrainTexturePack.cpp" />
     <ClCompile Include="TexturedModel.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,10 +169,9 @@
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TerrainRenderer.h" />
     <ClInclude Include="TerrainShader.h" />
+    <ClInclude Include="TerrainTexture.h" />
+    <ClInclude Include="TerrainTexturePack.h" />
     <ClInclude Include="TexturedModel.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="res\default.obj" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\default.png" />

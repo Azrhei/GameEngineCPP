@@ -10,35 +10,49 @@ Terrain::~Terrain()
 {
 }
 
-Terrain::Terrain(GLint gridX, GLint gridZ, Loader* loader, ModelTexture* tex){
-	texture = tex;
-	x = gridX * SIZE;
-	z = gridZ * SIZE;
-	model = generateTerrain(loader);
+Terrain::Terrain
+(
+GLint gridX, 
+GLint gridZ, 
+Loader* loader, 
+TerrainTexturePack* texturePack,
+TerrainTexture* blendMap
+)
+:
+_texturePack(texturePack),
+_blendMap(blendMap)
+{
+	_x = static_cast<GLfloat>(gridX) * SIZE;
+	_z = static_cast<GLfloat>(gridZ) * SIZE;
+	_model = generateTerrain(loader);
 }
 
 
 
-GLfloat Terrain::getX() {
-	return x;
+GLfloat Terrain::x() {
+	return _x;
 }
 
 
 
-GLfloat Terrain::getZ() {
-	return z;
+GLfloat Terrain::z() {
+	return _z;
 }
 
 
 
-RawModel* Terrain::getModel() {
-	return model;
+RawModel* Terrain::model() {
+	return _model;
 }
 
+TerrainTexturePack * Terrain::texturePack()
+{
+	return _texturePack;
+}
 
-
-ModelTexture* Terrain::getTexture() {
-	return texture;
+TerrainTexture * Terrain::blendMap()
+{
+	return _blendMap;
 }
 
 RawModel* Terrain::generateTerrain(Loader* loader){
@@ -57,14 +71,14 @@ RawModel* Terrain::generateTerrain(Loader* loader){
 	GLuint vertexPointer = 0;
 	for (GLuint i = 0; i<VERTEX_COUNT; i++){
 		for (GLuint j = 0; j<VERTEX_COUNT; j++){
-			(*vertices)[vertexPointer * 3] = (GLfloat)j / ((GLfloat)VERTEX_COUNT - 1) * SIZE;
+			(*vertices)[vertexPointer * 3] = static_cast<GLfloat>(j) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
 			(*vertices)[vertexPointer * 3 + 1] = 0;
-			(*vertices)[vertexPointer * 3 + 2] = (GLfloat)i / ((GLfloat)VERTEX_COUNT - 1) * SIZE;
+			(*vertices)[vertexPointer * 3 + 2] = static_cast<GLfloat>(i) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
 			(*normals)[vertexPointer * 3] = 0;
 			(*normals)[vertexPointer * 3 + 1] = 1;
 			(*normals)[vertexPointer * 3 + 2] = 0;
-			(*textureCoords)[vertexPointer * 2] = (GLfloat)j / ((GLfloat)VERTEX_COUNT - 1);
-			(*textureCoords)[vertexPointer * 2 + 1] = (GLfloat)i / ((GLfloat)VERTEX_COUNT - 1);
+			(*textureCoords)[vertexPointer * 2] = static_cast<GLfloat>(j) / static_cast<GLfloat>(VERTEX_COUNT - 1);
+			(*textureCoords)[vertexPointer * 2 + 1] = static_cast<GLfloat>(i) / static_cast<GLfloat>(VERTEX_COUNT - 1);
 			vertexPointer++;
 		}
 	}

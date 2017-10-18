@@ -13,28 +13,28 @@
 class IGame
 {
 private:
-	ILocalPlayer* player;
-	MasterRenderer* renderer;
-	StaticShader* shader;
-	ICamera* camera;
+	ILocalPlayer* _player;
+	MasterRenderer* _renderer;
+	StaticShader* _shader;
+	ICamera* _camera;
 	
-	Loader* loader;
+	Loader* _loader;
 	// loader = extern loader?
-	DisplayManager* display;
-	GLFWwindow* window;
-	vector<ILocalPlayer *> *local_players;
-	vector<IRemotePlayer *> *remote_players;
-	vector<MasterRenderer *> *renderers;
-	vector<StaticShader *> *shaders;
-	vector<ICamera *> *cameras;
+	DisplayManager* _display;
+	GLFWwindow* _window;
+	vector<ILocalPlayer *> *_local_players;
+	vector<IRemotePlayer *> *_remote_players;
+	vector<MasterRenderer *> *_renderers;
+	vector<StaticShader *> *_shaders;
+	vector<ICamera *> *_cameras;
 
 
 public:
-	void addPlayerLocal(ILocalPlayer *player) { local_players->push_back(player); }
-	void addPlayerRemote(IRemotePlayer *player) { remote_players->push_back(player); }
-	void addRenderer(MasterRenderer * renderer) { renderers->push_back(renderer); }
-	void addShader(StaticShader * shader) { shaders->push_back(shader); }
-	void addCamera(ICamera * camera) { cameras->push_back(camera); }
+	void addPlayerLocal(ILocalPlayer *player) { _local_players->push_back(player); }
+	void addPlayerRemote(IRemotePlayer *player) { _remote_players->push_back(player); }
+	void addRenderer(MasterRenderer * renderer) { _renderers->push_back(renderer); }
+	void addShader(StaticShader * shader) { _shaders->push_back(shader); }
+	void addCamera(ICamera * camera) { _cameras->push_back(camera); }
 
 	IGame();
 	IGame(ILocalPlayer* player, MasterRenderer* renderer, StaticShader* shader, ICamera* camera);

@@ -1,69 +1,78 @@
 #include "MasterRenderer.h"
 
 MasterRenderer::MasterRenderer()
-: shader(new StaticShader), terrain_shader(new TerrainShader)
+: _entity_shader(new StaticShader), _terrain_shader(new TerrainShader)
 {
-	this->entities = new map<TexturedModel*, vector<Entity*>>;
-	glEnable(GL_CULL_FACE);
+	_entities = new map<TexturedModel*, vector<Entity*>>;
+	enableCulling();
 	glCullFace(GL_BACK);
 
 	createProjectionMatrix();
-	terrains = new vector<Terrain*>();
-	entity_renderer = new EntityRenderer{ shader, projectionMatrix };
-	terrain_renderer = new TerrainRenderer{ terrain_shader, projectionMatrix };
+	_terrains = new vector<Terrain*>();
+	_entity_renderer = new EntityRenderer{ _entity_shader, projectionMatrix };
+	_terrain_renderer = new TerrainRenderer{ _terrain_shader, projectionMatrix };
 }
 
+void MasterRenderer::enableCulling()
+{
+	glEnable(GL_CULL_FACE);
+}
+
+void MasterRenderer::disableCulling()
+{
+	glDisable(GL_CULL_FACE);
+}
 
 MasterRenderer::~MasterRenderer()
 {
-	delete entity_renderer;
-	delete terrain_renderer;
-	entities->clear();
-	delete entities;
-	terrains->clear();
-	delete terrains;
+	delete _entity_renderer;
+	delete _terrain_renderer;
+	_entities->clear();
+	delete _entities;
+	_terrains->clear();
+	delete _terrains;
 }
 
 void MasterRenderer::processTerrain(Terrain* terrain)
 {
-	terrains->push_back(terrain);
+	_terrains->push_back(terrain);
 }
 
 void MasterRenderer::render(Light* sun, ICamera* cam)
 {
 	assert(cam != NULL);
 	assert(sun != NULL);
-	assert(this->shader != NULL);
-	assert(this->entity_renderer != NULL);
-	assert(entities);
-	assert(terrains);
+	assert(_entity_shader != NULL);
+	assert(_entity_renderer != NULL);
+	assert(_entities);
+	assert(_terrains);
 
 	prepare();
 
-	if ( !(terrains->empty()) )
+	if ( !(_terrains->empty()) )
 	{
-		terrain_shader->start();
+		_terrain_shader->start();
+		_terrain_shader->loadSkyColor(RED, GREEN, BLUE);
+		_terrain_shader->loadLight(sun);
+		_terrain_shader->loadViewMatrix(cam);
 
-		terrain_shader->loadLight(sun);
-		terrain_shader->loadViewMatrix(cam);
+		_terrain_renderer->render(_terrains);
 
-		terrain_renderer->render(terrains);
-
-		terrain_shader->stop();
-		terrains->clear();
+		_terrain_shader->stop();
+		_terrains->clear();
 	}
 
-	if ( !(entities->empty()) )
+	if ( !(_entities->empty()) )
 	{
-		shader->start();
+		_entity_shader->start();
+		_entity_shader->loadSkyColor(RED, GREEN, BLUE);
+		_entity_shader->loadLight(sun);
+		_entity_shader->loadViewMatrix(cam);
 
-		shader->loadLight(sun);
-		shader->loadViewMatrix(cam);
+		_entity_renderer->render(_entities);
 
-		entity_renderer->render(entities);
-
-		shader->stop();
-		entities->clear();
+		_entity_shader->stop();
+		_entities->clear();
 	}
 
 
@@ -93,16 +102,16 @@ void MasterRenderer::processEntity(Entity* entity)
 	if using point to vector then we also need to make certain to allocate the vector when creating the vector
 	*/
 	
-	TexturedModel* model = entity->getModel();
-	if (entities->empty())
+	TexturedModel* model = entity->model();
+	if (_entities->empty())
 	{
 		vector<Entity*>* t = new vector<Entity*>();
 		t->push_back(entity);
-		entities->insert(make_pair(model, *t));
+		_entities->insert(make_pair(model, *t));
 	}
 	else{
-		auto it = entities->find(model);
-		if (it != entities->end())
+		auto it = _entities->find(model);
+		if (it != _entities->end())
 		{
 			(it->second).push_back(entity);
 		}
@@ -110,7 +119,7 @@ void MasterRenderer::processEntity(Entity* entity)
 		{
 			vector<Entity*>* t = new vector<Entity*>();
 			t->push_back(entity);
-			entities->insert(make_pair(model, *t));
+			_entities->insert(make_pair(model, *t));
 		}
 	}
 }
@@ -119,7 +128,7 @@ glm::mat4* MasterRenderer::createProjectionMatrix()
 {
 	//glm can do this for us, see glm::frustrum
 	// Generate a Frustum matrix for converting from orthogonal space
-	GLfloat aspectRatio = (GLfloat)::display->getWidth() / (GLfloat)::display->getHeight();
+	GLfloat aspectRatio = (GLfloat)::display->width() / (GLfloat)::display->height();
 	GLfloat y_scale = (1.0f / glm::tan(glm::radians(FOV / 2.0f))) * aspectRatio;
 	GLfloat x_scale = y_scale / aspectRatio;
 	GLfloat frustrum_length = F_Plane - N_Plane;
@@ -146,5 +155,5 @@ void MasterRenderer::prepare()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Clear screen and set color before drawing frame
-	glClearColor(0.49f, .89f, 0.98f, 1);
+	glClearColor(RED, GREEN, BLUE, 1);
 }

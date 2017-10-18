@@ -13,31 +13,37 @@
 class MasterRenderer
 {
 private:
-	GLfloat FOV = 60;
-	GLfloat N_Plane = 0.1f;
-	GLfloat F_Plane = 300;
+	const GLfloat FOV = 60;
+	const GLfloat N_Plane = 0.1f;
+	const GLfloat F_Plane = 300;
+	const GLfloat RED = 0.5f;
+	const GLfloat GREEN = 0.5f;
+	const GLfloat BLUE = 0.5f;
 
-	StaticShader* shader;
-	TerrainShader* terrain_shader;
+	StaticShader* _entity_shader;
+	TerrainShader* _terrain_shader;
 
-	EntityRenderer* entity_renderer;
-	TerrainRenderer* terrain_renderer;
+	EntityRenderer* _entity_renderer;
+	TerrainRenderer* _terrain_renderer;
 
-	map<TexturedModel*, vector<Entity*>>* entities;
-	vector<Terrain*>* terrains;
+	map<TexturedModel*, vector<Entity*>>* _entities;
+	vector<Terrain*>* _terrains;
 
-	glm::mat4* projectionMatrix;
+	mat4* projectionMatrix;
 	void prepare();
 
 protected:
-	glm::mat4* createProjectionMatrix();
+	mat4* createProjectionMatrix();
 
 public:
 	MasterRenderer();
 	//MasterRenderer(StaticShader * shader);
 	~MasterRenderer();
+	static void enableCulling();
+	static void disableCulling();
+
 	void processTerrain(Terrain* terrain);
-	void cleanUp() { shader->cleanUp(); }
+	void cleanUp() { _entity_shader->cleanUp(); }
 	void processEntity(Entity* entity);
 
 	void render(Light* sun, ICamera* camera);

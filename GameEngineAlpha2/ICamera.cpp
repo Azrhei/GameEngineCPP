@@ -2,7 +2,7 @@
 
 
 ICamera::ICamera()
-: position({ 0, 0, 0 }), pitch(0), yaw(0), roll(0)
+: _position({ 0, 0, 0 }), _pitch(0), _yaw(0), _roll(0)
 {
 }
 

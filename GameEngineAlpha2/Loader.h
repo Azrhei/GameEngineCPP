@@ -11,9 +11,9 @@ using namespace std;
 class Loader
 {
 private:
-	vector<GLuint>* vaos;
-	vector<GLuint>* vbos;
-	vector<GLuint>* textures;
+	vector<GLuint>* _vaos;
+	vector<GLuint>* _vbos;
+	vector<GLuint>* _textures;
 	static GLint default_texture;
 	static string default_texture_filename;
 	GLint getDefaultTexture();
