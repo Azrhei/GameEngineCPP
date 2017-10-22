@@ -26,16 +26,16 @@ void TerrainRenderer::render(vector<Terrain*>* terrains)
 	{
 		prepareTerrain(terrain);
 		loadModelMatrix(terrain);
-		glDrawElements(GL_TRIANGLES, terrain->model()->vertexCount(), GL_UNSIGNED_INT, 0);
-		unbindTexturedModel();
+		glDrawElements(GL_TRIANGLES, terrain->mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
+		unbindModel();
 		
 	}
 }
 
 void TerrainRenderer::prepareTerrain(Terrain* terrain) 
 {
-	RawModel* rawModel = terrain->model();
-	glBindVertexArray(rawModel->id());
+	ModelMesh* ModelMesh = terrain->mesh();
+	glBindVertexArray(ModelMesh->id());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2); 
@@ -60,7 +60,7 @@ void TerrainRenderer::bindTextures(Terrain* terrain)
 	glBindTexture(GL_TEXTURE_2D, terrain->blendMap()->textureId());
 }
 
-void TerrainRenderer::unbindTexturedModel() 
+void TerrainRenderer::unbindModel() 
 {
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

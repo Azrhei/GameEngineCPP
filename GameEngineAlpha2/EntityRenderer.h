@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "SharedIncludes.h"
-#include "RawModel.h"
-#include "TexturedModel.h"
+#include "ModelMesh.h"
+#include "Model.h"
 
 #include "Entity.h"
 #include "StaticShader.h"
@@ -19,15 +19,15 @@ class EntityRenderer
 private:
 	StaticShader * _shader;
 
-	void prepareTeturedModel(TexturedModel* model);
+	void prepareTeturedModel(Model* model);
 	void prepareInstance(Entity* entity);
-	void unbindTexturedModel();
+	void unbindModel();
 public:
 	EntityRenderer();
 	EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix);
 	~EntityRenderer();
 
-	void render(map<TexturedModel*, vector<Entity*>>* entities);
+	void render(map<Model*, vector<Entity*>>* entities);
 
 
 };

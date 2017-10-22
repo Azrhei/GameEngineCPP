@@ -23,7 +23,7 @@ protected:
 
 public:
 	EntityLiving();
-	EntityLiving(TexturedModel* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale)
+	EntityLiving(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale)
 		: Entity(model, position, rx, ry, rz, scale) {}
 	~EntityLiving();
 };

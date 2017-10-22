@@ -22,7 +22,6 @@
     <None Include="vertexShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ReleaseNotes.css" />
     <None Include="terrainVertexShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
@@ -32,6 +31,7 @@
     <None Include="res\default.mtl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ReleaseNotes.css" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainTester.cpp">
@@ -40,16 +40,10 @@
     <ClCompile Include="DisplayManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RawModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModelTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TexturedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Maths.cpp">
@@ -166,15 +160,21 @@
     <ClCompile Include="TerrainTexturePack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ModelMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SharedIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DisplayManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RawModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Loader.h">
@@ -187,9 +187,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModelTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TexturedModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Maths.h">
@@ -304,6 +301,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TerrainTexturePack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

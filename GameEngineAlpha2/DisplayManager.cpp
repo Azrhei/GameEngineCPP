@@ -2,14 +2,11 @@
 
 DisplayManager::DisplayManager() 
 {
-	wcout << L"Creating display in constructor" << endl;
-
 	createDisplay();
 }
 
 DisplayManager::~DisplayManager()
 {
-	wcout << L"Destroying display in destructor" << endl;
 	closeDisplay();
 }
 

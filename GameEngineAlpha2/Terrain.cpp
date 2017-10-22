@@ -24,38 +24,10 @@ _blendMap(blendMap)
 {
 	_x = static_cast<GLfloat>(gridX) * SIZE;
 	_z = static_cast<GLfloat>(gridZ) * SIZE;
-	_model = generateTerrain(loader);
+	_mesh = generateTerrain(loader);
 }
 
-
-
-GLfloat Terrain::x() {
-	return _x;
-}
-
-
-
-GLfloat Terrain::z() {
-	return _z;
-}
-
-
-
-RawModel* Terrain::model() {
-	return _model;
-}
-
-TerrainTexturePack * Terrain::texturePack()
-{
-	return _texturePack;
-}
-
-TerrainTexture * Terrain::blendMap()
-{
-	return _blendMap;
-}
-
-RawModel* Terrain::generateTerrain(Loader* loader){
+ModelMesh* Terrain::generateTerrain(Loader* loader){
 	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
 
 	vector<GLfloat>* vertices = new vector<GLfloat>{};
@@ -69,8 +41,8 @@ RawModel* Terrain::generateTerrain(Loader* loader){
 	indices->resize(6 * (VERTEX_COUNT - 1)*(VERTEX_COUNT - 1));
 	
 	GLuint vertexPointer = 0;
-	for (GLuint i = 0; i<VERTEX_COUNT; i++){
-		for (GLuint j = 0; j<VERTEX_COUNT; j++){
+	for (int i = 0; i<VERTEX_COUNT; i++){
+		for (int j = 0; j<VERTEX_COUNT; j++){
 			(*vertices)[vertexPointer * 3] = static_cast<GLfloat>(j) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
 			(*vertices)[vertexPointer * 3 + 1] = 0;
 			(*vertices)[vertexPointer * 3 + 2] = static_cast<GLfloat>(i) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);

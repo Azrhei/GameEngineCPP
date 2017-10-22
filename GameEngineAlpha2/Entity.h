@@ -1,11 +1,11 @@
 #pragma once
 #include "SharedIncludes.h"
-#include "TexturedModel.h"
+#include "Model.h"
 
 class Entity
 {
 private:
-	TexturedModel* _model;
+	Model* _model;
 	vec3 _position;
 	GLfloat _rx;
 	GLfloat _ry;
@@ -13,7 +13,7 @@ private:
 	GLfloat _scale;
 
 protected:
-	void model(TexturedModel *model) { _model = model; }
+	void model(Model *model) { _model = model; }
 	void position(vec3 val){ _position = val; }
 	void rx(GLfloat val){ _rx = val; }
 	void ry(GLfloat val){ _ry = val; }
@@ -23,11 +23,11 @@ protected:
 
 public:
 	Entity();
-	Entity(TexturedModel* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale );
+	Entity(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
 	~Entity();
 
 	// Getters
-	TexturedModel* model() { return _model; }
+	Model* model() { return _model; }
 	vec3 position() { return _position; }
 	GLfloat scale() { return _scale; }
 	GLfloat rx() { return _rx; }

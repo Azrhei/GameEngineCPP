@@ -1,6 +1,6 @@
 #pragma once
 #include "SharedIncludes.h"
-#include "RawModel.h"
+#include "ModelMesh.h"
 #include <glm\glm.hpp>
 #include <vector>
 #include <fstream>
@@ -12,14 +12,14 @@ class OBJLoader
 {
 private:
 	static string default_model_filename;
-	static RawModel * default_model;
-	static RawModel * getDefaultModel(Loader *loader);
+	static ModelMesh * default_model;
+	static ModelMesh * getDefaultModel(Loader *loader);
 
 public:
 	OBJLoader();
 	~OBJLoader();
 
-	static RawModel * loadOBJ
+	static ModelMesh * loadOBJ
 		(
 		string path,
 		Loader * loader

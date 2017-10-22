@@ -24,7 +24,7 @@ EntityRenderer::~EntityRenderer()
 }
 
 
-void EntityRenderer::render(map<TexturedModel*, vector<Entity*>> *e)
+void EntityRenderer::render(map<Model*, vector<Entity*>> *e)
 {
 	assert(e != NULL);
 
@@ -38,18 +38,18 @@ void EntityRenderer::render(map<TexturedModel*, vector<Entity*>> *e)
 			for (Entity* entity : batch)
 			{
 				prepareInstance(entity);
-				glDrawElements(GL_TRIANGLES, entity->model()->rawModel()->vertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, entity->model()->mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
 			}
-			unbindTexturedModel();
+			unbindModel();
 		}
 	}
 }
 
-void EntityRenderer::prepareTeturedModel(TexturedModel* model)
+void EntityRenderer::prepareTeturedModel(Model* model)
 {
-	RawModel* rawModel = model->rawModel();
+	ModelMesh* ModelMesh = model->mesh();
 
-	glBindVertexArray(rawModel->id());
+	glBindVertexArray(ModelMesh->id());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
@@ -69,7 +69,7 @@ void EntityRenderer::prepareTeturedModel(TexturedModel* model)
 	glBindTexture(GL_TEXTURE_2D, model->texture()->id());
 }
 
-void EntityRenderer::unbindTexturedModel()
+void EntityRenderer::unbindModel()
 {
 	MasterRenderer::enableCulling();
 	glDisableVertexAttribArray(0);

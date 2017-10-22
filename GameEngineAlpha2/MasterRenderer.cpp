@@ -3,7 +3,7 @@
 MasterRenderer::MasterRenderer()
 : _entity_shader(new StaticShader), _terrain_shader(new TerrainShader)
 {
-	_entities = new map<TexturedModel*, vector<Entity*>>;
+	_entities = new map<Model*, vector<Entity*>>;
 	enableCulling();
 	glCullFace(GL_BACK);
 
@@ -102,7 +102,7 @@ void MasterRenderer::processEntity(Entity* entity)
 	if using point to vector then we also need to make certain to allocate the vector when creating the vector
 	*/
 	
-	TexturedModel* model = entity->model();
+	Model* model = entity->model();
 	if (_entities->empty())
 	{
 		vector<Entity*>* t = new vector<Entity*>();

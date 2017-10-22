@@ -5,7 +5,7 @@ Player::Player()
 {
 }
 
-Player::Player(TexturedModel* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale)
+Player::Player(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale)
 :
 EntityLiving(model,position,rx,ry,rz,scale)
 {

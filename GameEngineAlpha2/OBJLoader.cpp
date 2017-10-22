@@ -7,9 +7,9 @@
 using namespace glm;
 
 string OBJLoader::default_model_filename = "default";
-RawModel * OBJLoader::default_model=nullptr;
+ModelMesh * OBJLoader::default_model=nullptr;
 
-RawModel * OBJLoader::getDefaultModel(Loader * loader)
+ModelMesh * OBJLoader::getDefaultModel(Loader * loader)
 {
 	if (!OBJLoader::default_model)
 	{
@@ -36,7 +36,7 @@ OBJLoader::~OBJLoader()
 // MTL Specification
 //http://www.fileformat.info/format/material/
 //
-RawModel * OBJLoader::loadOBJ(
+ModelMesh * OBJLoader::loadOBJ(
 	string fileName,
 	Loader * loader
 	)
@@ -182,7 +182,7 @@ RawModel * OBJLoader::loadOBJ(
 
 	cout << "OBJ Loader finished, sending data to VAO loader...." << endl;
 
-	RawModel* m = loader->loadToVao(out_vertices, out_uvs, out_normals, indices);
+	ModelMesh* m = loader->loadToVao(out_vertices, out_uvs, out_normals, indices);
 	
 
 	delete vertices;

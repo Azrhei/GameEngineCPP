@@ -2,7 +2,7 @@
 #include <glm\glm.hpp>
 #include "EntityLiving.h"
 #include "SharedIncludes.h"
-#include "TexturedModel.h"
+#include "Model.h"
 #include "Camera.h"
 #include "DisplayManager.h"
 
@@ -27,7 +27,7 @@ protected:
 
 public:
 	Player();
-	Player(TexturedModel* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
+	Player(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
 	~Player();
 
 

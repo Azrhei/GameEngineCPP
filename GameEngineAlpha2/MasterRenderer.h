@@ -6,7 +6,7 @@
 #include "StaticShader.h"
 #include "EntityRenderer.h"
 #include "Entity.h"
-#include "TexturedModel.h" 
+#include "Model.h" 
 #include "TerrainRenderer.h"
 #include "TerrainShader.h"
 
@@ -26,7 +26,7 @@ private:
 	EntityRenderer* _entity_renderer;
 	TerrainRenderer* _terrain_renderer;
 
-	map<TexturedModel*, vector<Entity*>>* _entities;
+	map<Model*, vector<Entity*>>* _entities;
 	vector<Terrain*>* _terrains;
 
 	mat4* projectionMatrix;

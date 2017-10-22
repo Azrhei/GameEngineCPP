@@ -1,6 +1,6 @@
 #pragma once
 #include "SharedIncludes.h"
-#include "RawModel.h"
+#include "ModelMesh.h"
 //#include "Texture.h"
 
 #include <vector>
@@ -26,7 +26,7 @@ public:
 	Loader();
 	~Loader();
 	GLint loadTexture(string fileName);
-	RawModel * loadToVao
+	ModelMesh * loadToVao
 		(
 		vector<GLfloat>* positions, 
 		vector<GLfloat>* textureCoords, 

@@ -1,7 +1,7 @@
 #pragma once
 #include "SharedIncludes.h"
 #include "Loader.h"
-#include "RawModel.h"
+#include "ModelMesh.h"
 #include "TerrainTexture.h"
 #include "TerrainTexturePack.h"
 #include "ModelTexture.h"
@@ -14,9 +14,19 @@ private:
 
 	GLfloat _x;
 	GLfloat _z;
-	RawModel* _model;
+	ModelMesh* _mesh;
 	TerrainTexturePack* _texturePack;
 	TerrainTexture* _blendMap;
+
+protected:
+
+	//Setters
+	void x(GLfloat val){ _x = val; }
+	void z(GLfloat val){ _z = val; }
+	void mesh(ModelMesh* val){ _mesh = val; }
+	void texturePack(TerrainTexturePack* val){ _texturePack = val; }
+	void blendMap(TerrainTexture* val) { _blendMap = val; }
+
 public:
 	Terrain();
 	~Terrain();
@@ -28,11 +38,14 @@ public:
 		TerrainTexturePack* texturePack,
 		TerrainTexture* blendMap
 		);
-	GLfloat			x();
-	GLfloat			z();
-	RawModel*		model();
-	TerrainTexturePack*	texturePack();
-	TerrainTexture * blendMap();
-	RawModel*		generateTerrain(Loader* loader);
+
+	//Getters
+	GLfloat			x() { return _x; }
+	GLfloat			z() { return _z; }
+	ModelMesh*		mesh(){ return _mesh; }
+	TerrainTexturePack*	texturePack(){ return _texturePack; }
+	TerrainTexture * blendMap() { return _blendMap; }
+
+	ModelMesh*		generateTerrain(Loader* loader);
 
 };

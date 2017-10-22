@@ -1,5 +1,4 @@
 #define DEBUG
-
 #include "Player.h"
 #include "SharedIncludes.h"
 #include "DisplayManager.h"
@@ -8,7 +7,7 @@
 #include "MasterRenderer.h"
 #include "StaticShader.h"
 #include "ModelTexture.h"
-#include "TexturedModel.h"
+#include "Model.h"
 #include "Entity.h"
 #include "Camera.h"
 #include "IGame.h"
@@ -20,6 +19,7 @@ DisplayManager * display;
 Loader* loader;
 ICamera* camera;
 #define DEBUG 
+#include <ctime>
 
 int main(int argc, char ** argv, char ** argenv)
 {
@@ -50,14 +50,14 @@ int main(int argc, char ** argv, char ** argenv)
 	
 	//Entity* entity = new Entity
 	//{
-	//	new TexturedModel
+	//	new Model
 	//	{
-	//		OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
+	//		OBJLoader::loadOBJ("bunny", loader),	// ModelMesh::model
 	//		new ModelTexture
 	//		{
 	//			loader->loadTexture("grass")
-	//		}// RawModel::texture
-	//	},						// RawModel(model,texture)   
+	//		}// ModelMesh::texture
+	//	},						// ModelMesh(model,texture)   
 	//		vec3{ 0, 0, -1 },		// Entity::Position 
 	//		0,							// Entity::x rotation	
 	//		0,							// Entity::y rotation
@@ -93,16 +93,49 @@ int main(int argc, char ** argv, char ** argenv)
 	//Terrain* t3 = new Terrain{ 0, 1, loader, tp, blendMap };
 	//Terrain* t4 = new Terrain{ 1, 1, loader, tp, blendMap };
 	
-	Player* p1 = new Player{ new TexturedModel
+	Player* p1 = new Player{ new Model
 	{
-		OBJLoader::loadOBJ("bunny", loader),	// RawModel::model
+		OBJLoader::loadOBJ("bunny", loader),	// ModelMesh::model
 		new ModelTexture
 		{
 			loader->loadTexture("grass")
-		}// RawModel::texture
-	}, { 0, 0, 0 }, 0, 0, 0, 1 };
+		}// ModelMesh::texture
+	}, {0, -1, 2 }, 0, 0, 0, .5 };
 
+	/// Upcoming revised loop
+/*
+	double t_time = 0.0;
+	double d_time = 0.001;
+	
+	auto c_time = time(0);
+	double accumTime = 0.0;
 
+	double previousState, currentState;
+
+	while (!display)
+	{
+		double n_time = time(0);
+		double frameTime = n_time - c_time;
+		if (frameTime > 0.25) frameTime = .25;
+		c_time = n_time;
+		accumTime += frameTime;
+		while (accumTime >= d_time)
+		{
+			previousState = currentState;
+			//update(currentState, t_time, d_time); //update logic/physics
+			t_time += d_time;
+			accumTime -= d_time;
+		}
+		const double a_ = accumTime / d_time;
+
+		double state = currentState * a_ + previousState * (1.0 - a_);
+
+		//render(state)) // render graphics
+	}
+*/	
+	
+	
+	
 	while (!display->shouldClose())
 	{
 		/* Poll for and process events */
