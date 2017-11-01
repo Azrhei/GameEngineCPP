@@ -1,11 +1,13 @@
 #include "INonLiving.h"
 
-
-INonLiving::INonLiving()
+namespace EntityM
 {
-}
+	INonLiving::INonLiving()
+	{
+	}
 
 
-INonLiving::~INonLiving()
-{
+	INonLiving::~INonLiving()
+	{
+	}
 }

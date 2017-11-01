@@ -1,11 +1,13 @@
 #include "IEntityHostile.h"
 
-
-IEntityHostile::IEntityHostile()
+namespace EntityM
 {
-}
+	IEntityHostile::IEntityHostile()
+	{
+	}
 
 
-IEntityHostile::~IEntityHostile()
-{
+	IEntityHostile::~IEntityHostile()
+	{
+	}
 }

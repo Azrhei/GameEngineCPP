@@ -1,11 +1,15 @@
 #include "PlayerRemote.h"
 
-
-PlayerRemote::PlayerRemote()
+namespace PlayerM
 {
-}
+
+	PlayerRemote::PlayerRemote()
+	{
+	}
 
 
-PlayerRemote::~PlayerRemote()
-{
+	PlayerRemote::~PlayerRemote()
+	{
+	}
+
 }

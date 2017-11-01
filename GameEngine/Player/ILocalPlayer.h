@@ -1,8 +1,16 @@
 #pragma once
-class ILocalPlayer
+
+#ifndef I_LOCAL_PLAYER_H
+#define I_LOCAL_PLAYER_H
+
+namespace PlayerM
 {
-public:
-	ILocalPlayer();
-	~ILocalPlayer();
-};
+	class ILocalPlayer
+	{
+	public:
+		ILocalPlayer();
+		~ILocalPlayer();
+	};
+}
+#endif /* I_LOCAL_PLAYER_H */
 

@@ -1,11 +1,13 @@
 #include "IBreedable.h"
 
-
-//IBreedable::IBreedable()
-//{
-//}
-
-
-IBreedable::~IBreedable()
+namespace EntityM
 {
+	//IBreedable::IBreedable()
+	//{
+	//}
+
+
+	IBreedable::~IBreedable()
+	{
+	}
 }

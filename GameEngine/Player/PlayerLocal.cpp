@@ -1,11 +1,12 @@
 #include "PlayerLocal.h"
-
-
-PlayerLocal::PlayerLocal()
+namespace PlayerM
 {
-}
+	PlayerLocal::PlayerLocal()
+	{
+	}
 
 
-PlayerLocal::~PlayerLocal()
-{
+	PlayerLocal::~PlayerLocal()
+	{
+	}
 }

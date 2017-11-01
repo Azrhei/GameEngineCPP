@@ -1,13 +1,20 @@
 #pragma once
+#ifndef PLAYER_LOCAL_H
+#define PLAYER_LOCAL_H
 
+#include "..\Utility\SharedIncludes.h"
 #include "ILocalPlayer.h"
 #include "Player.h"
 
-class PlayerLocal :
-	public ILocalPlayer, public Player
+namespace PlayerM
 {
-public:
-	PlayerLocal();
-	~PlayerLocal();
-};
+	class PlayerLocal :
+		public ILocalPlayer, public Player
+	{
+	public:
+		PlayerLocal();
+		~PlayerLocal();
+	};
 
+}
+#endif /* PLAYER_LOCAL_H */

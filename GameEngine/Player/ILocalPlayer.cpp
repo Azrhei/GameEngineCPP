@@ -1,11 +1,13 @@
 #include "ILocalPlayer.h"
 
-
-ILocalPlayer::ILocalPlayer()
+namespace PlayerM
 {
-}
+	ILocalPlayer::ILocalPlayer()
+	{
+	}
 
 
-ILocalPlayer::~ILocalPlayer()
-{
+	ILocalPlayer::~ILocalPlayer()
+	{
+	}
 }

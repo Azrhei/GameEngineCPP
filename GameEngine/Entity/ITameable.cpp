@@ -1,11 +1,15 @@
 #include "ITameable.h"
 
-
-ITameable::ITameable()
+namespace EntityM
 {
-}
+
+	ITameable::ITameable()
+	{
+	}
 
 
-ITameable::~ITameable()
-{
+	ITameable::~ITameable()
+	{
+	}
+
 }

@@ -1,11 +1,13 @@
 #include "EntityLiving.h"
 
-
-EntityLiving::EntityLiving()
+namespace EntityM
 {
-}
+	EntityLiving::EntityLiving()
+	{
+	}
 
 
-EntityLiving::~EntityLiving()
-{
+	EntityLiving::~EntityLiving()
+	{
+	}
 }

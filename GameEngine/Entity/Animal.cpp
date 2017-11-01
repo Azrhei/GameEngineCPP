@@ -1,11 +1,13 @@
 #include "Animal.h"
 
-
-Animal::Animal()
+namespace EntityM
 {
-}
+	Animal::Animal()
+	{
+	}
 
 
-Animal::~Animal()
-{
+	Animal::~Animal()
+	{
+	}
 }

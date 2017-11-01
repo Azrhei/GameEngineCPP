@@ -1,33 +1,35 @@
 #pragma once
 
-#include <map>
-#include <vector>
+#ifndef ENTITY_RENDERER_H
+#define ENTITY_RENDERER_H
 
 #include "..\Utility\SharedIncludes.h"
 #include "..\Model\ModelMesh.h"
 #include "..\Model\Model.h"
-#include "..\Display\DisplayManager.h"
 #include "..\Entity\Entity.h"
 #include "..\Shader\StaticShader.h"
 #include "..\Utility\Maths.h"
 
-extern DisplayManager* display;
+#include <map>
+#include <vector>
 
-class EntityRenderer
+namespace RenderM
 {
-private:
-	StaticShader * _shader;
+	class EntityRenderer
+	{
+	private:
+		ShaderM::StaticShader * _shader;
 
-	void prepareTeturedModel(Model* model);
-	void prepareInstance(Entity* entity);
-	void unbindModel();
-public:
-	EntityRenderer();
-	EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix);
-	~EntityRenderer();
+		void prepareTeturedModel(ModelM::Model* model);
+		void prepareInstance(EntityM::Entity* entity);
+		void unbindModel();
+	public:
+		EntityRenderer();
+		EntityRenderer(ShaderM::StaticShader* shader, mat4* projectionMatrix);
+		~EntityRenderer();
 
-	void render(map<Model*, vector<Entity*>>* entities);
+		void render(map<ModelM::Model*, vector<EntityM::Entity*>>* entities);
 
-
-};
-
+	};
+}
+#endif /* ENTITY_RENDERER_H */

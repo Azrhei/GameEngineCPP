@@ -1,11 +1,13 @@
 #include "IRemotePlayer.h"
 
-
-IRemotePlayer::IRemotePlayer()
+namespace PlayerM
 {
-}
+	IRemotePlayer::IRemotePlayer()
+	{
+	}
 
 
-IRemotePlayer::~IRemotePlayer()
-{
+	IRemotePlayer::~IRemotePlayer()
+	{
+	}
 }

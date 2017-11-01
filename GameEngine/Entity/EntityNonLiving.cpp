@@ -1,11 +1,13 @@
 #include "EntityNonLiving.h"
 
-
-EntityNonLiving::EntityNonLiving()
+namespace EntityM
 {
-}
+	EntityNonLiving::EntityNonLiving()
+	{
+	}
 
 
-EntityNonLiving::~EntityNonLiving()
-{
+	EntityNonLiving::~EntityNonLiving()
+	{
+	}
 }

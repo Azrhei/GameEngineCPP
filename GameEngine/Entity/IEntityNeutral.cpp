@@ -1,11 +1,13 @@
 #include "IEntityNeutral.h"
 
-
-IEntityNeutral::IEntityNeutral()
+namespace EntityM
 {
-}
+	IEntityNeutral::IEntityNeutral()
+	{
+	}
 
 
-IEntityNeutral::~IEntityNeutral()
-{
+	IEntityNeutral::~IEntityNeutral()
+	{
+	}
 }

@@ -1,11 +1,13 @@
 #include "IEntity.h"
 
-
-IEntity::IEntity()
+namespace EntityM
 {
-}
+	IEntity::IEntity()
+	{
+	}
 
 
-IEntity::~IEntity()
-{
+	IEntity::~IEntity()
+	{
+	}
 }

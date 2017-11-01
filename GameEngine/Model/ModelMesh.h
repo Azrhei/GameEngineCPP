@@ -1,23 +1,31 @@
 #pragma once
+
+#ifndef MODEL_MESH_H
+#define MODEL_MESH_H
+
 #include "..\Utility\SharedIncludes.h"
 
-class ModelMesh
+namespace ModelM
 {
-private:
-	GLuint _vaoID;
-	GLuint _vertexCount;
-protected:
-	void id(GLuint) = delete;
-	void vertexCount(GLuint) = delete;
 
-public:
-	ModelMesh();
-	ModelMesh(GLuint vaoID, GLuint vertexCount);
-	~ModelMesh();
+	class ModelMesh
+	{
+	private:
+		GLuint _vaoID;
+		GLuint _vertexCount;
+	protected:
+		void id(GLuint) = delete;
+		void vertexCount(GLuint) = delete;
 
-	 GLuint id() { return _vaoID; }  ; 
-	 GLuint vertexCount() { return _vertexCount; }  ;
+	public:
+		ModelMesh();
+		ModelMesh(GLuint vaoID, GLuint vertexCount);
+		~ModelMesh();
 
-};
+		GLuint id() { return _vaoID; };
+		GLuint vertexCount() { return _vertexCount; };
 
+	};
 
+}
+#endif /* MODEL_MESH_H */

@@ -1,11 +1,13 @@
 #include "ILiving.h"
 
-
-ILiving::ILiving()
+namespace EntityM
 {
-}
+	ILiving::ILiving()
+	{
+	}
 
 
-ILiving::~ILiving()
-{
+	ILiving::~ILiving()
+	{
+	}
 }

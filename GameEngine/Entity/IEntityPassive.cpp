@@ -1,11 +1,13 @@
 #include "IEntityPassive.h"
 
-
-IEntityPassive::IEntityPassive()
+namespace EntityM
 {
-}
+	IEntityPassive::IEntityPassive()
+	{
+	}
 
 
-IEntityPassive::~IEntityPassive()
-{
+	IEntityPassive::~IEntityPassive()
+	{
+	}
 }
