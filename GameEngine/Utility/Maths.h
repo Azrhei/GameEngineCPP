@@ -20,6 +20,6 @@ public:
 		GLfloat scale
 		);
 
-	static mat4* createViewMatrix(ICamera* camera);
+	static mat4* createViewMatrix(Camera* camera);
 };
 

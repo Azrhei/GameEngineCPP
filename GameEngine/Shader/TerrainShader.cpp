@@ -103,13 +103,13 @@ void TerrainShader::loadTransformationMatrix(glm::mat4* matrix)
 	loadMatrix(location_transformationMatrix, matrix);
 }
 
-void TerrainShader::loadLight(Light* light)
+void TerrainShader::loadLight(Light& light)
 {
-	loadVector(location_lightPosition, light->position());
-	loadVector(location_lightColor, light->color());
+	loadVector(location_lightPosition, light.position());
+	loadVector(location_lightColor, light.color());
 }
 
-void TerrainShader::loadViewMatrix(ICamera* camera)
+void TerrainShader::loadViewMatrix(Camera* camera)
 {
 	glm::mat4* viewMatrix = Maths::createViewMatrix(camera);
 	loadMatrix(location_viewMatrix, viewMatrix);

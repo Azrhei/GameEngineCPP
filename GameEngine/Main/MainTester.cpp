@@ -57,12 +57,9 @@ int main(int argc, char ** argv, char ** argenv)
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
 
-	camera = { new Camera() };
-
-	//entity->model()->texture()->shineDampener(10);
-	//entity->model()->texture()->reflectivity(1);
-
-	Light* light = new Light
+	camera = new Camera{};
+	
+	Light light
 	{
 		{ 20000, 20000, 2000 },	// Position 
 		{ 1, 1, 1 },	// Color

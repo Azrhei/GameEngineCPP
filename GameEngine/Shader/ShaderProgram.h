@@ -27,8 +27,8 @@ public:
 
 	virtual void loadTransformationMatrix(mat4* matrix) = 0;
 	virtual void loadProjectionMatrix(mat4* matrix) = 0;
-	virtual void loadViewMatrix(ICamera* camera) = 0;
-	virtual void loadLight(Light* light) = 0;
+	virtual void loadViewMatrix(Camera* camera) = 0;
+	virtual void loadLight(Light& light) = 0;
 	virtual void loadShineVariables(GLfloat damper, GLfloat reflectivity) = 0;
 	virtual void loadFakeLighting(bool useFake) = 0;
 	virtual void loadSkyColor(vec3* color) = 0;

@@ -23,7 +23,7 @@ glm::mat4* Maths::createTransformationMatrix(
 	return matrix;
 }
 
-mat4* Maths::createViewMatrix(ICamera* camera)
+mat4* Maths::createViewMatrix(Camera* camera)
 {
 	mat4* matrix = new mat4{ 1 };
 

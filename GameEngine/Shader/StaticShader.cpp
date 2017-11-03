@@ -103,16 +103,16 @@ void StaticShader::loadTransformationMatrix(mat4* matrix)
 	loadMatrix(location_transformationMatrix, matrix);
 }
 
-void StaticShader::loadViewMatrix(ICamera* camera)
+void StaticShader::loadViewMatrix(Camera* camera)
 {
 	loadMatrix(location_viewMatrix, Maths::createViewMatrix(camera));
 }
 
-void StaticShader::loadLight(Light* light)
+void StaticShader::loadLight(Light& light)
 {
-	loadVector(location_lightPosition, light->position());
-	loadVector(location_lightColor, light->color());
-	loadFloat(location_lightIntensity, light->intensity());
+	loadVector(location_lightPosition, light.position());
+	loadVector(location_lightColor, light.color());
+	loadFloat(location_lightIntensity, light.intensity());
 }
 
 void StaticShader::loadShineVariables(GLfloat damper, GLfloat reflectivity)

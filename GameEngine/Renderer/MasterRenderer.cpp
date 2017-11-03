@@ -42,15 +42,8 @@ void MasterRenderer::processTerrain(Terrain* terrain)
 	_terrains->push_back(terrain);
 }
 
-void MasterRenderer::render(Light* sun, Camera* cam)
+void MasterRenderer::render(Light& sun, Camera* cam)
 {
-	assert(cam != NULL);
-	assert(sun != NULL);
-	assert(_entity_shader != NULL);
-	assert(_entity_renderer != NULL);
-	assert(_entities);
-	assert(_terrains);
-
 	prepare();
 
 	if ( !(_terrains->empty()) )

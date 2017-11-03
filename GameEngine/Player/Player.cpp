@@ -23,8 +23,8 @@ void Player::move()
 {
 	checkInputs();
 
-	increaseRotation(0, _currentTurnSpeed * display.delta(), 0);
-	float distance = _currentSpeed * display.delta();
+	increaseRotation(0, _currentTurnSpeed * .05f /*display.delta()*/, 0);
+	float distance = _currentSpeed * .05f /*display.delta()*/;
 
 	float dx = distance * sin(radians(rx()));
 	float dz = distance * cos(radians(rx()));
@@ -35,8 +35,7 @@ void Player::move()
 
 void Player::checkInputs()
 {
-	//int state = glfwGetKey(Display::getWindow(), GLFW_KEY_E);
-	//if (state == GLFW_PRESS);
+
 	static GLfloat speed_factor = 1;
 	GLFWwindow* _w = display.window();
 
