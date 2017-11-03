@@ -1,8 +1,4 @@
 #pragma once
-
-#ifndef I_CAMERA_H
-#define I_CAMERA_H
-
 #include "..\Utility\SharedIncludes.h"
 
 class ICamera
@@ -28,11 +24,10 @@ public:
 	void yaw(GLfloat val) { _yaw = val; }
 	void roll(GLfloat val) { _roll = val; }
 
-	virtual void move(double) = 0;
+	virtual void move() = 0;
 	//virtual void move(vec3 npos, vec3 nrot) = 0;
 	//virtual void move(vec3 npos, GLfloat drx, GLfloat dry, GLfloat drz) = 0;
 	//virtual void move(GLfloat dx, GLfloat dy, GLfloat dz) = 0;
 	//virtual void move(vec3 npos) = 0;
 };
 
-#endif /* I_CAMERA_H */

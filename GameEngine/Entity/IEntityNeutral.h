@@ -1,23 +1,15 @@
 #pragma once
-
-#ifndef I_ENTITY_NEUTRAL_H
-#define I_ENTITY_NEUTRAL_H
-
-namespace EntityM
+class IEntityNeutral
 {
-	class IEntityNeutral
-	{
-	private:
-		bool _agro;
+private:
+	bool _agro;
+protected:
+	void setAgro(bool newVal) { _agro = newVal; }
 
-	protected:
-		void setAgro(bool newVal) { _agro = newVal; }
+public:
+	void makeAgro() { _agro = true; }
+	bool isAgro() { return _agro; }
+	IEntityNeutral();
+	~IEntityNeutral();
+};
 
-	public:
-		void makeAgro() { _agro = true; }
-		bool isAgro() { return _agro; }
-		IEntityNeutral();
-		~IEntityNeutral();
-	};
-}
-#endif /* I_ENTITY_NEUTRAL_H */

@@ -34,6 +34,9 @@
     <None Include="ReleaseNotes.css" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Display\DisplayManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Utility\Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -106,6 +109,9 @@
     <ClCompile Include="Player\PlayerLocal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Player\PlayerRemote.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -127,7 +133,13 @@
     <ClCompile Include="Entity\ITameable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game\IGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\EntityRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\TerrainRenderer.cpp">
@@ -151,24 +163,18 @@
     <ClCompile Include="Model\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Main\MainTester.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse\Mouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Display\Display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\SharedIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Display\DisplayManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utility\Loader.h">
@@ -199,6 +205,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Light\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\MasterRenderer.h">
@@ -243,6 +252,9 @@
     <ClInclude Include="Player\PlayerLocal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Player\PlayerRemote.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -264,7 +276,13 @@
     <ClInclude Include="Entity\ITameable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\IGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\EntityRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\TerrainRenderer.h">
@@ -291,16 +309,7 @@
     <ClInclude Include="Model\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mouse\Mouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Display\Display.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Game.h">
+    <ClInclude Include="Game\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

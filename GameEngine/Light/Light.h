@@ -1,9 +1,7 @@
 #pragma once
-
-#ifndef LIGHT_H
-#define LIGHT_H
-
 #include "..\Utility\SharedIncludes.h"
+
+using namespace glm;
 
 class Light
 {
@@ -35,4 +33,3 @@ public:
 
 };
 
-#endif /* LIGHT_H */

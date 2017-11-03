@@ -2,7 +2,7 @@
 
 void handleKeyEvents()
 {
-	//int state = glfwGetKey(Display::getWindow(), GLFW_KEY_E);
+	//int state = glfwGetKey(display->getWindow(), GLFW_KEY_E);
 	//if (state == GLFW_PRESS);
 }
 

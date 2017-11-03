@@ -1,42 +1,39 @@
 #pragma once
-
-#ifndef OBJLOADER_H
-#define OBJLOADER_H
-
+#include <glm\glm.hpp>
+#include <vector>
+#include <fstream>
 #include "..\Utility\SharedIncludes.h"
 #include "..\Model\ModelMesh.h"
 #include "..\Utility\Loader.h"
 
-#include <vector>
-#include <fstream>
+using namespace glm;
 
-namespace UtilityM
+class OBJLoader
 {
-	class OBJLoader
-	{
-	private:
-		static string default_model_filename;
-		static ModelM::ModelMesh * default_model;
-		static ModelM::ModelMesh * getDefaultModel();
+private:
+	static string default_model_filename;
+	static ModelMesh * default_model;
+	static ModelMesh * getDefaultModel(Loader *loader);
 
-	protected:
+public:
+	OBJLoader();
+	~OBJLoader();
 
-	public:
-		OBJLoader();
-		~OBJLoader();
-
-		static ModelM::ModelMesh * loadOBJ
-		(string path	);
-
-		static void OBJLoader::processVertex
+	static ModelMesh * loadOBJ
 		(
-			ivec3 vertex,
-			vector<GLint>* ind,
-			vector<vec2>* tex,
-			vector<vec3>* norm,
-			vector<GLfloat>* texArray,
-			vector<GLfloat>* normArray
+		string path,
+		Loader * loader
 		);
-	};
-}
-#endif /* OBJLOADER_H */
+
+	static void OBJLoader::processVertex
+		(
+		ivec3 vertex,
+		vector<GLint>* ind,
+		vector<vec2>* tex,
+		vector<vec3>* norm,
+		vector<GLfloat>* texArray,
+		vector<GLfloat>* normArray
+		);
+private:
+};
+

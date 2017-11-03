@@ -156,5 +156,5 @@ $RECYCLE.BIN/
 .DS_Store
 *.opendb
 /.vs/ProjectSettings.json
-/.vs/VSWorkspaceState.json
 /.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
