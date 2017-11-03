@@ -39,6 +39,7 @@ void Player::checkInputs()
 	static GLfloat speed_factor = 1;
 	GLFWwindow* _w = display.window();
 
+
 	if (glfwGetKey(_w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
 		speed_factor = 2.5f;

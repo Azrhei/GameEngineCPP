@@ -20,14 +20,18 @@
 #include "..\Light\Light.h"
 #include "..\Player\Player.h"
 
-Camera* camera;
-
 #define DEBUG 
 #include <ctime>
 
 using namespace GameEngine;
 using namespace DisplayM;
 using namespace UtilityM;
+//using namespace PlayerM;
+//using namespace EntityM;
+//using namespace TerrainM;
+//using namespace ModelM;
+//using namespace ShaderM;
+//using namespace RenderM;
 
 int main(int argc, char ** argv, char ** argenv)
 {
@@ -57,7 +61,7 @@ int main(int argc, char ** argv, char ** argenv)
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
 
-	camera = new Camera{};
+	Camera* camera = new Camera{};
 	
 	Light light
 	{

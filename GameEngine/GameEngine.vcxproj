@@ -106,6 +106,7 @@
     <ClCompile Include="Entity\ITameable.cpp" />
     <ClCompile Include="Keyboard\KeyEvents.cpp" />
     <ClCompile Include="Light\Light.cpp" />
+    <ClCompile Include="UnitTests.cpp" />
     <ClCompile Include="Utility\Loader.cpp" />
     <ClCompile Include="Main\MainTester.cpp" />
     <ClCompile Include="Renderer\MasterRenderer.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="Model\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="catch.hpp" />
     <ClInclude Include="Entity\Animal.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\Camera1st.h" />
@@ -138,6 +140,7 @@
     <ClInclude Include="Entity\EntityLiving.h" />
     <ClInclude Include="Entity\EntityNonLiving.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="UnitTests.h" />
     <ClInclude Include="Utility\common.hpp" />
     <ClInclude Include="Utility\Error.h" />
     <ClInclude Include="Game\Game.h" />

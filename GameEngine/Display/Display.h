@@ -66,7 +66,6 @@ namespace GameEngine
 			//event handler
 			static void framebufferResize_callBack(GLFWwindow* window, int width, int height);
 		};
-
 		static Display& display = DisplayM::Display::getInstance();
 	}
 }
