@@ -86,7 +86,7 @@
     <ClCompile Include="Camera\Camera2nd.cpp" />
     <ClCompile Include="Camera\Camera3rd.cpp" />
     <ClCompile Include="Camera\CameraFollow.cpp" />
-    <ClCompile Include="Display\DisplayManager.cpp" />
+    <ClCompile Include="Display\Display.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Entity\EntityLiving.cpp" />
     <ClCompile Include="Entity\EntityNonLiving.cpp" />
@@ -133,10 +133,12 @@
     <ClInclude Include="Camera\Camera2nd.h" />
     <ClInclude Include="Camera\Camera3rd.h" />
     <ClInclude Include="Camera\CameraFollow.h" />
-    <ClInclude Include="Display\DisplayManager.h" />
+    <ClInclude Include="Display\Display.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Entity\EntityLiving.h" />
     <ClInclude Include="Entity\EntityNonLiving.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Utility\common.hpp" />
     <ClInclude Include="Utility\Error.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\GameManager.h" />

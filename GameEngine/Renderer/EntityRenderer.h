@@ -3,15 +3,16 @@
 #include <map>
 #include <vector>
 
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "..\Model\ModelMesh.h"
 #include "..\Model\Model.h"
-#include "..\Display\DisplayManager.h"
+#include "..\Display\Display.h"
 #include "..\Entity\Entity.h"
 #include "..\Shader\StaticShader.h"
 #include "..\Utility\Maths.h"
 
-extern DisplayManager* display;
+using namespace GameEngine;
+using namespace DisplayM;
 
 class EntityRenderer
 {

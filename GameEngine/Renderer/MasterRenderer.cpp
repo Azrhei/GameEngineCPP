@@ -1,4 +1,8 @@
 #include "MasterRenderer.h"
+#include "..\Display\Display.h"
+
+using namespace GameEngine;
+using namespace DisplayM;
 
 MasterRenderer::MasterRenderer()
 : _entity_shader(new StaticShader), _terrain_shader(new TerrainShader)
@@ -38,7 +42,7 @@ void MasterRenderer::processTerrain(Terrain* terrain)
 	_terrains->push_back(terrain);
 }
 
-void MasterRenderer::render(Light* sun, ICamera* cam)
+void MasterRenderer::render(Light* sun, Camera* cam)
 {
 	assert(cam != NULL);
 	assert(sun != NULL);
@@ -60,6 +64,7 @@ void MasterRenderer::render(Light* sun, ICamera* cam)
 
 		_terrain_shader->stop();
 		_terrains->clear();
+		
 	}
 
 	if ( !(_entities->empty()) )
@@ -124,16 +129,16 @@ void MasterRenderer::processEntity(Entity* entity)
 	}
 }
 
-glm::mat4* MasterRenderer::createProjectionMatrix()
+mat4* MasterRenderer::createProjectionMatrix()
 {
 	//glm can do this for us, see glm::frustrum
 	// Generate a Frustum matrix for converting from orthogonal space
-	GLfloat aspectRatio = (GLfloat)::display->width() / (GLfloat)::display->height();
+	GLfloat aspectRatio = (GLfloat)display.width() / (GLfloat)display.height();
 	GLfloat y_scale = (1.0f / glm::tan(glm::radians(FOV / 2.0f))) * aspectRatio;
 	GLfloat x_scale = y_scale / aspectRatio;
 	GLfloat frustrum_length = F_Plane - N_Plane;
 
-	glm::mat4* matrix = new glm::mat4{ 1 };
+	mat4* matrix = new mat4{ 1 };
 	(*matrix)[0][0] = x_scale;
 	(*matrix)[1][1] = y_scale;
 	(*matrix)[2][2] = -((F_Plane + N_Plane) / frustrum_length);

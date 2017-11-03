@@ -3,7 +3,7 @@
 #include "TerrainTexture.h"
 #include "TerrainTexturePack.h"
 
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "..\Utility\Loader.h"
 #include "..\Model\ModelMesh.h"
 #include "..\Model\ModelTexture.h"
@@ -36,7 +36,6 @@ public:
 		(
 		GLint gridX, 
 		GLint gridZ, 
-		Loader* loader, 
 		TerrainTexturePack* texturePack,
 		TerrainTexture* blendMap
 		);
@@ -48,6 +47,6 @@ public:
 	TerrainTexturePack*	texturePack(){ return _texturePack; }
 	TerrainTexture * blendMap() { return _blendMap; }
 
-	ModelMesh*		generateTerrain(Loader* loader);
+	ModelMesh*		generateTerrain();
 
 };

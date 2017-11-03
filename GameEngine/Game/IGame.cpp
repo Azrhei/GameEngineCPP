@@ -1,21 +1,21 @@
 #include "IGame.h"
 
-extern DisplayManager * display;
+//extern Display * display;
 
 IGame::IGame()
 {
 	ILocalPlayer*		_player = new ILocalPlayer;
 	MasterRenderer*		_renderer = new MasterRenderer;
 	StaticShader*		_shader = new StaticShader;
-	ICamera*			_camera = new Camera;
-	DisplayManager*		_display = ::display;
-	Loader*				_loader = new Loader;
+	Camera*			_camera = new Camera;
+	//Display*		_display = ::display;
+	//Loader*				_loader = new Loader;
 
 	_local_players	= { new vector<ILocalPlayer *> };
 	_remote_players	= { new vector<IRemotePlayer *> };
 	_renderers		= { new vector<MasterRenderer *> };
 	_shaders			= { new vector<StaticShader *> };
-	_cameras			= { new vector<ICamera *> };
+	_cameras			= { new vector<Camera *> };
 
 	_local_players->push_back(_player);
 	_renderers->push_back(_renderer);
@@ -23,28 +23,28 @@ IGame::IGame()
 	_cameras->push_back(_camera);
 }
 
-IGame::IGame(DisplayManager* display)
-: _display(display)
-{
-	_player = new ILocalPlayer;
-	_renderer = new MasterRenderer;
-	_shader = new StaticShader;
-	_camera = new Camera;
-	_loader = new Loader;
-}
+//IGame::IGame(Display* display)
+//: _display(display)
+//{
+//	_player = new ILocalPlayer;
+//	_renderer = new MasterRenderer;
+//	_shader = new StaticShader;
+//	_camera = new Camera;
+//	_loader = new Loader;
+//}
 
 
-IGame::IGame(ILocalPlayer* player, MasterRenderer* renderer, StaticShader* shader, ICamera* camera)
+IGame::IGame(ILocalPlayer* player, MasterRenderer* renderer, StaticShader* shader, Camera* camera)
 : _player(player), _renderer(renderer), _shader(shader), _camera(camera)
 {
 	_local_players	= { new vector<ILocalPlayer *> };
 	_remote_players	= { new vector<IRemotePlayer *> };
 	_renderers		= { new vector<MasterRenderer *> };
 	_shaders		= { new vector<StaticShader *> };
-	_cameras		= { new vector<ICamera *> };
+	_cameras		= { new vector<Camera *> };
 	
-	_loader			= { new Loader };
-	_display		= { ::display }; 
+	//_loader			= { new Loader };
+	//_display		= { ::display }; 
 
 	_local_players->push_back(player);
 	_renderers->push_back(renderer);
@@ -68,8 +68,8 @@ IGame::~IGame()
 	delete _cameras;
 
 	// close display if not already
-	//display->closeDisplay();
-	//glfwDestroyWindow(display->getWindow());
+	//Display::closeDisplay();
+	//glfwDestroyWindow(Display::getWindow());
 	//delete display;
 
 	//loader->cleanUp();
@@ -99,32 +99,32 @@ void IGame::setRenderer(MasterRenderer * newRenderer)
 	_renderer = newRenderer;
 }
 
-void IGame::setCamera(ICamera * newCamera)
+void IGame::setCamera(Camera * newCamera)
 {
 	// cameras->erase(camera);
 	// delete camera;
 	_camera = newCamera;
 }
 
-void IGame::setLoader(Loader * newLoader){}
+//void IGame::setLoader(Loader * newLoader){}
 
-void IGame::setDisplaManager(DisplayManager* newDisplay)
-{
-	//display->closeDisplay();
-	//glfwDestroyWindow(display->getWindow());
-	//
-	//delete display;
-	_display = newDisplay;
-}
+//void IGame::setDispla(Display* newDisplay)
+//{
+//	//Display::closeDisplay();
+//	//glfwDestroyWindow(Display::getWindow());
+//	//
+//	//delete display;
+//	_display = newDisplay;
+//}
 
 ILocalPlayer * IGame::getLocalPlayer(){ return _player; }
 vector<IRemotePlayer *>* IGame::getRemotePlayers(){ return nullptr; }
 StaticShader * IGame::getShader(){ return _shader; }
-ICamera * IGame::getCamera(){ return _camera; }
-Loader * IGame::getLoader(){ return _loader; }
-DisplayManager * IGame::getDisplayManager(){ return _display; }
-GLFWwindow* IGame::getWindow(){ return _window; }
-void IGame::setWindow(GLFWwindow* newWindow){ _window = newWindow; }
+Camera * IGame::getCamera(){ return _camera; }
+//Loader * IGame::getLoader(){ return _loader; }
+//Display * IGame::getDisplay(){ return _display; }
+//GLFWwindow* IGame::getWindow(){ return _window; }
+//void IGame::setWindow(GLFWwindow* newWindow){ _window = newWindow; }
 
 
 IRemotePlayer * IGame::findRemotePlayer(){ return nullptr; }

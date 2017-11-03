@@ -34,9 +34,6 @@
     <None Include="ReleaseNotes.css" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Display\DisplayManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -169,12 +166,12 @@
     <ClCompile Include="Main\MainTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Display\Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\SharedIncludes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Display\DisplayManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utility\Loader.h">
@@ -310,6 +307,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\common.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Display\Display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

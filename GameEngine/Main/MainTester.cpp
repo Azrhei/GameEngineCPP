@@ -1,7 +1,9 @@
 #define DEBUG
-#include "..\Utility\SharedIncludes.h"
+
+#include "..\Main.h"
+
 #include "..\Player\Player.h"
-#include "..\Display\DisplayManager.h"
+#include "..\Display\Display.h"
 #include "..\Renderer\MasterRenderer.h"
 #include "..\Utility\Loader.h"
 #include "..\Renderer\MasterRenderer.h"
@@ -14,27 +16,32 @@
 #include "..\Game\Game.h"
 #include "..\Keyboard\KeyEvents.h"
 #include "..\Utility\OBJLoader.h"
-#include "..\Display\DisplayManager.h"
+#include "..\Display\Display.h"
 #include "..\Light\Light.h"
 #include "..\Player\Player.h"
-#include "..\Terrain\TerrainTexture.h"
 
-DisplayManager * display;
-Loader* loader;
-ICamera* camera;
+Camera* camera;
 
 #define DEBUG 
 #include <ctime>
 
+using namespace GameEngine;
+using namespace DisplayM;
+using namespace UtilityM;
+
 int main(int argc, char ** argv, char ** argenv)
 {
+
 	wcout << L"Starting Engine" << nl;
+	
 	glfwInit();
 
 	wcout << L"Creating Display" << nl;
-	::display = new DisplayManager;
+	display.init();
+	// objLoader.init();
+	// loader.init();
 
-	if (!::display->exists())
+	if (!display.exists())
 	{
 		wcerr << L"Could not start Display" << nl;
 		glfwTerminate();
@@ -42,7 +49,7 @@ int main(int argc, char ** argv, char ** argenv)
 	}
 
 	wcout << L"Showing Display" << nl;
-	::display->showDisplay();
+	display.showDisplay();
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
@@ -50,9 +57,7 @@ int main(int argc, char ** argv, char ** argenv)
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
 
-	loader = { new Loader() };
 	camera = { new Camera() };
-	
 
 	//entity->model()->texture()->shineDampener(10);
 	//entity->model()->texture()->reflectivity(1);
@@ -64,29 +69,29 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
-	glfwSetKeyCallback(::display->window(), keyEvent_CallBack);
+	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
 
 	wcout << L"Begining Game loop" << nl;
 
 	MasterRenderer* renderer = new MasterRenderer;
 
-	ModelTexture* mt = new ModelTexture{ loader->loadTexture("grass") };
-	TerrainTexture* backgroundTexture = new TerrainTexture( loader->loadTexture("grassy") );
-	TerrainTexture* rTexture = new TerrainTexture( loader->loadTexture("dirt") );
-	TerrainTexture* gTexture = new TerrainTexture( loader->loadTexture("pinkFlowers") );
-	TerrainTexture* bTexture = new TerrainTexture( loader->loadTexture("path") );
-	TerrainTexture* blendMap = new TerrainTexture( loader->loadTexture("blendMap") );
+	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
+	TerrainTexture* backgroundTexture = new TerrainTexture( loader.loadTexture("grassy") );
+	TerrainTexture* rTexture = new TerrainTexture( loader.loadTexture("dirt") );
+	TerrainTexture* gTexture = new TerrainTexture( loader.loadTexture("pinkFlowers") );
+	TerrainTexture* bTexture = new TerrainTexture( loader.loadTexture("path") );
+	TerrainTexture* blendMap = new TerrainTexture( loader.loadTexture("blendMap") );
 	TerrainTexturePack* tp = new TerrainTexturePack( backgroundTexture, rTexture, gTexture, bTexture );
 	
-	Terrain* t1 = new Terrain{ 0, -1, loader, tp, blendMap };
-	Terrain* t2 = new Terrain{ -1, -1, loader, tp, blendMap };
-	Terrain* t3 = new Terrain{ 0, 1, loader, tp, blendMap };
-	Terrain* t4 = new Terrain{ 1, 1, loader, tp, blendMap };
+	Terrain* t1 = new Terrain{ 0, -1, tp, blendMap };
+	Terrain* t2 = new Terrain{ -1, -1, tp, blendMap };
+	Terrain* t3 = new Terrain{ 0, 1, tp, blendMap };
+	Terrain* t4 = new Terrain{ 1, 1, tp, blendMap };
 	
-	auto *modelMesh = OBJLoader::loadOBJ("bunny", loader);
-	auto *modelTexture = new ModelTexture{ loader->loadTexture("white") };
+	auto *modelMesh = objLoader.loadOBJ("bunny");
+	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
 	auto *model = new Model{ modelMesh, modelTexture };
-	Player* p1 = new Player{ model , {0, 0, 0 }, 0, 0, 0, 10 };
+	Player* p1 = new Player{ model , {0, 0, -3 }, 0, 0, 0, 1};
 
 	/// Upcoming revised loop
 /*
@@ -122,7 +127,7 @@ int main(int argc, char ** argv, char ** argenv)
 	
 	
 	
-	while (!::display->shouldClose())
+	while (!display.shouldClose())
 	{
 		/* Poll for and process events */
 		glfwPollEvents();
@@ -140,17 +145,15 @@ int main(int argc, char ** argv, char ** argenv)
 
 		renderer->render(light,camera);
 
-		::display->updateDisplay();
+		display.updateDisplay();
 	}
 
 	wcout << L"Removing Display" << nl;
 	 
 	wcout << L"Terminating OpenGL system" << nl;
 	glfwTerminate();
-	loader->cleanUp();
+	loader.cleanUp();
 	renderer->cleanUp();
-
-	delete loader;
 #ifdef DEBUG
 	std::cin.get();
 #endif

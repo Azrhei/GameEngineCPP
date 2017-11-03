@@ -1,9 +1,6 @@
 #pragma once
-#include "..\Utility\SharedIncludes.h"
-#include "..\Display\DisplayManager.h"
+#include "..\Utility\common.hpp"
 #include "..\Camera\ICamera.h"
-
-extern DisplayManager* display;
 
 class Camera : public ICamera
 {

@@ -2,7 +2,7 @@
 #include "IEntityPassive.h"
 #include "EntityLiving.h"
 
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 
 class Animal :
 	public IEntityPassive, EntityLiving

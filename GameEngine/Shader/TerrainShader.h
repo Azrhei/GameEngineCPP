@@ -1,5 +1,5 @@
 #pragma once
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "..\Shader\ShaderProgram.h"
 #include "..\Utility\Maths.h"
 #include "..\Camera\ICamera.h"

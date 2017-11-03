@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "TerrainTexture.h"
 
 class TerrainTexturePack

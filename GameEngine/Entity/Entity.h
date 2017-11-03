@@ -1,5 +1,5 @@
 #pragma once
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "..\Model\Model.h"
 
 class Entity

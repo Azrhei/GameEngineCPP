@@ -1,5 +1,5 @@
 #pragma once
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "..\Terrain\Terrain.h"
 #include "..\Model\ModelMesh.h"
 #include "..\Model\ModelTexture.h"

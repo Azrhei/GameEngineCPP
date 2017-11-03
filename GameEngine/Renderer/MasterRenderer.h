@@ -46,6 +46,6 @@ public:
 	void cleanUp() { _entity_shader->cleanUp(); }
 	void processEntity(Entity* entity);
 
-	void render(Light* sun, ICamera* camera);
+	void render(Light* sun, Camera* camera);
 };
 

@@ -9,12 +9,10 @@
 //#include "Engine.h"
 
 #include "Utility\common.hpp"
-#include "..\Display\Display.h"
-using namespace DisplayM;
+#include "Display\Display.h"
+#include "Game\Game.h"
+#include "Utility\Loader.h"
 
-#include "..\Game\Game.h"
-using namespace GameM;
+//using namespace GameEngine;
 
-#include "..\Utility\Loader.h"
-using namespace UtilityM;
 #endif /* MAIN_H */

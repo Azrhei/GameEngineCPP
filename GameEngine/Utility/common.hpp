@@ -2,6 +2,7 @@
 //
 //#ifndef _SHARED_H
 //#define _SHARED_H
+// This header is used by most or all GameEngine components.
 
 #include <gl/glew.h>
 #include <gl/freeglut.h>
@@ -17,9 +18,6 @@ using namespace std;
 
 #include "Error.h"
 
-//#define DEBUG 1
-
-//#define nl std::endl
 #define NEWLINE					 "\n"
 #define WIDE_NEWLINE			L"\n"
 #define CARRIAGE_RETURN			 "\r"
@@ -27,15 +25,6 @@ using namespace std;
 
 inline wostream& nl(wostream& o) { return o << WIDE_NEWLINE; }
 inline ostream& nl(ostream& o) { return o << NEWLINE; }
-
-//#include "..\Display\Display.h"
-////using namespace DisplayM;
-//
-//#include "..\Game\Game.h"
-////using namespace GameM;
-//
-//#include "..\Utility\Loader.h"
-////using namespace UtilityM;
 
 #define UM	UtiltyM
 #define GM	GameM

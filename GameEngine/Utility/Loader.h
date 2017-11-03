@@ -1,5 +1,9 @@
 #pragma once
-#include "..\Utility\SharedIncludes.h"
+
+#ifndef LOADER_H
+#define LOADER_H
+
+#include "..\Utility\common.hpp"
 #include "..\Model\ModelMesh.h"
 
 #include <vector>
@@ -7,30 +11,48 @@
 
 using namespace std;
 
-class Loader
-{
-private:
-	vector<GLuint>* _vaos;
-	vector<GLuint>* _vbos;
-	vector<GLuint>* _textures;
-	static GLint default_texture;
-	static string default_texture_filename;
-	GLint getDefaultTexture();
-	GLuint createVAO();
-	void storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>* data);
-	void unbindVAO();
-	void bindIndicesVBO(vector<GLint>* indices);
+namespace GameEngine {
+	namespace UtilityM {
+		class Loader
+		{
+		public:
+			static Loader& getIntance()
+			{
+				static Loader _inst_;
+				return _inst_;
+			}
+		private:
+			string Loader::default_texture_filename = "default";
+			GLint Loader::default_texture = 0;
 
-public:
-	Loader();
-	~Loader();
-	GLint loadTexture(string fileName);
-	ModelMesh * loadToVao
-		(
-		vector<GLfloat>* positions, 
-		vector<GLfloat>* textureCoords, 
-		vector<GLfloat>* normals, 
-		vector<GLint>* indices);
-	void cleanUp();
+			vector<GLuint>* _vaos = new vector<GLuint>();
+			vector<GLuint>* _vbos = new vector<GLuint>(); 
+			vector<GLuint>* _textures = new vector<GLuint>();
 
-};
+			GLint getDefaultTexture();
+			GLuint createVAO();
+			void storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>* data);
+			void unbindVAO();
+			void bindIndicesVBO(vector<GLint>* indices);
+
+		public:
+			Loader() {};
+			Loader(Loader const&) = delete;
+			void operator=(Loader const&) = delete;
+
+			~Loader();
+			GLint loadTexture(string fileName);
+			ModelMesh * loadToVao
+			(
+				vector<GLfloat>* positions,
+				vector<GLfloat>* textureCoords,
+				vector<GLfloat>* normals,
+				vector<GLint>* indices);
+			void cleanUp();
+
+		};
+		static Loader& loader = Loader::getIntance();
+	}
+}
+
+#endif /* LOADER_H */

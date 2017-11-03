@@ -1,10 +1,11 @@
 #include "Terrain.h"
-
+#include "..\Utility\Loader.h"
+using namespace GameEngine;
+using namespace UtilityM;
 
 Terrain::Terrain()
 {
 }
-
 
 Terrain::~Terrain()
 {
@@ -14,7 +15,6 @@ Terrain::Terrain
 (
 GLint gridX, 
 GLint gridZ, 
-Loader* loader, 
 TerrainTexturePack* texturePack,
 TerrainTexture* blendMap
 )
@@ -24,10 +24,10 @@ _blendMap(blendMap)
 {
 	_x = static_cast<GLfloat>(gridX) * SIZE;
 	_z = static_cast<GLfloat>(gridZ) * SIZE;
-	_mesh = generateTerrain(loader);
+	_mesh = generateTerrain();
 }
 
-ModelMesh* Terrain::generateTerrain(Loader* loader){
+ModelMesh* Terrain::generateTerrain(){
 	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
 
 	vector<GLfloat>* vertices = new vector<GLfloat>{};
@@ -70,7 +70,7 @@ ModelMesh* Terrain::generateTerrain(Loader* loader){
 			(*indices)[pointer++] = bottomRight;
 		}
 	}
-	return loader->loadToVao(vertices, textureCoords, normals, indices);
+	return loader.loadToVao(vertices, textureCoords, normals, indices);
 }
 
 

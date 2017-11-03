@@ -1,5 +1,8 @@
 #include "Player.h"
+#include "..\Display\Display.h"
 
+using namespace GameEngine;
+using namespace DisplayM;
 
 Player::Player()
 {
@@ -20,8 +23,8 @@ void Player::move()
 {
 	checkInputs();
 
-	increaseRotation(0, _currentTurnSpeed * display->delta(), 0);
-	float distance = _currentSpeed * display->delta();
+	increaseRotation(0, _currentTurnSpeed * display.delta(), 0);
+	float distance = _currentSpeed * display.delta();
 
 	float dx = distance * sin(radians(rx()));
 	float dz = distance * cos(radians(rx()));
@@ -32,10 +35,10 @@ void Player::move()
 
 void Player::checkInputs()
 {
-	//int state = glfwGetKey(display->getWindow(), GLFW_KEY_E);
+	//int state = glfwGetKey(Display::getWindow(), GLFW_KEY_E);
 	//if (state == GLFW_PRESS);
 	static GLfloat speed_factor = 1;
-	GLFWwindow* _w = display->window();
+	GLFWwindow* _w = display.window();
 
 	if (glfwGetKey(_w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
@@ -75,27 +78,27 @@ void Player::checkInputs()
 	}
 
 
-	//if (glfwGetKey(display->getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+	//if (glfwGetKey(Display::getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
 	//{
 	//	this->pitch += .2f * speed_factor;
 	//}
-	//if (glfwGetKey(display->getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+	//if (glfwGetKey(Display::getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
 	//{
 	//	this->pitch -= .2f * speed_factor;
 	//}
-	//if (glfwGetKey(display->getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+	//if (glfwGetKey(Display::getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
 	//{
 	//	this->yaw -= .2f * speed_factor;
 	//}
-	//if (glfwGetKey(display->getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+	//if (glfwGetKey(Display::getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
 	//{
 	//	this->yaw += .2f * speed_factor;
 	//}
-	//if (glfwGetKey(display->getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+	//if (glfwGetKey(Display::getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	//{
 	//	this->position.y -= .02f * speed_factor;
 	//}
-	//if (glfwGetKey(display->getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
+	//if (glfwGetKey(Display::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
 	//{
 	//	this->position.y += .02f * speed_factor;
 	//}

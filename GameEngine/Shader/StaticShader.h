@@ -1,7 +1,7 @@
 #pragma once
 #include "ShaderProgram.h"
 
-#include "..\Utility\SharedIncludes.h"
+#include "..\Utility\common.hpp"
 #include "..\Utility\Maths.h"
 
 #include <map>
