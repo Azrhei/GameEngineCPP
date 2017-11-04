@@ -1,11 +1,16 @@
 #include "CameraFollow.h"
 
-
-CameraFollow::CameraFollow()
+namespace GameEngine
 {
-}
+	namespace CameraM
+	{
+		CameraFollow::CameraFollow()
+		{
+		}
 
 
-CameraFollow::~CameraFollow()
-{
+		CameraFollow::~CameraFollow()
+		{
+		}
+	}
 }

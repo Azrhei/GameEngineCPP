@@ -1,12 +1,22 @@
 #pragma once
+
+#ifndef CAMERA_FOLLOW_H
+#define CAMERA_FOLLOW_H
+
 #include "ICamera.h"
 #include "Camera3rd.h"
 
-class CameraFollow :
-	public Camera3rd
+namespace GameEngine
 {
-public:
-	CameraFollow();
-	~CameraFollow();
-};
-
+	namespace CameraM
+	{
+		class CameraFollow :
+			public Camera3rd
+		{
+		public:
+			CameraFollow();
+			~CameraFollow();
+		};
+	}
+}
+#endif /* CAMERA_FOLLOW_H */

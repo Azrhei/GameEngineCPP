@@ -1,11 +1,14 @@
 #include "EntityLiving.h"
-
-
-EntityLiving::EntityLiving()
+namespace GameEngine
 {
-}
+	namespace EntityM
+	{
+		EntityLiving::EntityLiving()
+		{
+		}
 
-
-EntityLiving::~EntityLiving()
-{
+		EntityLiving::~EntityLiving()
+		{
+		}
+	}
 }

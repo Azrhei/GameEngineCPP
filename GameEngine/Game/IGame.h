@@ -10,6 +10,11 @@
 #include "..\Renderer\MasterRenderer.h"
 #include "..\Utility\Loader.h"
 
+using namespace GameEngine;
+using namespace CameraM;
+using namespace ShaderM;
+using namespace RenderM;
+
 class IGame
 {
 private:

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef ENTITY_RENDERER_H
+#define ENTITY_RENDERER_H
 
 #include <map>
 #include <vector>
@@ -11,24 +13,31 @@
 #include "..\Shader\StaticShader.h"
 #include "..\Utility\Maths.h"
 
-using namespace GameEngine;
-using namespace DisplayM;
-
-class EntityRenderer
+namespace GameEngine
 {
-private:
-	StaticShader * _shader;
+	using namespace DisplayM;
+	using namespace EntityM;
+	using namespace ShaderM;
 
-	void prepareTeturedModel(Model* model);
-	void prepareInstance(Entity* entity);
-	void unbindModel();
-public:
-	EntityRenderer();
-	EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix);
-	~EntityRenderer();
+	namespace RenderM
+	{
+		class EntityRenderer
+		{
+		private:
+			StaticShader * _shader;
 
-	void render(map<Model*, vector<Entity*>>* entities);
+			void prepareTeturedModel(Model* model);
+			void prepareInstance(Entity* entity);
+			void unbindModel();
+		public:
+			EntityRenderer();
+			EntityRenderer(StaticShader* shader, glm::mat4* projectionMatrix);
+			~EntityRenderer();
+
+			void render(map<Model*, vector<Entity*>>* entities);
 
 
-};
-
+		};
+	}
+}
+#endif /* ENTITY_RENDERER_H */

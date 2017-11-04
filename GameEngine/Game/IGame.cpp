@@ -1,6 +1,10 @@
 #include "IGame.h"
+#include "..\Camera\Camera.h"
 
-//extern Display * display;
+using namespace GameEngine;
+using namespace CameraM;
+using namespace ShaderM;
+using namespace RenderM;
 
 IGame::IGame()
 {

@@ -1,13 +1,24 @@
 #pragma once
+
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include "..\Utility\common.hpp"
 #include "..\Camera\ICamera.h"
 
-class Camera : public ICamera
+namespace GameEngine
 {
+	namespace CameraM
+	{
+		class Camera : public ICamera
+		{
 
-public:
-	Camera();
-	~Camera();
+		public:
+			Camera();
+			~Camera();
 
-	void move() override;
-};
+			void move() override;
+		};
+	}
+}
+#endif /* CAMERA_H */

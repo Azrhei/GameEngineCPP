@@ -1,4 +1,7 @@
 #pragma once
+#ifndef MASTER_RENDERER_H
+#define MASTER_RENDERER_H
+
 #include <map>
 #include <vector>
 
@@ -10,42 +13,51 @@
 #include "..\Renderer\TerrainRenderer.h"
 #include "..\Shader\TerrainShader.h"
 
-class MasterRenderer
+namespace GameEngine
 {
-private:
-	const GLfloat FOV = 60;
-	const GLfloat N_Plane = 0.1f;
-	const GLfloat F_Plane = 300;
-	const GLfloat RED = 0.5f;
-	const GLfloat GREEN = 0.5f;
-	const GLfloat BLUE = 0.5f;
+	using namespace EntityM;
+	using namespace ShaderM;
 
-	StaticShader* _entity_shader;
-	TerrainShader* _terrain_shader;
+	namespace RenderM
+	{
+		class MasterRenderer
+		{
+		private:
+			const GLfloat FOV = 60;
+			const GLfloat N_Plane = 0.1f;
+			const GLfloat F_Plane = 300;
+			const GLfloat RED = 0.5f;
+			const GLfloat GREEN = 0.5f;
+			const GLfloat BLUE = 0.5f;
 
-	EntityRenderer* _entity_renderer;
-	TerrainRenderer* _terrain_renderer;
+			StaticShader* _entity_shader;
+			TerrainShader* _terrain_shader;
 
-	map<Model*, vector<Entity*>>* _entities;
-	vector<Terrain*>* _terrains;
+			EntityRenderer* _entity_renderer;
+			TerrainRenderer* _terrain_renderer;
 
-	mat4* projectionMatrix;
-	void prepare();
+			map<Model*, vector<Entity*>>* _entities;
+			vector<Terrain*>* _terrains;
 
-protected:
-	mat4* createProjectionMatrix();
+			mat4* projectionMatrix;
+			void prepare();
 
-public:
-	MasterRenderer();
-	//MasterRenderer(StaticShader * shader);
-	~MasterRenderer();
-	static void enableCulling();
-	static void disableCulling();
+		protected:
+			mat4* createProjectionMatrix();
 
-	void processTerrain(Terrain* terrain);
-	void cleanUp() { _entity_shader->cleanUp(); }
-	void processEntity(Entity* entity);
+		public:
+			MasterRenderer();
+			//MasterRenderer(StaticShader * shader);
+			~MasterRenderer();
+			static void enableCulling();
+			static void disableCulling();
 
-	void render(Light& sun, Camera* camera);
-};
+			void processTerrain(Terrain* terrain);
+			void cleanUp() { _entity_shader->cleanUp(); }
+			void processEntity(Entity* entity);
 
+			void render(Light& sun, Camera* camera);
+		};
+	}
+}
+#endif /* MASTER_RENDERER_H */

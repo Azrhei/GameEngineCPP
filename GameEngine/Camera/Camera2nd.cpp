@@ -1,11 +1,16 @@
 #include "Camera2nd.h"
 
-
-Camera2nd::Camera2nd()
+namespace GameEngine
 {
-}
+	namespace CameraM
+	{
+		Camera2nd::Camera2nd()
+		{
+		}
 
 
-Camera2nd::~Camera2nd()
-{
+		Camera2nd::~Camera2nd()
+		{
+		}
+	}
 }

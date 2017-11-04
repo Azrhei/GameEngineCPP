@@ -1,25 +1,46 @@
 #pragma once
 
+#ifndef MATHS_H
+#define MATHS_H
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/common.hpp>
 
 #include "..\Utility\common.hpp"
 #include "..\Camera\Camera.h"
 
-class Maths
+using namespace GameEngine;
+using namespace CameraM;
+
+namespace GameEngine
 {
-public:
-	Maths()=delete;
-	~Maths();
+	namespace UtilityM
+	{
+		class Maths
+		{
+		public:
+			Maths() {}
+			Maths(const Maths&) = delete;
+			void operator=(Maths&) = delete;
+			~Maths();
 
-	static mat4* createTransformationMatrix(
-		vec3 translation,
-		GLfloat rx,
-		GLfloat ry,
-		GLfloat rz,
-		GLfloat scale
-		);
+			static Maths& getInstance()
+			{
+				static Maths _inst_;
+				return _inst_;
+			}
 
-	static mat4* createViewMatrix(Camera* camera);
-};
+			static mat4* createTransformationMatrix(
+				vec3 translation,
+				GLfloat rx,
+				GLfloat ry,
+				GLfloat rz,
+				GLfloat scale
+			);
 
+			static mat4* createViewMatrix(Camera* camera);
+		};
+		static Maths& maths = Maths::getInstance();
+	}
+}
+#endif /* MATHS_H */

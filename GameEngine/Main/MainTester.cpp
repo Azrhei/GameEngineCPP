@@ -2,36 +2,19 @@
 
 #include "..\Main.h"
 
-#include "..\Player\Player.h"
-#include "..\Display\Display.h"
-#include "..\Renderer\MasterRenderer.h"
-#include "..\Utility\Loader.h"
-#include "..\Renderer\MasterRenderer.h"
-#include "..\Shader\StaticShader.h"
-#include "..\Model\ModelTexture.h"
-#include "..\Model\Model.h"
-#include "..\Entity\Entity.h"
-#include "..\Camera\Camera.h"
-#include "..\Game\IGame.h"
-#include "..\Game\Game.h"
-#include "..\Keyboard\KeyEvents.h"
-#include "..\Utility\OBJLoader.h"
-#include "..\Display\Display.h"
-#include "..\Light\Light.h"
-#include "..\Player\Player.h"
-
 #define DEBUG 
 #include <ctime>
 
 using namespace GameEngine;
 using namespace DisplayM;
 using namespace UtilityM;
-//using namespace PlayerM;
+using namespace CameraM;
+using namespace PlayerM;
 //using namespace EntityM;
 //using namespace TerrainM;
 //using namespace ModelM;
 //using namespace ShaderM;
-//using namespace RenderM;
+using namespace RenderM;
 
 int main(int argc, char ** argv, char ** argenv)
 {
@@ -92,6 +75,10 @@ int main(int argc, char ** argv, char ** argenv)
 	auto *modelMesh = objLoader.loadOBJ("bunny");
 	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
 	auto *model = new Model{ modelMesh, modelTexture };
+
+	modelTexture->reflectivity(.5f);
+	modelTexture->shineDampener(.5f);
+
 	Player* p1 = new Player{ model , {0, 0, -3 }, 0, 0, 0, 1};
 
 	/// Upcoming revised loop

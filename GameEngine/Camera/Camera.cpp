@@ -1,17 +1,22 @@
 #include "Camera.h"
 
-
-Camera::Camera()
+namespace GameEngine
 {
-}
+	namespace CameraM
+	{
+		Camera::Camera()
+		{
+		}
 
 
-Camera::~Camera()
-{
-}
+		Camera::~Camera()
+		{
+		}
 
 
-void Camera::move()
-{
-	
+		void Camera::move()
+		{
+
+		}
+	}
 }
