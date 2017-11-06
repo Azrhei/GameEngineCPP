@@ -44,7 +44,7 @@ namespace GameEngine
 			void connectTextureUnits();
 			void loadTransformationMatrix(mat4 *matrix) override;
 			void loadProjectionMatrix(mat4 *matrix) override;
-			void loadViewMatrix(Camera* camera) override;
+			void loadViewMatrix(Camera& camera) override;
 			void loadLight(Light& light) override;
 			void loadShineVariables(GLfloat damper, GLfloat reflectivity) override;
 			void loadFakeLighting(bool useFake) override;

@@ -1,3 +1,4 @@
+#include "..\Utility\common.hpp"
 #include "Display.h"
 
 namespace GameEngine
@@ -29,7 +30,7 @@ namespace GameEngine
 			}
 
 			glfwSetFramebufferSizeCallback(_window, framebufferResize_callBack);
-			glfwGetWindowSize(_window, &_WIDTH, &_HEIGHT);
+			glfwGetFramebufferSize(_window, &_WIDTH, &_HEIGHT);
 			//_lastFrameTime = time(0) * 1000;
 		}
 
@@ -55,6 +56,7 @@ namespace GameEngine
 		void Display::updateDisplay()
 		{
 			glfwSwapBuffers(_window);
+
 			//auto currentFrameTime = time(0) * 1000;
 			//_delta = (currentFrameTime - _lastFrameTime) / 1000.0f;
 			//_lastFrameTime = currentFrameTime;
@@ -64,6 +66,8 @@ namespace GameEngine
 		void Display::framebufferResize_callBack(GLFWwindow* window, int width, int height)
 		{
 			glViewport(0, 0, width, height);
+			
+//			glfwSetWindowAspectRatio(window, width, height);
 		}
 	}
 }

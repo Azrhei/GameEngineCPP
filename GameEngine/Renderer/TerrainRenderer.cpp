@@ -4,6 +4,7 @@
 namespace GameEngine
 {
 	using namespace UtilityM;
+	using namespace ModelM;
 
 	namespace RenderM
 	{
@@ -15,7 +16,7 @@ namespace GameEngine
 		{
 		}
 
-		TerrainRenderer::TerrainRenderer(TerrainShader* shader, glm::mat4* projectionMatrix) {
+		TerrainRenderer::TerrainRenderer(TerrainShader* shader, mat4* projectionMatrix) {
 			_shader = shader;
 			_shader->start();
 			_shader->loadProjectionMatrix(projectionMatrix);

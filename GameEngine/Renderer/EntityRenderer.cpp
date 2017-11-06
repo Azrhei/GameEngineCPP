@@ -7,6 +7,7 @@ namespace GameEngine
 {
 	using namespace UtilityM;
 	using namespace EntityM;
+	using namespace ModelM;
 
 	namespace RenderM
 	{

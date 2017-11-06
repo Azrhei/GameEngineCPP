@@ -17,6 +17,7 @@ namespace GameEngine
 {
 	using namespace EntityM;
 	using namespace ShaderM;
+	using namespace ModelM;
 
 	namespace RenderM
 	{
@@ -56,7 +57,7 @@ namespace GameEngine
 			void cleanUp() { _entity_shader->cleanUp(); }
 			void processEntity(Entity* entity);
 
-			void render(Light& sun, Camera* camera);
+			void render(Light& sun, Camera& camera);
 		};
 	}
 }

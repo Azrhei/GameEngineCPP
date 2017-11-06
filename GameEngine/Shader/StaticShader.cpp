@@ -112,7 +112,7 @@ namespace GameEngine
 			loadMatrix(location_transformationMatrix, matrix);
 		}
 
-		void StaticShader::loadViewMatrix(Camera* camera)
+		void StaticShader::loadViewMatrix(Camera& camera)
 		{
 			loadMatrix(location_viewMatrix, maths.createViewMatrix(camera));
 		}

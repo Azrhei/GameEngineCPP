@@ -18,6 +18,7 @@ namespace GameEngine
 	using namespace DisplayM;
 	using namespace EntityM;
 	using namespace ShaderM;
+	using namespace ModelM;
 
 	namespace RenderM
 	{

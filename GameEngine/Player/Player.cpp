@@ -1,11 +1,13 @@
 #include "Player.h"
 #include "..\Display\Display.h"
 
-using namespace DisplayM;
-using namespace EntityM;
 
 namespace GameEngine
 {
+	using namespace DisplayM;
+	using namespace EntityM;
+	using namespace ModelM;
+
 	namespace PlayerM
 	{
 		Player::Player()

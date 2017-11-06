@@ -8,6 +8,9 @@
 #include "..\Model\ModelMesh.h"
 #include "..\Model\ModelTexture.h"
 
+using namespace GameEngine;
+using namespace ModelM;
+
 class Terrain
 {
 private:

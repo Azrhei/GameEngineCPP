@@ -119,7 +119,7 @@ namespace GameEngine
 			loadVector(location_lightColor, light.color());
 		}
 
-		void TerrainShader::loadViewMatrix(Camera* camera)
+		void TerrainShader::loadViewMatrix(Camera& camera)
 		{
 			mat4* viewMatrix = maths.createViewMatrix(camera);
 			loadMatrix(location_viewMatrix, viewMatrix);

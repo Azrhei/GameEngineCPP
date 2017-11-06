@@ -4,11 +4,10 @@
 
 #include "Entity.h"
 
-using namespace GameEngine;
-using namespace EntityM;
-
 namespace GameEngine
 {
+	using namespace ModelM;
+
 	namespace EntityM
 	{
 		class EntityLiving :

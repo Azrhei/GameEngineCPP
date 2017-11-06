@@ -160,3 +160,7 @@ $RECYCLE.BIN/
 /.vs/ProjectSettings.json
 /.vs/slnx.sqlite
 /.vs/VSWorkspaceState.json
+/GameEngine/UnitTesting/GameEngine.tlog
+/GameEngine/UnitTesting
+/extensions
+/.vs/GameEngine/v15

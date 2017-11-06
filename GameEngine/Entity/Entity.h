@@ -8,6 +8,8 @@
 
 namespace GameEngine
 {
+	using namespace ModelM;
+
 	namespace EntityM
 	{
 		class Entity

@@ -5,6 +5,7 @@ namespace GameEngine
 {
 	using namespace DisplayM;
 	using namespace EntityM;
+	using namespace ModelM;
 	
 	namespace RenderM
 	{
@@ -46,7 +47,7 @@ namespace GameEngine
 			_terrains->push_back(terrain);
 		}
 
-		void MasterRenderer::render(Light& sun, Camera* cam)
+		void MasterRenderer::render(Light& sun, Camera& cam)
 		{
 			prepare();
 

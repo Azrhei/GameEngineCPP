@@ -7,7 +7,10 @@
 #include "Error.h"
 
 using namespace glm;
+
 namespace GameEngine {
+	using namespace ModelM;
+
 	namespace UtilityM {
 		
 		ModelMesh * OBJLoader::getDefaultModel()

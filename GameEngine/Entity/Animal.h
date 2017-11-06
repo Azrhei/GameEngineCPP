@@ -4,6 +4,9 @@
 
 #include "..\Utility\common.hpp"
 
+using namespace GameEngine;
+using namespace EntityM;
+
 class Animal :
 	public IEntityPassive, EntityLiving
 {

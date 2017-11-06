@@ -1,6 +1,8 @@
 #include "Entity.h"
 namespace GameEngine
 {
+	using namespace ModelM;
+
 	namespace EntityM
 	{
 		Entity::Entity()

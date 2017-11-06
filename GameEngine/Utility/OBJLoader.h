@@ -14,6 +14,8 @@ using namespace glm;
 
 namespace GameEngine
 {
+	using namespace ModelM;
+
 	namespace UtilityM
 	{
 		class OBJLoader

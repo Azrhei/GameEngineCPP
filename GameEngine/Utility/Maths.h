@@ -38,7 +38,7 @@ namespace GameEngine
 				GLfloat scale
 			);
 
-			static mat4* createViewMatrix(Camera* camera);
+			static mat4* createViewMatrix(Camera& camera);
 		};
 		static Maths& maths = Maths::getInstance();
 	}

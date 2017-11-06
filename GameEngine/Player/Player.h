@@ -7,10 +7,12 @@
 #include "..\Entity\EntityLiving.h"
 #include "..\Model\Model.h"
 
-using namespace EntityM;
 
 namespace GameEngine
 {
+	using namespace EntityM;
+	using namespace ModelM;
+
 	namespace PlayerM
 	{
 		class Player :

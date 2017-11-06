@@ -1,26 +1,26 @@
-#define DEBUG
+#include "Main.h"
 
-#include "..\Main.h"
-
-#define DEBUG 
+#ifdef RUN_TESTS
+#include "..\Tests\UnitTests.h"
+#include "..\Tests\Tests.hpp"
+#else
 #include <ctime>
-
 using namespace GameEngine;
 using namespace DisplayM;
 using namespace UtilityM;
 using namespace CameraM;
 using namespace PlayerM;
-//using namespace EntityM;
+using namespace EntityM;
 //using namespace TerrainM;
-//using namespace ModelM;
-//using namespace ShaderM;
+using namespace ModelM;
+using namespace ShaderM;
 using namespace RenderM;
 
 int main(int argc, char ** argv, char ** argenv)
 {
 
 	wcout << L"Starting Engine" << nl;
-	
+
 	glfwInit();
 
 	wcout << L"Creating Display" << nl;
@@ -44,7 +44,7 @@ int main(int argc, char ** argv, char ** argenv)
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
 
-	Camera* camera = new Camera{};
+	Camera& camera = Camera{};
 	
 	Light light
 	{
@@ -122,7 +122,7 @@ int main(int argc, char ** argv, char ** argenv)
 		handleKeyEvents();
 
 		p1->move();
-		camera->move();
+		camera.move();
 		
 		renderer->processEntity(p1);
 		
@@ -146,3 +146,4 @@ int main(int argc, char ** argv, char ** argenv)
 	std::cin.get();
 #endif
 }
+#endif /* RUN_TESTS */

@@ -27,7 +27,7 @@ namespace GameEngine
 			GLint _FPS_LIMIT;
 			GLFWwindow* _window;
 			long _lastFrameTime;
-			float _delta;
+			float _delta=.02f;
 			bool _shown;
 			bool _shouldClose;
 
@@ -49,8 +49,8 @@ namespace GameEngine
 
 			// Getters
 			GLFWwindow * window() { return _window; }
-			GLint height() { return _WIDTH; }
-			GLint width() { return _HEIGHT; }
+			GLint height() { return _HEIGHT; }
+			GLint width() { return _WIDTH; }
 			bool exists() { return (_window == nullptr) ? false : true; }
 			bool shown() { return _shown; }
 			float delta() { return _delta; }
@@ -62,6 +62,12 @@ namespace GameEngine
 			void closeDisplay();
 			void showDisplay();
 			void updateDisplay();
+
+			void resize(int width, int height)
+			{
+				glfwSetWindowSize(this->window(), width, height);
+				glViewport(0, 0, width, height);
+			}
 
 			//event handler
 			static void framebufferResize_callBack(GLFWwindow* window, int width, int height);

@@ -2,6 +2,8 @@
 #include "..\Utility\Error.h"
 
 namespace GameEngine {
+	using namespace ModelM;
+
 	namespace UtilityM {
 
 		Loader::~Loader()
@@ -55,9 +57,18 @@ namespace GameEngine {
 
 		void Loader::cleanUp()
 		{
-			glDeleteVertexArrays(_vaos->size(), &(*_vaos)[0]);
-			glDeleteBuffers(_vbos->size(), &(*_vbos)[0]);
-			glDeleteTextures(_textures->size(), &(*_textures)[0]);
+			if (_vaos->size() > 0)
+			{
+				glDeleteVertexArrays(_vaos->size(), &(*_vaos)[0]);
+			}
+			if (_vbos->size() > 0)
+			{
+				glDeleteBuffers(_vbos->size(), &(*_vbos)[0]);
+			}
+			if (_textures->size() > 0)
+			{
+				glDeleteTextures(_textures->size(), &(*_textures)[0]);
+			}
 		}
 
 		void Loader::unbindVAO()

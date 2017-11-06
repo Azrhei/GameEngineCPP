@@ -12,6 +12,8 @@
 using namespace std;
 
 namespace GameEngine {
+	using namespace ModelM;
+
 	namespace UtilityM {
 		class Loader
 		{

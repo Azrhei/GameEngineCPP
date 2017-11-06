@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by Engine.rc
+// Used by GameEngine.rc
 
 // Next default values for new objects
 // 
