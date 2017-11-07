@@ -32,7 +32,7 @@ namespace GameEngine
 			void TURN_SPEED(float) = delete;
 
 		public:
-			Player();
+			Player() = delete;
 			Player(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
 			~Player();
 

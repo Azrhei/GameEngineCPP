@@ -32,7 +32,7 @@ namespace GameEngine
 			void growUp() { if (_age == CHILD) _age = AGE::ADULT; }
 
 		public:
-			EntityLiving();
+			EntityLiving() = delete;
 			EntityLiving(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale)
 				: Entity(model, position, rx, ry, rz, scale) {}
 			~EntityLiving();

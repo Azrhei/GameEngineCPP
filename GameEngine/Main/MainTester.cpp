@@ -67,10 +67,10 @@ int main(int argc, char ** argv, char ** argenv)
 	TerrainTexture* blendMap = new TerrainTexture( loader.loadTexture("blendMap") );
 	TerrainTexturePack* tp = new TerrainTexturePack( backgroundTexture, rTexture, gTexture, bTexture );
 	
-	Terrain* t1 = new Terrain{ 0, -1, tp, blendMap };
-	Terrain* t2 = new Terrain{ -1, -1, tp, blendMap };
-	Terrain* t3 = new Terrain{ 0, 1, tp, blendMap };
-	Terrain* t4 = new Terrain{ 1, 1, tp, blendMap };
+	Terrain& t1 = Terrain{ 0, -1, tp, blendMap };
+	Terrain& t2 = Terrain{ -1, -1, tp, blendMap };
+	Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
+	Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
 	
 	auto *modelMesh = objLoader.loadOBJ("bunny");
 	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
@@ -79,7 +79,7 @@ int main(int argc, char ** argv, char ** argenv)
 	modelTexture->reflectivity(.5f);
 	modelTexture->shineDampener(.5f);
 
-	Player* p1 = new Player{ model , {0, 0, -3 }, 0, 0, 0, 1};
+	Player& p1 = Player{ model , {0, 0, -3 }, 0, 0, 0, 1};
 
 	/// Upcoming revised loop
 /*
@@ -121,7 +121,7 @@ int main(int argc, char ** argv, char ** argenv)
 		glfwPollEvents();
 		handleKeyEvents();
 
-		p1->move();
+		p1.move();
 		camera.move();
 		
 		renderer->processEntity(p1);

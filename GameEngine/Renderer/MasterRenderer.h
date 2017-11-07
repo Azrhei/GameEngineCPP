@@ -37,8 +37,8 @@ namespace GameEngine
 			EntityRenderer* _entity_renderer;
 			TerrainRenderer* _terrain_renderer;
 
-			map<Model*, vector<Entity*>>* _entities;
-			vector<Terrain*>* _terrains;
+			map<Model*, vector<Entity>>* _entities;
+			vector<Terrain>* _terrains;
 
 			mat4* projectionMatrix;
 			void prepare();
@@ -53,9 +53,9 @@ namespace GameEngine
 			static void enableCulling();
 			static void disableCulling();
 
-			void processTerrain(Terrain* terrain);
+			void processTerrain(Terrain& terrain);
 			void cleanUp() { _entity_shader->cleanUp(); }
-			void processEntity(Entity* entity);
+			void processEntity(Entity& entity);
 
 			void render(Light& sun, Camera& camera);
 		};

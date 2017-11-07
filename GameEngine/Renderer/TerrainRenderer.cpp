@@ -24,22 +24,22 @@ namespace GameEngine
 			_shader->stop();
 		}
 
-		void TerrainRenderer::render(vector<Terrain*>* terrains)
+		void TerrainRenderer::render(vector<Terrain>* terrains)
 		{
 			assert(terrains != NULL);
 
-			for (auto *terrain : *terrains)
+			for (auto terrain : *terrains)
 			{
 				prepareTerrain(terrain);
 				loadModelMatrix(terrain);
-				glDrawElements(GL_TRIANGLES, terrain->mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, terrain.mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
 				unbindModel();
 			}
 		}
 
-		void TerrainRenderer::prepareTerrain(Terrain* terrain)
+		void TerrainRenderer::prepareTerrain(Terrain& terrain)
 		{
-			ModelMesh* ModelMesh = terrain->mesh();
+			ModelMesh* ModelMesh = terrain.mesh();
 			glBindVertexArray(ModelMesh->id());
 			glEnableVertexAttribArray(0);
 			glEnableVertexAttribArray(1);
@@ -49,9 +49,9 @@ namespace GameEngine
 			_shader->loadShineVariables(1, 0);
 		}
 
-		void TerrainRenderer::bindTextures(Terrain* terrain)
+		void TerrainRenderer::bindTextures(Terrain& terrain)
 		{
-			TerrainTexturePack* texturePack = terrain->texturePack();
+			TerrainTexturePack* texturePack = terrain.texturePack();
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, texturePack->backgroundTexture()->textureId());
@@ -62,7 +62,7 @@ namespace GameEngine
 			glActiveTexture(GL_TEXTURE3);
 			glBindTexture(GL_TEXTURE_2D, texturePack->bTexture()->textureId());
 			glActiveTexture(GL_TEXTURE4);
-			glBindTexture(GL_TEXTURE_2D, terrain->blendMap()->textureId());
+			glBindTexture(GL_TEXTURE_2D, terrain.blendMap()->textureId());
 		}
 
 		void TerrainRenderer::unbindModel()
@@ -73,10 +73,10 @@ namespace GameEngine
 			glBindVertexArray(0);
 		}
 
-		void TerrainRenderer::loadModelMatrix(Terrain* terrain) {
+		void TerrainRenderer::loadModelMatrix(Terrain& terrain) {
 			mat4* transformationMatrix =
 				maths.createTransformationMatrix(
-			{ terrain->x(), 0, terrain->z() },
+			{ terrain.x(), 0, terrain.z() },
 					0,
 					0,
 					0,

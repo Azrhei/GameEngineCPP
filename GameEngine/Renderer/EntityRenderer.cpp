@@ -31,7 +31,7 @@ namespace GameEngine
 		{
 		}
 
-		void EntityRenderer::render(map<Model*, vector<Entity*>> *e)
+		void EntityRenderer::render(map<Model*, vector<Entity>> *e)
 		{
 			assert(e != NULL);
 
@@ -41,11 +41,12 @@ namespace GameEngine
 				{
 					prepareTeturedModel(models.first);
 
-					vector<Entity*> batch = models.second;
-					for (Entity* entity : batch)
+					vector<Entity> batch = models.second;
+					for (Entity entity : batch)
 					{
+						
 						prepareInstance(entity);
-						glDrawElements(GL_TRIANGLES, entity->model()->mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
+						glDrawElements(GL_TRIANGLES, entity.model()->mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
 					}
 					unbindModel();
 				}
@@ -85,15 +86,15 @@ namespace GameEngine
 			glBindVertexArray(0);
 		}
 
-		void EntityRenderer::prepareInstance(Entity* entity)
+		void EntityRenderer::prepareInstance(Entity& entity)
 		{
 			mat4 *transformationMatrix = maths.createTransformationMatrix
 			(
-				entity->position(),
-				entity->rx(),
-				entity->ry(),
-				entity->rz(),
-				entity->scale()
+				entity.position(),
+				entity.rx(),
+				entity.ry(),
+				entity.rz(),
+				entity.scale()
 			);
 			_shader->loadTransformationMatrix(transformationMatrix);
 		}

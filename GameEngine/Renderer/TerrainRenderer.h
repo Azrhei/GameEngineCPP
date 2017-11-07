@@ -24,11 +24,11 @@ namespace GameEngine
 			TerrainRenderer();
 			~TerrainRenderer();
 			TerrainRenderer(TerrainShader* shader, mat4* projectionMatrix);
-			void prepareTerrain(Terrain* terrain);
+			void prepareTerrain(Terrain& terrain);
 			void unbindModel();
-			void loadModelMatrix(Terrain* terrain);
-			void render(vector<Terrain*>* terrains);
-			void bindTextures(Terrain* terrain);
+			void loadModelMatrix(Terrain& terrain);
+			void render(vector<Terrain>* terrains);
+			void bindTextures(Terrain& terrain);
 		};
 	}
 }

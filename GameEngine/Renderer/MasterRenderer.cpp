@@ -12,12 +12,12 @@ namespace GameEngine
 		MasterRenderer::MasterRenderer()
 			: _entity_shader(new StaticShader), _terrain_shader(new TerrainShader)
 		{
-			_entities = new map<Model*, vector<Entity*>>;
+			_entities = new map<Model*, vector<Entity>>;
 			enableCulling();
 			glCullFace(GL_BACK);
 
 			createProjectionMatrix();
-			_terrains = new vector<Terrain*>();
+			_terrains = new vector<Terrain>();
 			_entity_renderer = new EntityRenderer{ _entity_shader, projectionMatrix };
 			_terrain_renderer = new TerrainRenderer{ _terrain_shader, projectionMatrix };
 		}
@@ -42,7 +42,7 @@ namespace GameEngine
 			delete _terrains;
 		}
 
-		void MasterRenderer::processTerrain(Terrain* terrain)
+		void MasterRenderer::processTerrain(Terrain& terrain)
 		{
 			_terrains->push_back(terrain);
 		}
@@ -80,9 +80,8 @@ namespace GameEngine
 		}
 
 		// Add an entity to be rendered during render cycle.
-		void MasterRenderer::processEntity(Entity* entity)
+		void MasterRenderer::processEntity(Entity& entity)
 		{
-			assert(entity != NULL);
 			/*
 			is entity null ? break;
 			is entities empty?
@@ -103,10 +102,10 @@ namespace GameEngine
 			if using point to vector then we also need to make certain to allocate the vector when creating the vector
 			*/
 
-			Model* model = entity->model();
+			Model* model = entity.model();
 			if (_entities->empty())
 			{
-				vector<Entity*>* t = new vector<Entity*>();
+				vector<Entity>* t = new vector<Entity>();
 				t->push_back(entity);
 				_entities->insert(make_pair(model, *t));
 			}
@@ -118,7 +117,7 @@ namespace GameEngine
 				}
 				else
 				{
-					vector<Entity*>* t = new vector<Entity*>();
+					vector<Entity>* t = new vector<Entity>();
 					t->push_back(entity);
 					_entities->insert(make_pair(model, *t));
 				}

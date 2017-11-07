@@ -23,7 +23,7 @@ namespace GameEngine
 			GLfloat _scale;
 
 		protected:
-			void model(Model *model) { _model = model; }
+			void model(Model* model) { _model = model; }
 			void position(vec3 val) { _position = val; }
 			void rx(GLfloat val) { _rx = val; }
 			void ry(GLfloat val) { _ry = val; }
@@ -32,7 +32,7 @@ namespace GameEngine
 
 
 		public:
-			Entity();
+			Entity() = delete;
 			Entity(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
 			~Entity();
 

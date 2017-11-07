@@ -3,10 +3,6 @@ namespace GameEngine
 {
 	namespace EntityM
 	{
-		EntityLiving::EntityLiving()
-		{
-		}
-
 		EntityLiving::~EntityLiving()
 		{
 		}
