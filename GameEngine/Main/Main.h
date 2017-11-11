@@ -21,6 +21,6 @@
 #include "..\Utility\OBJLoader.h"
 #include "..\Light\Light.h"
 
-using namespace GameEngine;
+//using namespace GameEngine;
 
 #endif /* MAIN_H */

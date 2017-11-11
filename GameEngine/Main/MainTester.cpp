@@ -5,6 +5,8 @@
 #include "..\Tests\Tests.hpp"
 #else
 #include <ctime>
+#include "..\Mouse\Mouse.h"
+
 using namespace GameEngine;
 using namespace DisplayM;
 using namespace UtilityM;
@@ -15,6 +17,7 @@ using namespace EntityM;
 using namespace ModelM;
 using namespace ShaderM;
 using namespace RenderM;
+using namespace InputM;
 
 int main(int argc, char ** argv, char ** argenv)
 {
@@ -114,7 +117,8 @@ int main(int argc, char ** argv, char ** argenv)
 */	
 	
 	
-	
+	mouse.init();
+
 	while (!display.shouldClose())
 	{
 		/* Poll for and process events */
