@@ -1,5 +1,10 @@
 #include "Animal.h"
-
-Animal::~Animal()
+namespace GameEngine
 {
+	namespace EntityM
+	{
+		Animal::~Animal()
+		{
+		}
+	}
 }
