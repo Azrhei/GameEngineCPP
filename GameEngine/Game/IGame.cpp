@@ -11,7 +11,7 @@ IGame::IGame()
 	ILocalPlayer*		_player = new ILocalPlayer;
 	MasterRenderer*		_renderer = new MasterRenderer;
 	StaticShader*		_shader = new StaticShader;
-	Camera*			_camera = new Camera;
+	//Camera*			_camera = new Camera;
 	//Display*		_display = ::display;
 	//Loader*				_loader = new Loader;
 

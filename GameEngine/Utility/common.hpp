@@ -1,7 +1,7 @@
 #pragma once
 //
-//#ifndef _SHARED_H
-//#define _SHARED_H
+#ifndef _SHARED_H
+#define _SHARED_H
 // This header is used by most or all GameEngine components.
 
 #include <gl/glew.h>
@@ -35,4 +35,4 @@ inline ostream& nl(ostream& o) { return o << NEWLINE; }
 #define RM	RenderM
 #define SM	ShaderM
 
-//#endif
+#endif

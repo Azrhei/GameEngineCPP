@@ -21,7 +21,6 @@ using namespace InputM;
 
 int main(int argc, char ** argv, char ** argenv)
 {
-
 	wcout << L"Starting Engine" << nl;
 
 	glfwInit();
@@ -46,8 +45,6 @@ int main(int argc, char ** argv, char ** argenv)
 		wcerr << L"Could not start GLEW" << nl;
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
-
-	Camera& camera = Camera{};
 	
 	Light light
 	{
@@ -55,10 +52,6 @@ int main(int argc, char ** argv, char ** argenv)
 		{ 1, 1, 1 },	// Color
 		1				// Itensity
 	};
-
-	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
-
-	wcout << L"Begining Game loop" << nl;
 
 	MasterRenderer* renderer = new MasterRenderer;
 
@@ -82,7 +75,9 @@ int main(int argc, char ** argv, char ** argenv)
 	modelTexture->reflectivity(.5f);
 	modelTexture->shineDampener(.5f);
 
-	Player& p1 = Player{ model , {0, 0, -3 }, 0, 0, 0, 1};
+	Player& p1 = Player( model , {0, 0, -3 }, 0, 0, 0, 1);
+
+	Camera& camera = Camera(p1);
 
 	/// Upcoming revised loop
 /*
@@ -117,8 +112,9 @@ int main(int argc, char ** argv, char ** argenv)
 */	
 	
 	
+	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
 	mouse.init();
-
+	wcout << L"Begining Game loop" << nl;
 	while (!display.shouldClose())
 	{
 		/* Poll for and process events */
@@ -126,8 +122,6 @@ int main(int argc, char ** argv, char ** argenv)
 		handleKeyEvents();
 
 		p1.move();
-		camera.move();
-		
 		renderer->processEntity(p1);
 		
 		renderer->processTerrain(t1);
@@ -135,6 +129,7 @@ int main(int argc, char ** argv, char ** argenv)
 		//renderer->processTerrain(t3);
 		//renderer->processTerrain(t4);
 
+		//camera.move(.1);
 		renderer->render(light,camera);
 
 		display.updateDisplay();
