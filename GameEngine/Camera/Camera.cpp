@@ -11,7 +11,8 @@ namespace GameEngine
 	{
 		Camera::Camera(Player& p) : _player(p)
 		{
-
+			_angleAroundPlayer = 0;
+			_distanceFromPlayer = 50;
 		}
 
 		Camera::~Camera()
@@ -34,14 +35,15 @@ namespace GameEngine
 		void Camera::calculateCameraPosition(GLfloat hDist, GLfloat vDist)
 		{
 			auto theta = glm::radians(player().ry() + _angleAroundPlayer);
-			auto dx = hDist * sin(theta);
-			auto dz = hDist * cos(theta);
+			auto dx = hDist * glm::sin(theta);
+			auto dz = hDist * glm::cos(theta);
 
 			auto & pos = position();
 			pos.x = player().position().x - dx;
 			pos.z = player().position().z - dz;
 			pos.y = player().position().y - vDist;
 
+			position(std::move(pos));
 			//(static_cast<vec3&>(position())).x = player().position().x - dx;
 			//(static_cast<vec3&>(position())).y = player().position().y - vDist;
 			//(static_cast<vec3&>(position())).z = player().position().z - dz;
@@ -53,14 +55,22 @@ namespace GameEngine
 		GLfloat Camera::distanceFromPlayer() const { return _distanceFromPlayer; }
 		GLfloat Camera::angleAroundPlayer() const { return _angleAroundPlayer; }
 
-		GLfloat Camera::calculateHorizontalDistance() { return _distanceFromPlayer * cos(radians(pitch())); }
-		GLfloat Camera::calculateVerticalDistance() { return _distanceFromPlayer * sin(radians(pitch())); }
+		GLfloat Camera::calculateHorizontalDistance() { return _distanceFromPlayer * glm::cos(glm::radians(pitch())); }
+		GLfloat Camera::calculateVerticalDistance() { return _distanceFromPlayer * glm::sin(glm::radians(pitch())); }
 
 		void Camera::calculateZoom()
 		{
-			Mouse& t = Mouse::getInstance();
-			float zoomLevel = t.yscroll();
-			_distanceFromPlayer -= zoomLevel;
+			auto t = mouse.yscroll();
+			auto dt = mouse.yscrollDirection();
+			if (dt != Mouse::YDirection::SCROLL_TARE)
+			{
+				float zoomLevel = t;
+				_distanceFromPlayer -= zoomLevel * 0.1f;				
+			}
+			else
+			{
+
+			}
 		}
 
 		void Camera::calculateAngleFromPlayer()

@@ -39,8 +39,8 @@ namespace GameEngine
 			*matrix = rotate(*matrix, radians(camera.yaw()), vec3{ 0, 1, 0 });
 			*matrix = rotate(*matrix, radians(camera.roll()), vec3{ 0, 0, 1 });
 
-			vec3 cameraPos = camera.position();
-			vec3 negCameraPos = vec3{ -cameraPos.x, -cameraPos.y, -cameraPos.z };
+			auto & cameraPos = camera.position();
+			auto & negCameraPos = vec3{ -cameraPos.x, -cameraPos.y, -cameraPos.z };
 			*matrix = translate(*matrix, negCameraPos);
 
 			return matrix;

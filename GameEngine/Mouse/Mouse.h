@@ -12,7 +12,7 @@ namespace GameEngine
 	{
 		class Mouse
 		{
-
+		public:
 			enum class XDirection
 			{
 				SCROLL_TARE,
@@ -27,6 +27,7 @@ namespace GameEngine
 				SCROLL_UP
 			};
 
+		private:
 			const GLFWwindow* _window;
 
 			float		_xPos;
@@ -122,8 +123,17 @@ namespace GameEngine
 			}
 
 			~Mouse();
-			float yscroll() const { return _yscroll; }
+			
+			float yscroll()  
+			{ 
+				auto t = _yscroll;
+				_yscroll = 0;
+				return t; 
+			}
+
 			float xscroll() const { return _xscroll; }
+			YDirection yscrollDirection() const { return _yscrollDirection; }
+			XDirection xscrollDirection() const { return _xscrollDirection; }
 			float xpos() const { return _xPos; }
 			float ypos() const { return _yPos; }
 			float dx() const { return _dx; }
