@@ -7,6 +7,7 @@
 #include "..\Player\Player.h"
 #include "..\Mouse\Mouse.h"
 
+// This is actually the 3rd Person camera.
 namespace GameEngine
 {
 	using namespace PlayerM;
@@ -15,6 +16,9 @@ namespace GameEngine
 	{
 		class Camera : public ICamera
 		{
+		private:
+			Player& _player;
+
 			GLfloat _distanceFromPlayer = 50.0f;
 			GLfloat _angleAroundPlayer = 0.0f;
 
@@ -37,7 +41,7 @@ namespace GameEngine
 			Camera(Player& p);
 			~Camera();
 			void move(double delta) override;
-			Player& _player;
+			Player& player() { return _player; }
 		};
 	}
 }

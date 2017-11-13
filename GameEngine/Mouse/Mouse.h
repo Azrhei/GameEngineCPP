@@ -44,6 +44,7 @@ namespace GameEngine
 			Mouse() 
 			{
 				this->_window = display.window();
+				init();
 			}
 
 

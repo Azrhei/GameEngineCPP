@@ -117,19 +117,19 @@ int main(int argc, char ** argv, char ** argenv)
 	wcout << L"Begining Game loop" << nl;
 	while (!display.shouldClose())
 	{
-		/* Poll for and process events */
 		glfwPollEvents();
 		handleKeyEvents();
 
+		/* Poll for and process events */
 		p1.move();
+ 		camera.move(0.001);		
+				
 		renderer->processEntity(p1);
-		
 		renderer->processTerrain(t1);
 		//renderer->processTerrain(t2);
 		//renderer->processTerrain(t3);
 		//renderer->processTerrain(t4);
 
-		//camera.move(.1);
 		renderer->render(light,camera);
 
 		display.updateDisplay();

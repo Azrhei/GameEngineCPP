@@ -37,7 +37,6 @@ namespace GameEngine
 			void exists(GLint) = delete;
 			void shown(bool val) { _shown = val; }
 			void delta(GLfloat val) { _delta = val; }
-			void shouldClose(bool) = delete;
 
 		public:
 			Display(Display const&) = delete;
@@ -48,6 +47,7 @@ namespace GameEngine
 			~Display();
 
 			// Getters
+			void shouldClose(GLboolean val) { glfwSetWindowShouldClose(_window, val); }
 			GLFWwindow * window() { return _window; }
 			GLint height() { return _HEIGHT; }
 			GLint width() { return _WIDTH; }

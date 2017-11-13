@@ -6,11 +6,20 @@ namespace GameEngine
 	{
 		class ICamera
 		{
+		private:
+			vec3 _position = { 0,0,0 };
+			GLfloat _pitch = 20;
+			GLfloat _yaw = 0;
+			GLfloat _roll = 0;
 		protected:
-			vec3 _position;
-			GLfloat _pitch;
-			GLfloat _yaw;
-			GLfloat _roll;
+			/*
+			void roll(GLfloat val) { _roll = val; }
+			void drx(GLfloat val);
+			void dry(GLfloat val);
+			void drz(GLfloat val);
+			void drot(vec3 val);
+			void drot(GLfloat pitch, GLfloat yaw, GLfloat roll);
+			*/
 
 		public:
 			ICamera();
@@ -27,11 +36,11 @@ namespace GameEngine
 			void yaw(GLfloat val) { _yaw = val; }
 			void roll(GLfloat val) { _roll = val; }
 
-			virtual void move(double) = 0;
-			//virtual void move(vec3 npos, vec3 nrot) = 0;
-			//virtual void move(vec3 npos, GLfloat drx, GLfloat dry, GLfloat drz) = 0;
-			//virtual void move(GLfloat dx, GLfloat dy, GLfloat dz) = 0;
-			//virtual void move(vec3 npos) = 0;
+			virtual void move(double delta) = 0;
+			//virtual void move(double delta, vec3 npos, vec3 nrot) = 0;
+			//virtual void move(double delta, vec3 npos, GLfloat drx, GLfloat dry, GLfloat drz) = 0;
+			//virtual void move(double delta, GLfloat dx, GLfloat dy, GLfloat dz) = 0;
+			//virtual void move(double delta, vec3 npos) = 0;
 		};
 	}
 }

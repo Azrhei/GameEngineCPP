@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "..\Mouse\Mouse.h"
+#include <glm\ext.hpp>
 
 namespace GameEngine
 {
@@ -13,33 +14,38 @@ namespace GameEngine
 
 		}
 
-
 		Camera::~Camera()
 		{
 		}
 
-
 		void Camera::move(double delta)
 		{
-			calculateAngleAroundPlayer();
+			calculateZoom();                               
 			calculateAngleFromPlayer();
-			calculateZoom();
+			calculateAngleAroundPlayer();
 
 			float hDistance = calculateHorizontalDistance();
 			float vDistance = calculateVerticalDistance();
 
 			calculateCameraPosition(hDistance, vDistance);
+			yaw(180 - player().ry() + _angleAroundPlayer);
 		}
 
 		void Camera::calculateCameraPosition(GLfloat hDist, GLfloat vDist)
 		{
-			auto theta = glm::radians(_player.ry() + _angleAroundPlayer);
+			auto theta = glm::radians(player().ry() + _angleAroundPlayer);
 			auto dx = hDist * sin(theta);
 			auto dz = hDist * cos(theta);
 
-			vec3 p{ _player.position().x - dx,_player.position().y * vDist, _player.position().z - hDist };
+			auto & pos = position();
+			pos.x = player().position().x - dx;
+			pos.z = player().position().z - dz;
+			pos.y = player().position().y - vDist;
 
-			_position = std::move(p);
+			//(static_cast<vec3&>(position())).x = player().position().x - dx;
+			//(static_cast<vec3&>(position())).y = player().position().y - vDist;
+			//(static_cast<vec3&>(position())).z = player().position().z - dz;
+
 		}
 
 		void Camera::distanceFromPlayer(GLfloat val) { _distanceFromPlayer = val; }
@@ -52,7 +58,8 @@ namespace GameEngine
 
 		void Camera::calculateZoom()
 		{
-			float zoomLevel = mouse.yscroll() * 0.1f;
+			Mouse& t = Mouse::getInstance();
+			float zoomLevel = t.yscroll();
 			_distanceFromPlayer -= zoomLevel;
 		}
 
@@ -60,9 +67,8 @@ namespace GameEngine
 		{
 			if (mouse.rightButtonState() == GLFW_PRESS)
 			{
-				float pitchChange = mouse.dy() * 0.1f;
+				float pitchChange = mouse.dy() * 0.01f;
 				pitch(pitch() - pitchChange);
-
 			}
 		}
 
@@ -70,7 +76,9 @@ namespace GameEngine
 		{
 			if (mouse.leftButtonState() == GLFW_PRESS)
 			{
-				float angleChange = mouse.dx() * 0.3f;
+				float angleChange = mouse.dx() * 0.03f;
+				angleAroundPlayer(angleAroundPlayer() - angleChange);
+				
 				_angleAroundPlayer -= angleChange;
 			}
 		}
