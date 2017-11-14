@@ -30,15 +30,15 @@ namespace GameEngine
 		private:
 			const GLFWwindow* _window;
 
-			float		_xPos;
-			float		_yPos;
-			float		_dy;
-			float		_dx;
-			float		_yscroll;
-			float		_xscroll;
-			bool			_lButton;
-			bool			_rButton;
-			bool			_mButton;
+			float	_yPos;
+			float	_dy;
+			float	_dx;
+			float	_yscroll;
+			float	_xscroll;
+			float	_xPos;
+			bool	_lButton;
+			bool	_rButton;
+			bool	_mButton;
 			XDirection	_xscrollDirection;
 			YDirection	_yscrollDirection;
 
@@ -47,7 +47,6 @@ namespace GameEngine
 				this->_window = display.window();
 				init();
 			}
-
 
 			static void MouseScrollCB(GLFWwindow* window, double xoffset, double yoffset)
 			{
@@ -107,15 +106,14 @@ namespace GameEngine
 			static Mouse & getInstance()
 			{
 				static Mouse _inst_;
-				
 				return _inst_;
 			}
 
 			void init()
 			{
-				GLFWcursorposfun moveCB = &Mouse::MouseMoveCB;
-				GLFWmousebuttonfun buttonCB = &Mouse::MouseButtonCB;
-				GLFWscrollfun scrollCB = &Mouse::MouseScrollCB;
+				GLFWcursorposfun	moveCB   = &Mouse::MouseMoveCB;
+				GLFWmousebuttonfun	buttonCB = &Mouse::MouseButtonCB;
+				GLFWscrollfun		scrollCB = &Mouse::MouseScrollCB;
 
 				glfwSetCursorPosCallback(display.window(), moveCB);
 				glfwSetMouseButtonCallback(display.window(), buttonCB);
@@ -131,7 +129,7 @@ namespace GameEngine
 				return t; 
 			}
 
-			float xscroll() const { return _xscroll; }
+			float xscroll() { return _xscroll; }
 			YDirection yscrollDirection() const { return _yscrollDirection; }
 			XDirection xscrollDirection() const { return _xscrollDirection; }
 			float xpos() const { return _xPos; }

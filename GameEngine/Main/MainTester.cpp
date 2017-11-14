@@ -1,3 +1,4 @@
+#define DEBUG
 #include "Main.h"
 
 #ifdef RUN_TESTS

@@ -44,10 +44,6 @@ namespace GameEngine
 			pos.y = player().position().y - vDist;
 
 			position(std::move(pos));
-			//(static_cast<vec3&>(position())).x = player().position().x - dx;
-			//(static_cast<vec3&>(position())).y = player().position().y - vDist;
-			//(static_cast<vec3&>(position())).z = player().position().z - dz;
-
 		}
 
 		void Camera::distanceFromPlayer(GLfloat val) { _distanceFromPlayer = val; }
