@@ -28,11 +28,12 @@ namespace GameEngine
 			}
 
 		private:
-			OBJLoader() {};
+			OBJLoader() 
+			{
+			};
 
-			string default_model_filename = "default";
-			ModelMesh * default_model = nullptr;
-			ModelMesh * getDefaultModel();
+			const string default_model_filename = "default";
+			ModelMesh& getDefaultModel();
 
 		public:
 			~OBJLoader();
@@ -40,16 +41,16 @@ namespace GameEngine
 			OBJLoader(OBJLoader const&) = delete;
 			void operator=(OBJLoader const&) = delete;
 
-			ModelMesh * loadOBJ(string path);
+			ModelMesh loadOBJ(string path);
 
 			void OBJLoader::processVertex
 			(
 				ivec3 vertex,
-				vector<GLint>* ind,
-				vector<vec2>* tex,
-				vector<vec3>* norm,
-				vector<GLfloat>* texArray,
-				vector<GLfloat>* normArray
+				vector<GLint>& ind,
+				vector<vec2>& tex,
+				vector<vec3>& norm,
+				vector<GLfloat>& texArray,
+				vector<GLfloat>& normArray
 			);
 		};
 		static OBJLoader& objLoader = OBJLoader::getInstance();

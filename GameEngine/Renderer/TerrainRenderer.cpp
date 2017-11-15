@@ -32,15 +32,15 @@ namespace GameEngine
 			{
 				prepareTerrain(terrain);
 				loadModelMatrix(terrain);
-				glDrawElements(GL_TRIANGLES, terrain.mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, terrain.mesh().vertexCount(), GL_UNSIGNED_INT, 0);
 				unbindModel();
 			}
 		}
 
 		void TerrainRenderer::prepareTerrain(Terrain& terrain)
 		{
-			ModelMesh* ModelMesh = terrain.mesh();
-			glBindVertexArray(ModelMesh->id());
+			ModelMesh& mesh = terrain.mesh();
+			glBindVertexArray(mesh.id());
 			glEnableVertexAttribArray(0);
 			glEnableVertexAttribArray(1);
 			glEnableVertexAttribArray(2);

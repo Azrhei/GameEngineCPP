@@ -69,7 +69,7 @@ int main(int argc, char ** argv, char ** argenv)
 	Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
 	Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
 	
-	auto *modelMesh = objLoader.loadOBJ("bunny");
+	auto modelMesh = objLoader.loadOBJ("bunny");
 	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
 	auto *model = new Model{ modelMesh, modelTexture };
 

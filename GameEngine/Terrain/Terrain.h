@@ -19,7 +19,7 @@ private:
 
 	GLfloat _x;
 	GLfloat _z;
-	ModelMesh* _mesh;
+	ModelMesh& _mesh;
 	TerrainTexturePack* _texturePack;
 	TerrainTexture* _blendMap;
 
@@ -28,12 +28,12 @@ protected:
 	//Setters
 	void x(GLfloat val){ _x = val; }
 	void z(GLfloat val){ _z = val; }
-	void mesh(ModelMesh* val){ _mesh = val; }
+	void mesh(ModelMesh& val){ _mesh = val; }
 	void texturePack(TerrainTexturePack* val){ _texturePack = val; }
 	void blendMap(TerrainTexture* val) { _blendMap = val; }
 
 public:
-	Terrain();
+	Terrain() = delete;
 	~Terrain();
 	Terrain
 		(
@@ -46,10 +46,10 @@ public:
 	//Getters
 	GLfloat			x() { return _x; }
 	GLfloat			z() { return _z; }
-	ModelMesh*		mesh(){ return _mesh; }
+	ModelMesh&		mesh(){ return _mesh; }
 	TerrainTexturePack*	texturePack(){ return _texturePack; }
 	TerrainTexture * blendMap() { return _blendMap; }
 
-	ModelMesh*		generateTerrain();
+	ModelMesh&		generateTerrain(const char * heightMap);
 
 };

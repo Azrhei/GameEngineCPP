@@ -46,7 +46,7 @@ namespace GameEngine
 					{
 						
 						prepareInstance(entity);
-						glDrawElements(GL_TRIANGLES, entity.model()->mesh()->vertexCount(), GL_UNSIGNED_INT, 0);
+						glDrawElements(GL_TRIANGLES, entity.model()->mesh().vertexCount(), GL_UNSIGNED_INT, 0);
 					}
 					unbindModel();
 				}
@@ -55,9 +55,9 @@ namespace GameEngine
 
 		void EntityRenderer::prepareTeturedModel(Model* model)
 		{
-			ModelMesh* ModelMesh = model->mesh();
+			ModelMesh& mesh = model->mesh();
 
-			glBindVertexArray(ModelMesh->id());
+			glBindVertexArray(mesh.id());
 			glEnableVertexAttribArray(0);
 			glEnableVertexAttribArray(1);
 			glEnableVertexAttribArray(2);

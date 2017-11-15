@@ -4,10 +4,6 @@ using namespace GameEngine;
 using namespace UtilityM;
 using namespace ModelM;
 
-Terrain::Terrain()
-{
-}
-
 Terrain::~Terrain()
 {
 }
@@ -21,37 +17,39 @@ TerrainTexture* blendMap
 )
 :
 _texturePack(texturePack),
-_blendMap(blendMap)
+_blendMap(blendMap),
+_mesh(generateTerrain("heightMap"))
 {
 	_x = static_cast<GLfloat>(gridX) * SIZE;
 	_z = static_cast<GLfloat>(gridZ) * SIZE;
-	_mesh = generateTerrain();
+	//_mesh = generateTerrain("heightMap");
 }
 
-ModelMesh* Terrain::generateTerrain(){
+ModelMesh& Terrain::generateTerrain(const char * heightMap){
 	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
 
-	vector<GLfloat>* vertices = new vector<GLfloat>{};
-	vector<GLfloat>* normals = new vector<GLfloat>{};
-	vector<GLfloat>* textureCoords = new vector<GLfloat>{};
-	vector<GLint>* indices = new vector<GLint>{};
+	vector<GLfloat>& vertices = vector<GLfloat>{};
+	vector<GLfloat>& normals = vector<GLfloat>{};
+	vector<GLfloat>& textureCoords = vector<GLfloat>{};
+	vector<GLint>& indices = vector<GLint>{};
 
-	vertices->resize(count * 3);
-	normals->resize(count * 3);
-	textureCoords->resize(count * 2);
-	indices->resize(6 * (VERTEX_COUNT - 1)*(VERTEX_COUNT - 1));
+	vertices.resize(count * 3);
+	normals.resize(count * 3);
+	textureCoords.resize(count * 2);
+	indices.resize(6 * (VERTEX_COUNT - 1)*(VERTEX_COUNT * 1));
 	
 	GLuint vertexPointer = 0;
 	for (int i = 0; i<VERTEX_COUNT; i++){
 		for (int j = 0; j<VERTEX_COUNT; j++){
-			(*vertices)[vertexPointer * 3] = static_cast<GLfloat>(j) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
-			(*vertices)[vertexPointer * 3 + 1] = 0;
-			(*vertices)[vertexPointer * 3 + 2] = static_cast<GLfloat>(i) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
-			(*normals)[vertexPointer * 3] = 0;
-			(*normals)[vertexPointer * 3 + 1] = 1;
-			(*normals)[vertexPointer * 3 + 2] = 0;
-			(*textureCoords)[vertexPointer * 2] = static_cast<GLfloat>(j) / static_cast<GLfloat>(VERTEX_COUNT - 1);
-			(*textureCoords)[vertexPointer * 2 + 1] = static_cast<GLfloat>(i) / static_cast<GLfloat>(VERTEX_COUNT - 1);
+
+			(vertices)[vertexPointer * 3] = static_cast<GLfloat>(j) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
+			(vertices)[vertexPointer * 3 + 1] = 0;
+			(vertices)[vertexPointer * 3 + 2] = static_cast<GLfloat>(i) / (static_cast<GLfloat>(VERTEX_COUNT - 1) * SIZE);
+			(normals)[vertexPointer * 3] = 0;
+			(normals)[vertexPointer * 3 + 1] = 1;
+			(normals)[vertexPointer * 3 + 2] = 0;
+			(textureCoords)[vertexPointer * 2] = static_cast<GLfloat>(j) / static_cast<GLfloat>(VERTEX_COUNT - 1);
+			(textureCoords)[vertexPointer * 2 + 1] = static_cast<GLfloat>(i) / static_cast<GLfloat>(VERTEX_COUNT - 1);
 			vertexPointer++;
 		}
 	}
@@ -63,12 +61,12 @@ ModelMesh* Terrain::generateTerrain(){
 			int topRight = topLeft + 1;
 			int bottomLeft = ((gz + 1)*VERTEX_COUNT) + gx;
 			int bottomRight = bottomLeft + 1;
-			(*indices)[pointer++] = topLeft;
-			(*indices)[pointer++] = bottomLeft;
-			(*indices)[pointer++] = topRight;
-			(*indices)[pointer++] = topRight;
-			(*indices)[pointer++] = bottomLeft;
-			(*indices)[pointer++] = bottomRight;
+			(indices)[pointer++] = topLeft;
+			(indices)[pointer++] = bottomLeft;
+			(indices)[pointer++] = topRight;
+			(indices)[pointer++] = topRight;
+			(indices)[pointer++] = bottomLeft;
+			(indices)[pointer++] = bottomRight;
 		}
 	}
 	return loader.loadToVao(vertices, textureCoords, normals, indices);

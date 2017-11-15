@@ -9,65 +9,61 @@ namespace GameEngine {
 		Loader::~Loader()
 		{
 			cleanUp();
-			delete _vaos;
-			delete _vbos;
-			delete _textures;
 		}
 
-		ModelMesh* Loader::loadToVao
+		ModelMesh& Loader::loadToVao
 		(
-			vector<GLfloat>* positions,
-			vector<GLfloat>* textureCoords,
-			vector<GLfloat>* normals,
-			vector<GLint>* indices
+			vector<GLfloat>& positions,
+			vector<GLfloat>& textureCoords,
+			vector<GLfloat>& normals,
+			vector<GLint>& indices
 		)
 		{
-			ModelMesh* mesh;
 			GLuint vaoID = createVAO();
 			bindIndicesVBO(indices);
 
-			if (positions->size() > 0) storeDataInAttribList(0, 3, positions);
-			if (textureCoords->size() > 0) storeDataInAttribList(1, 2, textureCoords);
-			if (normals->size() > 0) storeDataInAttribList(2, 3, normals);
+			if (positions.size() > 0) storeDataInAttribList(0, 3, positions);
+			if (textureCoords.size() > 0) storeDataInAttribList(1, 2, textureCoords);
+			if (normals.size() > 0) storeDataInAttribList(2, 3, normals);
 
-			mesh = new ModelMesh{ vaoID, indices->size() };
+			ModelMesh& mesh = ModelMesh( vaoID, indices.size() );
 			unbindVAO();
-			return mesh;
+			return std::move(mesh);
 		}
 
 		GLuint Loader::createVAO()
 		{
-			GLuint i;
+			GLuint i=0;
 			glGenVertexArrays(1, &i);
-			_vaos->push_back(i);
+			_vaos.push_back(i);
 			glBindVertexArray(i);
 			return i;
 		}
 
-		void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>* data)
+		void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>& data)
 		{
-			GLuint i;
+			GLuint i=0;
 			glGenBuffers(1, &i);
-			_vbos->push_back(i);
+			_vbos.push_back(i);
 			glBindBuffer(GL_ARRAY_BUFFER, i);
-			glBufferData(GL_ARRAY_BUFFER, data->size() * sizeof(GLfloat), &(*data)[0], GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), (data._Myfirst()), GL_STATIC_DRAW);
 			glVertexAttribPointer(attribNumber, coordinateSize, GL_FLOAT, false, 0, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 
 		void Loader::cleanUp()
 		{
-			if (_vaos->size() > 0)
+			if (_vaos.size() > 0)
 			{
-				glDeleteVertexArrays(_vaos->size(), &(*_vaos)[0]);
+				glDeleteVertexArrays(_vaos.size(), &(_vaos)[0]);
 			}
-			if (_vbos->size() > 0)
+			if (_vbos.size() > 0)
 			{
-				glDeleteBuffers(_vbos->size(), &(*_vbos)[0]);
+				glDeleteBuffers(_vbos.size(), &(_vbos)[0]);
 			}
-			if (_textures->size() > 0)
+			if (_textures.size() > 0)
 			{
-				glDeleteTextures(_textures->size(), &(*_textures)[0]);
+				glDeleteTextures(_textures.size(), &(_textures)[0]);
 			}
 		}
 
@@ -76,13 +72,13 @@ namespace GameEngine {
 			glBindVertexArray(0);
 		}
 
-		void Loader::bindIndicesVBO(vector<GLint>* indices)
+		void Loader::bindIndicesVBO(vector<GLint>& indices)
 		{
-			GLuint i;
+			GLuint i=0;
 			glGenBuffers(1, &i);
-			_vbos->push_back(i);
+			_vbos.push_back(i);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, i);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size() * sizeof(GLuint), &(*indices)[0], GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), /*&(indices)[0]*/ (indices._Myfirst()), GL_STATIC_DRAW);
 		}
 
 		GLint Loader::loadTexture(string fileName)
@@ -117,13 +113,13 @@ namespace GameEngine {
 			SOIL_free_image_data(image);
 			glGenerateMipmap(GL_TEXTURE_2D);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -1);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			_textures->push_back(textureId);
+			_textures.push_back(textureId);
 
 			return textureId;
 		}

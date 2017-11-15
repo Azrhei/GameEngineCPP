@@ -27,15 +27,15 @@ namespace GameEngine {
 			string Loader::default_texture_filename = "default";
 			GLint Loader::default_texture = 0;
 
-			vector<GLuint>* _vaos = new vector<GLuint>();
-			vector<GLuint>* _vbos = new vector<GLuint>(); 
-			vector<GLuint>* _textures = new vector<GLuint>();
+			vector<GLuint>& _vaos = vector<GLuint>();
+			vector<GLuint>& _vbos = vector<GLuint>(); 
+			vector<GLuint>& _textures = vector<GLuint>();
 
 			GLint getDefaultTexture();
 			GLuint createVAO();
-			void storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>* data);
+			void storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>& data);
 			void unbindVAO();
-			void bindIndicesVBO(vector<GLint>* indices);
+			void bindIndicesVBO(vector<GLint>& indices);
 
 		public:
 			Loader() {};
@@ -44,12 +44,12 @@ namespace GameEngine {
 
 			~Loader();
 			GLint loadTexture(string fileName);
-			ModelMesh * loadToVao
+			ModelMesh& loadToVao
 			(
-				vector<GLfloat>* positions,
-				vector<GLfloat>* textureCoords,
-				vector<GLfloat>* normals,
-				vector<GLint>* indices);
+				vector<GLfloat>& positions,
+				vector<GLfloat>& textureCoords,
+				vector<GLfloat>& normals,
+				vector<GLint>& indices);
 			void cleanUp();
 
 		};
