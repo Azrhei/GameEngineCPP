@@ -17,6 +17,7 @@ namespace GameEngine
 
 #ifdef DEBUG
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+			glEnable(GL_DEBUG_OUTPUT);
 #endif
 
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed

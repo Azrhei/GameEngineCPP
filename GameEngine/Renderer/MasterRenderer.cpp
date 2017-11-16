@@ -13,8 +13,8 @@ namespace GameEngine
 			: _entity_shader(new StaticShader), _terrain_shader(new TerrainShader)
 		{
 			_entities = new map<Model*, vector<Entity>>;
-			enableCulling();
-			glCullFace(GL_BACK);
+			//enableCulling();
+			//glCullFace(GL_BACK);
 
 			createProjectionMatrix();
 			_terrains = new vector<Terrain>();
@@ -58,11 +58,10 @@ namespace GameEngine
 				_terrain_shader->loadLight(sun);
 				_terrain_shader->loadViewMatrix(cam);
 
-				_terrain_renderer->render(_terrains);
+				//_terrain_renderer->render(_terrains);
 
 				_terrain_shader->stop();
 				_terrains->clear();
-
 			}
 
 			if (!(_entities->empty()))
@@ -77,6 +76,7 @@ namespace GameEngine
 				_entity_shader->stop();
 				_entities->clear();
 			}
+
 		}
 
 		// Add an entity to be rendered during render cycle.
@@ -148,14 +148,14 @@ namespace GameEngine
 
 		void MasterRenderer::prepare()
 		{
-			// Enable Depth testing
-			glEnable(GL_DEPTH_TEST);
-
+			// Clear screen and set color before drawing frame
+			glClearColor(RED, GREEN, BLUE, 1);
+			
 			// Clear color buffer and depth buffer for next frame
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			// Clear screen and set color before drawing frame
-			glClearColor(RED, GREEN, BLUE, 1);
+			// Enable Depth testing
+			glEnable(GL_DEPTH_TEST);
 		}
 	}
 }

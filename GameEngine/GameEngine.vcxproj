@@ -160,6 +160,7 @@
     <ClInclude Include="Camera\Camera3rd.h" />
     <ClInclude Include="Camera\CameraFollow.h" />
     <ClInclude Include="Camera\ICamera.h" />
+    <ClInclude Include="Debugger.h" />
     <ClInclude Include="Display\Display.h" />
     <ClInclude Include="Entity\Animal.h" />
     <ClInclude Include="Entity\Entity.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Camera\Camera3rd.cpp" />
     <ClCompile Include="Camera\CameraFollow.cpp" />
     <ClCompile Include="Camera\ICamera.cpp" />
+    <ClCompile Include="Debugger.cpp" />
     <ClCompile Include="Display\Display.cpp" />
     <ClCompile Include="Entity\Animal.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />

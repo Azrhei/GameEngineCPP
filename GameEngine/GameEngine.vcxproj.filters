@@ -192,6 +192,9 @@
     <ClInclude Include="Mouse\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Debugger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -341,6 +344,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mouse\Mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
