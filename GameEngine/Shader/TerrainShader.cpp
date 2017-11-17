@@ -2,12 +2,14 @@
 #include "..\Camera\Camera.h"
 #include "..\Utility\Maths.h"
 #include "ShaderProgram.h"
-
-using namespace CameraM;
-using namespace UtilityM;
+#include "..\Debugger.h"
 
 namespace GameEngine
 {
+	using namespace CameraM;
+	using namespace UtilityM;
+	using namespace Debugger;
+
 	namespace ShaderM
 	{
 		TerrainShader::~TerrainShader()
@@ -44,11 +46,16 @@ namespace GameEngine
 
 		void TerrainShader::load()
 		{
+	
 			wcout << L"Loading Terrain shaders..." << nl;
 			generateShaderProgram();
+			assert(!debug.checkErrors());
 			bindAttributes();
+			assert(!debug.checkErrors());
 			buildShaderProgram();
+			assert(!debug.checkErrors());
 			getAllUniformLocations();
+			assert(!debug.checkErrors());
 			wcout << L"Terrain shaders loaded" << nl;
 		}
 

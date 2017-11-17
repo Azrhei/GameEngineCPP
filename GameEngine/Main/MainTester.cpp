@@ -9,7 +9,7 @@
 #else
 #include <ctime>
 #include "..\Mouse\Mouse.h"
-
+#include "..\Debugger.h"
 using namespace GameEngine;
 using namespace DisplayM;
 using namespace UtilityM;
@@ -21,34 +21,33 @@ using namespace ModelM;
 using namespace ShaderM;
 using namespace RenderM;
 using namespace InputM;
+using namespace Debugger;
 
 int main(int argc, char ** argv, char ** argenv)
 {
+
 	wcout << L"Starting Engine" << nl;
-
 	glfwInit();
-
-	wcout << L"Creating Display" << nl;
 	display.init();
-	// objLoader.init();
-	// loader.init();
+	wcout << L"Creating Display" << nl;
 
 	if (!display.exists())
 	{
 		wcerr << L"Could not start Display" << nl;
+		std::cin.get();
 		glfwTerminate();
 		exit(EXIT_CODES::WINDOW_FAILED_TO_OPEN);
 	}
-
 	wcout << L"Showing Display" << nl;
 	display.showDisplay();
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 		wcerr << L"Could not start GLEW" << nl;
+		std::cin.get();
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
-	
+
 	Light light
 	{
 		{ 20000, 20000, 2000 },	// Position 
@@ -57,7 +56,7 @@ int main(int argc, char ** argv, char ** argenv)
 	};
 
 	MasterRenderer* renderer = new MasterRenderer;
-
+	assert(!debug.checkErrors());
 	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
 	TerrainTexture* backgroundTexture = new TerrainTexture( loader.loadTexture("grassy") );
 	TerrainTexture* rTexture = new TerrainTexture( loader.loadTexture("dirt") );
@@ -118,11 +117,12 @@ int main(int argc, char ** argv, char ** argenv)
 	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
 	mouse.init();
 	wcout << L"Begining Game loop" << nl;
+	assert(!debug.checkErrors());
 	while (!display.shouldClose())
 	{
 		glfwPollEvents();
 		handleKeyEvents();
-
+		assert(!debug.checkErrors());
 		/* Poll for and process events */
 		p1.move();
  		camera.move(0.001);		
@@ -132,10 +132,11 @@ int main(int argc, char ** argv, char ** argenv)
 		//renderer->processTerrain(t2);
 		//renderer->processTerrain(t3);
 		//renderer->processTerrain(t4);
-
+		assert(!debug.checkErrors());
 		renderer->render(light,camera);
 
 		display.updateDisplay();
+		assert(!debug.checkErrors());
 	}
 
 	wcout << L"Removing Display" << nl;

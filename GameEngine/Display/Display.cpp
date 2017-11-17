@@ -1,8 +1,11 @@
 #include "..\Utility\common.hpp"
 #include "Display.h"
+#include "..\Debugger.h"
 
 namespace GameEngine
 {
+	using namespace Debugger;
+
 	namespace DisplayM
 	{
 		Display::~Display()
@@ -13,15 +16,12 @@ namespace GameEngine
 		void Display::createDisplay()
 		{
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 #ifdef DEBUG
-			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-			glEnable(GL_DEBUG_OUTPUT);
+			//glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+			//glEnable(GL_DEBUG_OUTPUT);
 #endif
-
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			_window = glfwCreateWindow(1280, 720, "Test Window", NULL, NULL);
 			if (!_window)
@@ -39,7 +39,6 @@ namespace GameEngine
 		{
 			_shown = true;
 			glfwShowWindow(_window);
-			glfwMakeContextCurrent(_window);
 		}
 
 		void Display::hideDisplay()
@@ -67,7 +66,6 @@ namespace GameEngine
 		void Display::framebufferResize_callBack(GLFWwindow* window, int width, int height)
 		{
 			glViewport(0, 0, width, height);
-			
 //			glfwSetWindowAspectRatio(window, width, height);
 		}
 	}

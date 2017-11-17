@@ -1,9 +1,10 @@
 #include "ShaderProgram.h"
 #include "StaticShader.h"
-#include <vector>
+#include "..\Debugger.h"
 
 namespace GameEngine
 {
+	using namespace Debugger;
 	namespace ShaderM
 	{
 		ShaderProgram::ShaderProgram(const char* vertexFile, const char* fragmentFile)
@@ -18,13 +19,16 @@ namespace GameEngine
 			_fragmentShaderID = loadShader(_fragmentFileName, GL_FRAGMENT_SHADER);
 			_programId = glCreateProgram();
 			glAttachShader(_programId, _vertexShaderID);
+			assert(!debug.checkErrors());
 			glAttachShader(_programId, _fragmentShaderID);
+			assert(!debug.checkErrors());
 		}
 
 		void ShaderProgram::buildShaderProgram()
 		{
 			glLinkProgram(_programId);
 			glValidateProgram(_programId);
+			assert(!debug.checkErrors());
 		}
 
 
@@ -33,9 +37,11 @@ namespace GameEngine
 		}
 
 
-		GLuint ShaderProgram::loadShader(string file, GLuint type)
+		GLuint ShaderProgram::loadShader(string file, GLenum type)
 		{
+
 			GLuint shaderId = glCreateShader(type);
+
 			string fsrc = readFile((string("res/") + file).c_str());
 			const char * src = fsrc.c_str();
 
@@ -54,22 +60,24 @@ namespace GameEngine
 			glGetShaderInfoLog(shaderId, logLength, NULL, &shaderError[0]);
 			std::cout << &shaderError[0] << nl;
 
+			assert(!debug.checkErrors());
 			return shaderId;
 		}
 
 		void ShaderProgram::start()
 		{
 			glUseProgram(_programId);
+			assert(!debug.checkErrors());
 		}
 
 		void ShaderProgram::stop()
 		{
 			glUseProgram(0);
+			assert(!debug.checkErrors());
 		}
 
 		void ShaderProgram::cleanUp()
 		{
-			stop();
 			glDetachShader(_programId, _vertexShaderID);
 			glDetachShader(_programId, _fragmentShaderID);
 			glDeleteShader(_vertexShaderID);

@@ -5,9 +5,12 @@
 
 #include "..\Utility\common.hpp"
 #include <ctime>
+#include "..\Debugger.h"
 
 namespace GameEngine
 {
+	using namespace Debugger;
+
 	namespace DisplayM
 	{
 		class Display
@@ -42,12 +45,17 @@ namespace GameEngine
 			Display(Display const&) = delete;
 			void operator=(Display const&) = delete;
 
-			void init() { createDisplay(); }; // this should call constructor first time, then nothing everyother time.
+			void init() 
+			{ 
+				createDisplay();			
+				glfwMakeContextCurrent(_window);
+			}; // this should call constructor first time, then nothing everyother time.
 			//Destructors
 			~Display();
 
 			// Getters
-			void shouldClose(GLboolean val) { glfwSetWindowShouldClose(_window, val); }
+			void shouldClose(GLboolean val) { glfwSetWindowShouldClose(_window, val); assert(!debug.checkErrors());
+			}
 			GLFWwindow * window() { return _window; }
 			GLint height() { return _HEIGHT; }
 			GLint width() { return _WIDTH; }
@@ -65,8 +73,8 @@ namespace GameEngine
 
 			void resize(int width, int height)
 			{
-				glfwSetWindowSize(this->window(), width, height);
-				glViewport(0, 0, width, height);
+				glfwSetWindowSize(this->window(), width, height); assert(!debug.checkErrors());
+				glViewport(0, 0, width, height); assert(!debug.checkErrors());
 			}
 
 			//event handler

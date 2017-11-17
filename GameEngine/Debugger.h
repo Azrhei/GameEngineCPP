@@ -6,7 +6,7 @@
 
 namespace GameEngine 
 {
-	namespace DEBUGGER
+	namespace Debugger
 	{
 		class Debugger
 		{
@@ -22,6 +22,24 @@ namespace GameEngine
 			Debugger(Debugger&) = delete;
 			void operator=(Debugger&) = delete;
 			~Debugger();
+
+			void ClearError()
+			{
+				while (glGetError() != GL_NO_ERROR);
+			}
+
+			bool checkErrors()
+			{
+				GLenum err;
+				static bool hasError = false;
+				while ((err = glGetError()) != GL_NO_ERROR) {
+					hasError = true;
+					std::cerr << err << nl;
+					return err;
+				}
+				
+				return hasError;
+			}
 
 		private:
 			Debugger() {};
