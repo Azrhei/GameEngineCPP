@@ -19,16 +19,13 @@ namespace GameEngine
 			_fragmentShaderID = loadShader(_fragmentFileName, GL_FRAGMENT_SHADER);
 			_programId = glCreateProgram();
 			glAttachShader(_programId, _vertexShaderID);
-			assert(!debug.checkErrors());
 			glAttachShader(_programId, _fragmentShaderID);
-			assert(!debug.checkErrors());
 		}
 
 		void ShaderProgram::buildShaderProgram()
 		{
 			glLinkProgram(_programId);
 			glValidateProgram(_programId);
-			assert(!debug.checkErrors());
 		}
 
 
@@ -60,20 +57,17 @@ namespace GameEngine
 			glGetShaderInfoLog(shaderId, logLength, NULL, &shaderError[0]);
 			std::cout << &shaderError[0] << nl;
 
-			assert(!debug.checkErrors());
 			return shaderId;
 		}
 
 		void ShaderProgram::start()
 		{
 			glUseProgram(_programId);
-			assert(!debug.checkErrors());
 		}
 
 		void ShaderProgram::stop()
 		{
 			glUseProgram(0);
-			assert(!debug.checkErrors());
 		}
 
 		void ShaderProgram::cleanUp()

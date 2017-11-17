@@ -56,7 +56,6 @@ int main(int argc, char ** argv, char ** argenv)
 	};
 
 	MasterRenderer* renderer = new MasterRenderer;
-	assert(!debug.checkErrors());
 	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
 	TerrainTexture* backgroundTexture = new TerrainTexture( loader.loadTexture("grassy") );
 	TerrainTexture* rTexture = new TerrainTexture( loader.loadTexture("dirt") );
@@ -117,12 +116,10 @@ int main(int argc, char ** argv, char ** argenv)
 	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
 	mouse.init();
 	wcout << L"Begining Game loop" << nl;
-	assert(!debug.checkErrors());
 	while (!display.shouldClose())
 	{
 		glfwPollEvents();
 		handleKeyEvents();
-		assert(!debug.checkErrors());
 		/* Poll for and process events */
 		p1.move();
  		camera.move(0.001);		
@@ -132,11 +129,9 @@ int main(int argc, char ** argv, char ** argenv)
 		//renderer->processTerrain(t2);
 		//renderer->processTerrain(t3);
 		//renderer->processTerrain(t4);
-		assert(!debug.checkErrors());
 		renderer->render(light,camera);
 
 		display.updateDisplay();
-		assert(!debug.checkErrors());
 	}
 
 	wcout << L"Removing Display" << nl;
@@ -146,6 +141,8 @@ int main(int argc, char ** argv, char ** argenv)
 	loader.cleanUp();
 	renderer->cleanUp();
 #ifdef DEBUG
+	glDebugMessageInsert(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_LOW, 16 & sizeof(GLchar), "This is a test.");
+	debug.GetFirstNMessages(10);
 	std::cin.get();
 #endif
 }

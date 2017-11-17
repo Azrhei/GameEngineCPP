@@ -49,13 +49,9 @@ namespace GameEngine
 	
 			wcout << L"Loading Terrain shaders..." << nl;
 			generateShaderProgram();
-			assert(!debug.checkErrors());
 			bindAttributes();
-			assert(!debug.checkErrors());
 			buildShaderProgram();
-			assert(!debug.checkErrors());
 			getAllUniformLocations();
-			assert(!debug.checkErrors());
 			wcout << L"Terrain shaders loaded" << nl;
 		}
 

@@ -23,7 +23,6 @@ namespace GameEngine
 			_terrains = new vector<Terrain>();
 			_entity_renderer = new EntityRenderer{ _entity_shader, projectionMatrix };
 			_terrain_renderer = new TerrainRenderer{ _terrain_shader, projectionMatrix };
-			assert(!debug.checkErrors());
 		}
 
 		void MasterRenderer::enableCulling()
@@ -53,10 +52,8 @@ namespace GameEngine
 
 		void MasterRenderer::render(Light& sun, Camera& cam)
 		{
-			assert(!debug.checkErrors());
 			prepare();
 
-			assert(!debug.checkErrors());
 			//if (!(_terrains->empty()))
 			//{
 			//	_terrain_shader->start();
@@ -64,14 +61,11 @@ namespace GameEngine
 			//	_terrain_shader->loadLight(sun);
 			//	_terrain_shader->loadViewMatrix(cam);
 
-			//	//_terrain_renderer->render(_terrains);
+			//	_terrain_renderer->render(_terrains);
 
 			//	_terrain_shader->stop();
 			//	_terrains->clear();
 			//}
-
-			assert(!debug.checkErrors());
-
 
 			if (!(_entities->empty()))
 			{
@@ -85,8 +79,6 @@ namespace GameEngine
 				_entity_shader->stop();
 				_entities->clear();
 			}
-
-			assert(!debug.checkErrors());
 		}
 
 		// Add an entity to be rendered during render cycle.
