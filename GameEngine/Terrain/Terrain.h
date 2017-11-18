@@ -19,7 +19,7 @@ private:
 
 	GLfloat _x;
 	GLfloat _z;
-	ModelMesh& _mesh;
+	ModelMesh _mesh;
 	TerrainTexturePack* _texturePack;
 	TerrainTexture* _blendMap;
 
@@ -50,6 +50,6 @@ public:
 	TerrainTexturePack*	texturePack(){ return _texturePack; }
 	TerrainTexture * blendMap() { return _blendMap; }
 
-	ModelMesh&		generateTerrain(const char * heightMap);
+	ModelMesh		generateTerrain(const char * heightMap);
 
 };

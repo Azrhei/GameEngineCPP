@@ -55,7 +55,6 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
-	MasterRenderer* renderer = new MasterRenderer;
 	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
 	TerrainTexture* backgroundTexture = new TerrainTexture( loader.loadTexture("grassy") );
 	TerrainTexture* rTexture = new TerrainTexture( loader.loadTexture("dirt") );
@@ -65,9 +64,9 @@ int main(int argc, char ** argv, char ** argenv)
 	TerrainTexturePack* tp = new TerrainTexturePack( backgroundTexture, rTexture, gTexture, bTexture );
 	
 	Terrain& t1 = Terrain{ 0, -1, tp, blendMap };
-	Terrain& t2 = Terrain{ -1, -1, tp, blendMap };
-	Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
-	Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
+	//Terrain& t2 = Terrain{ -1, -1, tp, blendMap };
+	//Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
+	//Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
 	
 	auto modelMesh = objLoader.loadOBJ("bunny");
 	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
@@ -112,7 +111,10 @@ int main(int argc, char ** argv, char ** argenv)
 	}
 */	
 	
-	
+	MasterRenderer* renderer = new MasterRenderer;
+#ifdef DEBUG
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+#endif
 	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
 	mouse.init();
 	wcout << L"Begining Game loop" << nl;

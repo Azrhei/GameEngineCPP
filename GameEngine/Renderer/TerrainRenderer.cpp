@@ -26,8 +26,6 @@ namespace GameEngine
 
 		void TerrainRenderer::render(vector<Terrain>* terrains)
 		{
-			assert(terrains != NULL);
-
 			for (auto terrain : *terrains)
 			{
 				prepareTerrain(terrain);

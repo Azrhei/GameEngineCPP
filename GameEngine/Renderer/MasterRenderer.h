@@ -53,7 +53,7 @@ namespace GameEngine
 			static void enableCulling();
 			static void disableCulling();
 
-			void processTerrain(Terrain& terrain);
+			void processTerrain(Terrain terrain);
 			void cleanUp() { _entity_shader->cleanUp(); }
 			void processEntity(Entity& entity);
 

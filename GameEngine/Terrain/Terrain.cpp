@@ -25,7 +25,7 @@ _mesh(generateTerrain("heightMap"))
 	//_mesh = generateTerrain("heightMap");
 }
 
-ModelMesh& Terrain::generateTerrain(const char * heightMap){
+ModelMesh Terrain::generateTerrain(const char * heightMap){
 	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
 
 	vector<GLfloat>& vertices = vector<GLfloat>{};
@@ -69,7 +69,8 @@ ModelMesh& Terrain::generateTerrain(const char * heightMap){
 			(indices)[pointer++] = bottomRight;
 		}
 	}
-	return loader.loadToVao(vertices, textureCoords, normals, indices);
+	auto & r = loader.loadToVao(vertices, textureCoords, normals, indices);
+	return r;
 }
 
 

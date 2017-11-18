@@ -11,7 +11,7 @@ namespace GameEngine
 	namespace RenderM
 	{
 		MasterRenderer::MasterRenderer()
-			: _entity_shader(new StaticShader), _terrain_shader(new TerrainShader)
+			: _entity_shader(new StaticShader), _terrain_shader(new TerrainShader), _terrains(new vector<Terrain>{})
 		{
 			_entities = new map<Model*, vector<Entity>>;
 
@@ -20,7 +20,7 @@ namespace GameEngine
 			glCullFace(GL_BACK);
 
 			createProjectionMatrix();
-			_terrains = new vector<Terrain>();
+
 			_entity_renderer = new EntityRenderer{ _entity_shader, projectionMatrix };
 			_terrain_renderer = new TerrainRenderer{ _terrain_shader, projectionMatrix };
 		}
@@ -45,7 +45,7 @@ namespace GameEngine
 			delete _terrains;
 		}
 
-		void MasterRenderer::processTerrain(Terrain& terrain)
+		void MasterRenderer::processTerrain(Terrain terrain)
 		{
 			_terrains->push_back(terrain);
 		}
@@ -54,18 +54,18 @@ namespace GameEngine
 		{
 			prepare();
 
-			//if (!(_terrains->empty()))
-			//{
-			//	_terrain_shader->start();
-			//	_terrain_shader->loadSkyColor(RED, GREEN, BLUE);
-			//	_terrain_shader->loadLight(sun);
-			//	_terrain_shader->loadViewMatrix(cam);
+			if (!(_terrains->empty()))
+			{
+				_terrain_shader->start();
+				_terrain_shader->loadSkyColor(RED, GREEN, BLUE);
+				_terrain_shader->loadLight(sun);
+				_terrain_shader->loadViewMatrix(cam);
 
-			//	_terrain_renderer->render(_terrains);
+				_terrain_renderer->render(_terrains);
 
-			//	_terrain_shader->stop();
-			//	_terrains->clear();
-			//}
+				_terrain_shader->stop();
+				_terrains->clear();
+			}
 
 			if (!(_entities->empty()))
 			{

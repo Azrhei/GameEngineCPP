@@ -45,6 +45,11 @@ namespace GameEngine
 			Display(Display const&) = delete;
 			void operator=(Display const&) = delete;
 
+
+			/* TO DO
+			Eventually move to OpenGL calls only, removing dependency on GLFW
+			wglMakeContext.....etc etc....
+			*/
 			void init() 
 			{ 
 				createDisplay();			
@@ -54,8 +59,8 @@ namespace GameEngine
 			~Display();
 
 			// Getters
-			void shouldClose(GLboolean val) { glfwSetWindowShouldClose(_window, val); assert(!debug.checkErrors());
-			}
+			void shouldClose(GLboolean val) { glfwSetWindowShouldClose(_window, val); }
+
 			GLFWwindow * window() { return _window; }
 			GLint height() { return _HEIGHT; }
 			GLint width() { return _WIDTH; }
@@ -73,8 +78,8 @@ namespace GameEngine
 
 			void resize(int width, int height)
 			{
-				glfwSetWindowSize(this->window(), width, height); assert(!debug.checkErrors());
-				glViewport(0, 0, width, height); assert(!debug.checkErrors());
+				glfwSetWindowSize(this->window(), width, height);
+				glViewport(0, 0, width, height);
 			}
 
 			//event handler
