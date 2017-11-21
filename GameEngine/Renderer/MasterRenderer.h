@@ -24,9 +24,9 @@ namespace GameEngine
 		class MasterRenderer
 		{
 		private:
-			const GLfloat FOV = 60;
+			const GLfloat FOV = 90;
 			const GLfloat N_Plane = 0.1f;
-			const GLfloat F_Plane = 300;
+			const GLfloat F_Plane = 1200;
 			const GLfloat RED = 0.5f;
 			const GLfloat GREEN = 0.5f;
 			const GLfloat BLUE = 0.5f;

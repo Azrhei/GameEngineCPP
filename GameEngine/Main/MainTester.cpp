@@ -68,8 +68,10 @@ int main(int argc, char ** argv, char ** argenv)
 	//Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
 	//Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
 	
-	auto modelMesh = objLoader.loadOBJ("bunny");
+	auto modelMesh = objLoader.loadOBJ("dragon");
 	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
+
+	// How about just Model{ Name } -> loads mesh and texture using the same name or encoded into single file
 	auto *model = new Model{ modelMesh, modelTexture };
 
 	modelTexture->reflectivity(.5f);
@@ -143,8 +145,8 @@ int main(int argc, char ** argv, char ** argenv)
 	loader.cleanUp();
 	renderer->cleanUp();
 #ifdef DEBUG
-	glDebugMessageInsert(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_LOW, 16 & sizeof(GLchar), "This is a test.");
-	debug.GetFirstNMessages(10);
+	//glDebugMessageInsert(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_LOW, 16 & sizeof(GLchar), "This is a test.");
+	//debug.GetFirstNMessages(10);
 	std::cin.get();
 #endif
 }

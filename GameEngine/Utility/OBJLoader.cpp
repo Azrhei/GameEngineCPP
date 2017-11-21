@@ -272,14 +272,14 @@ namespace GameEngine {
 		{
 			if (!in) return;
 			if (_data->size() < tp->total_elements) _data->resize(tp->total_elements);
-			in->read(reinterpret_cast<char *>(&_data[0]), tp->element_size*tp->total_elements);
+			in->read(reinterpret_cast<char *>(_data->data()), tp->element_size*tp->total_elements);
 		}
 
 		void OBJLoader::readFLOATfromFile(ifstream* in, vector<float>* _data, type_header* tp)
 		{
 			if (!in) return;
 			if (_data->size() < tp->total_elements) _data->resize(tp->total_elements);
-			in->read(reinterpret_cast<char *>(&_data[0]), tp->element_size*tp->total_elements);
+			in->read(reinterpret_cast<char *>(_data->data()), tp->element_size*tp->total_elements);
 		}
 
 		void OBJLoader::writeFLOATtoFile(ofstream* out, const char marker, vector<float>* t)

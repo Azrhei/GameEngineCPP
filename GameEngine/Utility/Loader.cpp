@@ -41,13 +41,13 @@ namespace GameEngine {
 			return i;
 		}
 
-		void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>& data)
+		void Loader::storeDataInAttribList(GLint attribNumber, GLint coordinateSize, vector<GLfloat>& _data)
 		{
 			GLuint i=0;
 			glGenBuffers(1, &i);
 			_vbos.push_back(i);
 			glBindBuffer(GL_ARRAY_BUFFER, i);
-			glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), (data._Myfirst()), GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, _data.size() * sizeof(GLfloat), (_data.data()), GL_STATIC_DRAW);
 			glVertexAttribPointer(attribNumber, coordinateSize, GL_FLOAT, false, 0, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
@@ -56,15 +56,15 @@ namespace GameEngine {
 		{
 			if (_vaos.size() > 0)
 			{
-				glDeleteVertexArrays(_vaos.size(), &(_vaos)[0]);
+				glDeleteVertexArrays(_vaos.size(), _vaos.data());
 			}
 			if (_vbos.size() > 0)
 			{
-				glDeleteBuffers(_vbos.size(), &(_vbos)[0]);
+				glDeleteBuffers(_vbos.size(), _vbos.data());
 			}
 			if (_textures.size() > 0)
 			{
-				glDeleteTextures(_textures.size(), &(_textures)[0]);
+				glDeleteTextures(_textures.size(), _textures.data());
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace GameEngine {
 			glGenBuffers(1, &i);
 			_vbos.push_back(i);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, i);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), /*&(indices)[0]*/ (indices._Myfirst()), GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), /*&(indices)[0]*/ (indices.data()), GL_STATIC_DRAW);
 		}
 
 		GLint Loader::loadTexture(string fileName)

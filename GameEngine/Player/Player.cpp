@@ -25,8 +25,8 @@ namespace GameEngine
 		{
 			checkInputs();
 
-			increaseRotation(0, _currentTurnSpeed * .05f /*display.delta()*/, 0);
-			float distance = _currentSpeed * .05f /*display.delta()*/;
+			increaseRotation(0, _currentTurnSpeed * .1f /*display.delta()*/, 0);
+			float distance = _currentSpeed * .1f /*display.delta()*/;
 
 			float dx = distance * sin(radians(rx()));
 			float dz = distance * cos(radians(rx()));
