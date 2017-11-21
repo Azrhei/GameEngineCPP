@@ -24,7 +24,6 @@ private:
 	TerrainTexture* _blendMap;
 
 protected:
-
 	//Setters
 	void x(GLfloat val){ _x = val; }
 	void z(GLfloat val){ _z = val; }

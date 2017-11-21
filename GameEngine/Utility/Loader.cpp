@@ -26,7 +26,8 @@ namespace GameEngine {
 			if (textureCoords.size() > 0) storeDataInAttribList(1, 2, textureCoords);
 			if (normals.size() > 0) storeDataInAttribList(2, 3, normals);
 
-			ModelMesh& mesh = ModelMesh( vaoID, indices.size() );
+
+			ModelMesh& mesh = *(new ModelMesh ( vaoID, indices.size() ));
 			unbindVAO();
 			return std::move(mesh);
 		}
@@ -85,7 +86,7 @@ namespace GameEngine {
 		{
 			//Texture texture = 0;
 
-			GLuint textureId;
+			GLuint textureId = 0;
 			glGenTextures(1, &textureId);
 
 			unsigned char * image;

@@ -104,6 +104,8 @@ namespace GameEngine
 			if using point to vector then we also need to make certain to allocate the vector when creating the vector
 			*/
 
+
+			// It should be noted that having more than 1 entity makes this fail....still.
 			Model* model = entity.model();
 			if (_entities->empty())
 			{
@@ -142,7 +144,6 @@ namespace GameEngine
 			(*matrix)[2][3] = -1;
 			(*matrix)[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
 			(*matrix)[3][3] = 0;
-
 			this->projectionMatrix = matrix;
 
 			return matrix;
