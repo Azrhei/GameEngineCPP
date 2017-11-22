@@ -2,14 +2,13 @@
 
 
 #include "Main.h"
+#include <memory>
 
 #ifdef RUN_TESTS
 #include "..\Tests\UnitTests.h"
 #include "..\Tests\Tests.hpp"
 #else
-#include <ctime>
-#include "..\Mouse\Mouse.h"
-#include "..\Debugger.h"
+
 using namespace GameEngine;
 using namespace DisplayM;
 using namespace UtilityM;
@@ -25,6 +24,10 @@ using namespace Debugger;
 
 int main(int argc, char ** argv, char ** argenv)
 {
+	//wcout << L"Loading settings...." << nl;
+	// Settings* settings("config.xml");
+	//wcout << L"Parsing settings....." << nl;
+	// settings.parse(gameManager, keyBindings, player, display->settings);
 
 	wcout << L"Starting Engine" << nl;
 	glfwInit();
@@ -55,28 +58,35 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
+	// ModelTexture* mt = new ModelTexture("grass"); // Loader is global...
 	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
+
+	// TerrainTexture* backTex = new TerrainTexture("grassy"); // Load is global..... (See below)
 	TerrainTexture* backgroundTexture = new TerrainTexture( loader.loadTexture("grassy") );
 	TerrainTexture* rTexture = new TerrainTexture( loader.loadTexture("dirt") );
 	TerrainTexture* gTexture = new TerrainTexture( loader.loadTexture("pinkFlowers") );
 	TerrainTexture* bTexture = new TerrainTexture( loader.loadTexture("path") );
 	TerrainTexture* blendMap = new TerrainTexture( loader.loadTexture("blendMap") );
+
+	// TerrainTexturePack* tp = new TerrainTexturePack("grassy", "dirt", "pinkFlowers", "path"); // These should always go together, so this should be ok
 	TerrainTexturePack* tp = new TerrainTexturePack( backgroundTexture, rTexture, gTexture, bTexture );
 	
+	// Terrain* t1 = Terrain{0,-1, new TerrainTexturePack("grassy", "dirt", "pinkFlowers", "path"), new TerrainTexture("blendMap")}; // doesn't prevent duplicate memory on GPU
 	Terrain& t1 = Terrain{ 0, -1, tp, blendMap };
 	//Terrain& t2 = Terrain{ -1, -1, tp, blendMap };
 	//Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
 	//Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
 	
-	auto modelMesh = objLoader.loadOBJ("dragon");
+	auto modelMesh = objLoader.loadOBJ("bunny");
 	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
 
-	// How about just Model{ Name } -> loads mesh and texture using the same name or encoded into single file
+	// auto *model = new Model("bunny", "white");
 	auto *model = new Model{ modelMesh, modelTexture };
 
 	modelTexture->reflectivity(.5f);
 	modelTexture->shineDampener(.5f);
 
+	// Player* p1 ....
 	Player& p1 = Player( model , {0, 0, -3 }, 0, 0, 0, 1);
 
 	Camera& camera = Camera(p1);

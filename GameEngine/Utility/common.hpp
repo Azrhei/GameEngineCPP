@@ -5,15 +5,15 @@
 // This header is used by most or all GameEngine components.
 
 #include <gl/glew.h>
-#include <gl/freeglut.h>
 #include <GL/GL.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 using namespace glm;
 
 #include <iostream>
 #include <string>
 #include <fstream>
+
 using namespace std;
 
 #include "Error.h"

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <random>
+#include <ctime>
 
 //#include "Engine.h"
 #include "..\Utility\common.hpp"
@@ -20,7 +21,8 @@
 #include "..\Keyboard\KeyEvents.h"
 #include "..\Utility\OBJLoader.h"
 #include "..\Light\Light.h"
-
+#include "..\Mouse\Mouse.h"
+#include "..\Debugger.h"
 //using namespace GameEngine;
 
 #endif /* MAIN_H */

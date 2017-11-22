@@ -79,15 +79,12 @@ namespace GameEngine
 			void writeINTtoFile(ofstream* out, const char marker, vector<int>* t);
 			void writeFLOATtoFile(ofstream* out, const char marker, vector<float>* t);
 			obj_data* readOBJData(ifstream& in);
-			//tuple<char, vector<T>*> OBJLoader::readFromFile(ifstream& in, vector<T>* t)
 			const string default_model_filename = "default";
 			ModelMesh& getDefaultModel();
 			obj_data* loadOBJmtl(ifstream& in);
 			void processVertex(ivec3 vertex,vector<GLint>* ind,vector<vec2>* tex,vector<vec3>* norm,vector<GLfloat>* texArray,vector<GLfloat>* normArray);
 			void writeOBJData(string path, obj_data* t);
 			template<typename T> void readFromFile(ifstream* in, vector<T>* _data, type_header* tp);
-			void readFLOATfromFile(ifstream* in, vector<float>* _data, type_header* tp);
-			void readINTfromFile(ifstream* in, vector<int>* _data, type_header* tp);
 
 		public:
 			~OBJLoader();
