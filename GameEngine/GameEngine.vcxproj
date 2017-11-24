@@ -195,6 +195,7 @@
     <ClInclude Include="Renderer\MasterRenderer.h" />
     <ClInclude Include="Renderer\TerrainRenderer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="Shader\ShaderProgram.h" />
     <ClInclude Include="Shader\StaticShader.h" />
     <ClInclude Include="Shader\TerrainShader.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="Renderer\EntityRenderer.cpp" />
     <ClCompile Include="Renderer\MasterRenderer.cpp" />
     <ClCompile Include="Renderer\TerrainRenderer.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Shader\ShaderProgram.cpp" />
     <ClCompile Include="Shader\StaticShader.cpp" />
     <ClCompile Include="Shader\TerrainShader.cpp" />
@@ -311,6 +313,7 @@
     <Import Project="..\packages\glew_mx.11.1.0.1\build\native\glew_mx.targets" Condition="Exists('..\packages\glew_mx.11.1.0.1\build\native\glew_mx.targets')" />
     <Import Project="..\packages\glfw.redist.3.2.1\build\native\glfw.redist.targets" Condition="Exists('..\packages\glfw.redist.3.2.1\build\native\glfw.redist.targets')" />
     <Import Project="..\packages\glfw.3.2.1\build\native\glfw.targets" Condition="Exists('..\packages\glfw.3.2.1\build\native\glfw.targets')" />
+    <Import Project="..\packages\boost.1.65.1.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.65.1.0\build\native\boost.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -327,5 +330,6 @@
     <Error Condition="!Exists('..\packages\glew_mx.11.1.0.1\build\native\glew_mx.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew_mx.11.1.0.1\build\native\glew_mx.targets'))" />
     <Error Condition="!Exists('..\packages\glfw.redist.3.2.1\build\native\glfw.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.redist.3.2.1\build\native\glfw.redist.targets'))" />
     <Error Condition="!Exists('..\packages\glfw.3.2.1\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.3.2.1\build\native\glfw.targets'))" />
+    <Error Condition="!Exists('..\packages\boost.1.65.1.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.65.1.0\build\native\boost.targets'))" />
   </Target>
 </Project>
