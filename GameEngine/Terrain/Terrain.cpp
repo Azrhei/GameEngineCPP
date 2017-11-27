@@ -1,5 +1,7 @@
 #include "Terrain.h"
 #include "..\Utility\Loader.h"
+#include <soil.h>
+
 using namespace GameEngine;
 using namespace UtilityM;
 using namespace ModelM;
@@ -25,9 +27,22 @@ _mesh(generateTerrain("heightMap"))
 	//_mesh = generateTerrain("heightMap");
 }
 
-ModelMesh Terrain::generateTerrain(const char * heightMap){
-	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
+float getHeight(int x, int y, image_data *ht_map)
+{
+	ht_map[0][0]
+}
 
+ModelMesh Terrain::generateTerrain(string heightMap){
+	int width, height, channels;
+	unsigned char *ht_map = SOIL_load_image
+	(
+		"heightmap.png",
+		&width, &height, &channels,
+		SOIL_LOAD_L
+	);
+	int VERTEX_COUNT=height;
+	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
+	
 	vector<GLfloat>& vertices = vector<GLfloat>{};
 	vector<GLfloat>& normals = vector<GLfloat>{};
 	vector<GLfloat>& textureCoords = vector<GLfloat>{};

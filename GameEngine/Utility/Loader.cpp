@@ -6,6 +6,24 @@ namespace GameEngine {
 
 	namespace UtilityM {
 
+		image_data* Loader::loadPNGImage(string filename)
+		{
+			image_data* result = new image_data{};
+			result->data = SOIL_load_image
+			(
+				"terrain.tga",
+				&result->width, &result->height, &result->channels,
+				SOIL_LOAD_AUTO
+			);
+			return result;
+			result->_data->r
+		}
+
+		void Loader::destroyPNGImage(image_data* data)
+		{
+			delete data;
+		}
+
 		Loader::~Loader()
 		{
 			cleanUp();

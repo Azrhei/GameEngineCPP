@@ -16,6 +16,8 @@ class Terrain
 private:
 	GLint SIZE = 8000;
 	GLint VERTEX_COUNT = 256;
+	GLfloat MAX_HEIGHT = 40;
+	GLfloat MAX_PIXEL_COLOR = 256 * 256 * 256;
 
 	GLfloat _x;
 	GLfloat _z;
@@ -49,6 +51,6 @@ public:
 	TerrainTexturePack*	texturePack(){ return _texturePack; }
 	TerrainTexture * blendMap() { return _blendMap; }
 
-	ModelMesh		generateTerrain(const char * heightMap);
+	ModelMesh		generateTerrain(string heightMap);
 
 };

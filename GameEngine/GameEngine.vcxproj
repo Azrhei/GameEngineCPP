@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\soil.1.16.0\build\native\soil.props" Condition="Exists('..\packages\soil.1.16.0\build\native\soil.props')" />
   <ItemGroup Label="ProjectConfigurations">
@@ -179,6 +179,7 @@
     <ClInclude Include="Game\IGame.h" />
     <ClInclude Include="GLWrap\VAO.h" />
     <ClInclude Include="GLWrap\VBO.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="Keyboard\KeyEvents.h" />
     <ClInclude Include="Light\Light.h" />
     <ClInclude Include="Main\Main.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="Game\IGame.cpp" />
     <ClCompile Include="GLWrap\VAO.cpp" />
     <ClCompile Include="GLWrap\VBO.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Keyboard\KeyEvents.cpp" />
     <ClCompile Include="Light\Light.cpp" />
     <ClCompile Include="Main\MainTester.cpp" />
