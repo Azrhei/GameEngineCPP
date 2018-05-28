@@ -18,7 +18,7 @@ namespace GameEngine
 			void vertexCount(GLuint) = delete;
 
 		public:
-			ModelMesh() = delete;
+			ModelMesh() = default;
 			ModelMesh(GLuint vaoID, GLuint vertexCount);
 			~ModelMesh();
 

@@ -58,41 +58,72 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
-	// ModelTexture* mt = new ModelTexture("grass"); // Loader is global...
 	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
 
-	// TerrainTexture* backTex = new TerrainTexture("grassy"); // Load is global..... (See below)
-	TerrainTexture* backgroundTexture = new TerrainTexture( loader.loadTexture("grassy") );
-	TerrainTexture* rTexture = new TerrainTexture( loader.loadTexture("dirt") );
-	TerrainTexture* gTexture = new TerrainTexture( loader.loadTexture("pinkFlowers") );
-	TerrainTexture* bTexture = new TerrainTexture( loader.loadTexture("path") );
-	TerrainTexture* blendMap = new TerrainTexture( loader.loadTexture("blendMap") );
+	TerrainTexture* backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
+	TerrainTexture* rTexture = new TerrainTexture(loader.loadTexture("dirt"));
+	TerrainTexture* gTexture = new TerrainTexture(loader.loadTexture("pinkFlowers"));
+	TerrainTexture* bTexture = new TerrainTexture(loader.loadTexture("path"));
+	TerrainTexture* blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
-	// TerrainTexturePack* tp = new TerrainTexturePack("grassy", "dirt", "pinkFlowers", "path"); // These should always go together, so this should be ok
-	TerrainTexturePack* tp = new TerrainTexturePack( backgroundTexture, rTexture, gTexture, bTexture );
-	
-	// Terrain* t1 = Terrain{0,-1, new TerrainTexturePack("grassy", "dirt", "pinkFlowers", "path"), new TerrainTexture("blendMap")}; // doesn't prevent duplicate memory on GPU
-	Terrain& t1 = Terrain{ 0, -1, tp, blendMap };
-	//Terrain& t2 = Terrain{ -1, -1, tp, blendMap };
-	//Terrain& t3 = Terrain{ 0, 1, tp, blendMap };
-	//Terrain& t4 = Terrain{ 1, 1, tp, blendMap };
-	
-	auto modelMesh = objLoader.loadOBJ("bunny");
-	auto *modelTexture = new ModelTexture{ loader.loadTexture("white") };
+	TerrainTexturePack* tp = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+	__height_map* htmap = new __height_map("res/heightmap.png");
 
-	// auto *model = new Model("bunny", "white");
+	Terrain& t1 = Terrain{ 0, -1, tp, blendMap, htmap };
+	Terrain& t2 = Terrain{ -1, -1, tp, blendMap, htmap };
+	Terrain& t3 = Terrain{ 0, 1, tp, blendMap, htmap};
+	Terrain& t4 = Terrain{ 1, 1, tp, blendMap, htmap };
+	
+	auto modelMesh = objLoader.loadOBJ("person");
+	auto *modelTexture = new ModelTexture{ loader.loadTexture("playerTexture") };
+
 	auto *model = new Model{ modelMesh, modelTexture };
 
 	modelTexture->reflectivity(.5f);
 	modelTexture->shineDampener(.5f);
 
 	// Player* p1 ....
-	Player& p1 = Player( model , {0, 0, -3 }, 0, 0, 0, 1);
+	Player& p1 = Player( model , {0, 0, 0 }, 0, 0, 0, 1);
 
 	Camera& camera = Camera(p1);
 
-	/// Upcoming revised loop
-/*
+	auto modelMeshBOX = objLoader.loadOBJ("bunny");
+	auto *modelTextureBOX = new ModelTexture{ loader.loadTexture("dirt") };
+	auto *modelBOX = new Model{ modelMeshBOX, modelTexture };
+	std::vector<Entity> entities;
+	for (int i = 0; i < 100; i++)
+	{
+		float x = randFloat(-500, 500);
+		float z = randFloat(-500, 500);
+		float y = t1.getHeightOfTerrain(x, z);
+
+		entities.push_back({ modelBOX, {x, y, z}, 0, randFloat(-360.0f,360.0f), 0, 0.9f });
+	}
+
+/**
+//		Future feature:
+//		Adding unique renderers and shaders for different elements of the game, each will handle their own objects.
+//		A master Renderer that will manage all renderers.
+	
+	auto EntityRenderer entityRender{ EntityShaders{} };
+	auto TerrainRenderer terrainRenderer{ TerrainShaders{} };
+	auto PlayerRenderer playerRenderer{ PlayerShaders{} };
+
+	auto MasterRenderer masterRenderer{};
+	masterRenderer.addRenderer(GameEngine::RenderM::ENTITY_RENDERER, entityRenderer);
+	masterRenderer.addRenderer(GameEngine::RenderM::TERRAIN_RENDERER, terrainRenderer);
+	masterRenderer.addRenderer(GameEngine::RenderM::PLAYER_RENDERE, playerRenderer);
+	// OR THIS?
+	masterRender.addRenderer<EntityRenderer>(entityRenderer);
+	
+*/
+
+	
+/** 
+//	Future feature:
+//	Upcoming revised loop
+
+
 	double t_time = 0.0;
 	double d_time = 0.001;
 	
@@ -137,12 +168,15 @@ int main(int argc, char ** argv, char ** argenv)
 		/* Poll for and process events */
 		p1.move();
  		camera.move(0.001);		
-				
+		for (Entity e : entities)
+		{
+			renderer->processEntity(e);
+		}
 		renderer->processEntity(p1);
 		renderer->processTerrain(t1);
-		//renderer->processTerrain(t2);
-		//renderer->processTerrain(t3);
-		//renderer->processTerrain(t4);
+		renderer->processTerrain(t2);
+		renderer->processTerrain(t3);
+		renderer->processTerrain(t4);
 		renderer->render(light,camera);
 
 		display.updateDisplay();
@@ -155,8 +189,8 @@ int main(int argc, char ** argv, char ** argenv)
 	loader.cleanUp();
 	renderer->cleanUp();
 #ifdef DEBUG
-	//glDebugMessageInsert(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_LOW, 16 & sizeof(GLchar), "This is a test.");
-	//debug.GetFirstNMessages(10);
+	glDebugMessageInsert(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_LOW, 16 & sizeof(GLchar), "This is a test.");
+	debug.GetFirstNMessages(10);
 	std::cin.get();
 #endif
 }

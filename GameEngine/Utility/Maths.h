@@ -16,6 +16,8 @@ namespace GameEngine
 {
 	namespace UtilityM
 	{
+		float randFloat(float min, float max);
+
 		class Maths
 		{
 		public:
@@ -37,7 +39,7 @@ namespace GameEngine
 				GLfloat rz,
 				GLfloat scale
 			);
-
+			static GLfloat barryCentric(vec3 p1, vec3 p2, vec3 p3, vec2 pos);
 			static mat4* createViewMatrix(Camera& camera);
 		};
 		static Maths& maths = Maths::getInstance();

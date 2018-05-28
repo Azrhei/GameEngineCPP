@@ -6,23 +6,22 @@ namespace GameEngine {
 
 	namespace UtilityM {
 
-		image_data* Loader::loadPNGImage(string filename)
-		{
-			image_data* result = new image_data{};
-			result->data = SOIL_load_image
-			(
-				"terrain.tga",
-				&result->width, &result->height, &result->channels,
-				SOIL_LOAD_AUTO
-			);
-			return result;
-			result->_data->r
-		}
+		//image_data* Loader::loadPNGImage(string filename)
+		//{
+		//	image_data* result = new image_data{};
+		//	result->_data = SOIL_load_image
+		//	(
+		//		"terrain.tga",
+		//		&result->_width, &result->_height, &result->_channels,
+		//		SOIL_LOAD_AUTO
+		//	);
+		//	return result;
+		//}
 
-		void Loader::destroyPNGImage(image_data* data)
-		{
-			delete data;
-		}
+		//void Loader::destroyPNGImage(image_data* data)
+		//{
+		//	delete data;
+		//}
 
 		Loader::~Loader()
 		{
