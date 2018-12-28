@@ -128,7 +128,7 @@ namespace GameEngine
 			}
 		}
 
-		mat4* MasterRenderer::createProjectionMatrix()
+		mat4 MasterRenderer::createProjectionMatrix()
 		{
 			//glm can do this for us, see glm::frustrum
 			// Generate a Frustum matrix for converting from orthogonal space
@@ -138,15 +138,25 @@ namespace GameEngine
 			GLfloat frustrum_length = F_Plane - N_Plane;
 
 			mat4* matrix = new mat4{ 1 };
+
+			mat4 matrix_t{ 1 };
+			matrix_t[0][0] = x_scale;
+			matrix_t[1][1] = y_scale;
+			matrix_t[2][2] = -((F_Plane + N_Plane) / frustrum_length);
+			matrix_t[2][3] = -1;
+			matrix_t[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
+			matrix_t[3][3] = 0;
+
 			(*matrix)[0][0] = x_scale;
 			(*matrix)[1][1] = y_scale;
 			(*matrix)[2][2] = -((F_Plane + N_Plane) / frustrum_length);
 			(*matrix)[2][3] = -1;
 			(*matrix)[3][2] = -((2 * N_Plane * F_Plane) / frustrum_length);
 			(*matrix)[3][3] = 0;
-			this->projectionMatrix = matrix;
 
-			return matrix;
+			this->projectionMatrix = matrix_t;
+
+			return matrix_t;
 		}
 
 		void MasterRenderer::prepare()

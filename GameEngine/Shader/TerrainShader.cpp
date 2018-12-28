@@ -111,7 +111,7 @@ namespace GameEngine
 			loadFloat(location_reflectivity, reflectivity);
 		}
 
-		void TerrainShader::loadTransformationMatrix(glm::mat4* matrix)
+		void TerrainShader::loadTransformationMatrix(glm::mat4 matrix)
 		{
 			loadMatrix(location_transformationMatrix, matrix);
 		}
@@ -124,11 +124,11 @@ namespace GameEngine
 
 		void TerrainShader::loadViewMatrix(Camera& camera)
 		{
-			mat4* viewMatrix = maths.createViewMatrix(camera);
+			mat4 viewMatrix = maths.createViewMatrix(camera);
 			loadMatrix(location_viewMatrix, viewMatrix);
 		}
 
-		void TerrainShader::loadProjectionMatrix(mat4* projection)
+		void TerrainShader::loadProjectionMatrix(mat4 projection)
 		{
 			loadMatrix(location_projectionMatrix, projection);
 		}

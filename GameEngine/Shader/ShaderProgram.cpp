@@ -132,14 +132,9 @@ namespace GameEngine
 			glUniform3f(location, value->x, value->y, value->z);
 		}
 
-		void ShaderProgram::loadMatrix(GLuint location, glm::mat4* value)
+		void ShaderProgram::loadMatrix(GLuint location, glm::mat4 value)
 		{
-			glUniformMatrix4fv(location, 1, GL_FALSE, &(*value)[0][0]);
-		}
-
-		void loadMatrix(GLuint location, glm::mat4 value)
-		{
-			glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+			glUniformMatrix4fv(location, 1, GL_FALSE, &(value)[0][0]);
 		}
 
 		void ShaderProgram::addUniformName(string name)

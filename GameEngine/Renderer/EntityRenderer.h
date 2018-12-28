@@ -32,7 +32,7 @@ namespace GameEngine
 			void unbindModel();
 		public:
 			EntityRenderer();
-			EntityRenderer(StaticShader* shader, mat4* projectionMatrix);
+			EntityRenderer(StaticShader* shader, mat4 projectionMatrix);
 			~EntityRenderer();
 
 			void render(map<Model*, vector<Entity>>* entities);

@@ -21,19 +21,38 @@ namespace GameEngine
 		{
 		}
 
-		void Player::move()
+		void Player::move(/* Terrain terrain */)
 		{
 			checkInputs();
 
 			increaseRotation(0, _currentTurnSpeed * .1f /*display.delta()*/, 0);
 			float distance = _currentSpeed * .1f /*display.delta()*/;
 
-			float dx = distance * sin(radians(rx()));
-			float dz = distance * cos(radians(rx()));
-
+			float dx = distance * sin(radians(ry()));
+			float dz = distance * cos(radians(ry()));
 			increasePosition(dx, 0, dz);
 
+			increasePosition(0, upwardsSpeed * .1f, 0);
+			//float terrainHeight = terrain.getHeightOfTerrain(position().x, position().z);
+			//if (position.y < terrainHeight)
+			//{
+			//	upwardsSpeed = 0;
+			//	isInAir = false;
+			//	position.y = terrainHeight;
+			//}
 		}
+
+		void Player::jump()
+		{
+			if (!isInAir)
+			{
+				upwardsSpeed = JUMP_POWER;
+				isInAir = true;
+				upwardsSpeed += GRAVITY * .1f;
+
+			}
+		}
+
 
 		void Player::checkInputs()
 		{
@@ -79,31 +98,18 @@ namespace GameEngine
 				_currentTurnSpeed = 0;
 			}
 
+			if (glfwGetKey(_w, GLFW_KEY_SPACE) == GLFW_PRESS)
+			{
+				jump();
+			}
+			else
+			{
+				isInAir = false;
+				upwardsSpeed = 0;
 
-			//if (glfwGetKey(Display::getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-			//{
-			//	this->pitch += .2f * speed_factor;
-			//}
-			//if (glfwGetKey(Display::getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-			//{
-			//	this->pitch -= .2f * speed_factor;
-			//}
-			//if (glfwGetKey(Display::getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-			//{
-			//	this->yaw -= .2f * speed_factor;
-			//}
-			//if (glfwGetKey(Display::getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-			//{
-			//	this->yaw += .2f * speed_factor;
-			//}
-			//if (glfwGetKey(Display::getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-			//{
-			//	this->position.y -= .02f * speed_factor;
-			//}
-			//if (glfwGetKey(Display::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
-			//{
-			//	this->position.y += .02f * speed_factor;
-			//}
+			}
+
+			
 		}
 	}
 }

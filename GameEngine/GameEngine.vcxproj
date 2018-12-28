@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Audio\Source.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\Camera1st.h" />
     <ClInclude Include="Camera\Camera2nd.h" />

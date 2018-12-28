@@ -34,8 +34,8 @@ namespace GameEngine
 			void stop();
 			void cleanUp();
 
-			virtual void loadTransformationMatrix(mat4* matrix) = 0;
-			virtual void loadProjectionMatrix(mat4* matrix) = 0;
+			virtual void loadTransformationMatrix(mat4 matrix) = 0;
+			virtual void loadProjectionMatrix(mat4 matrix) = 0;
 			virtual void loadViewMatrix(Camera& camera) = 0;
 			virtual void loadLight(Light& light) = 0;
 			virtual void loadShineVariables(GLfloat damper, GLfloat reflectivity) = 0;
@@ -70,7 +70,7 @@ namespace GameEngine
 			void loadVector(GLuint location, vec3 value);
 			void loadVector(GLuint location, vec3* value);
 			void loadMatrix(GLuint location, mat4 value);
-			void loadMatrix(GLuint location, mat4* value);
+			//void loadMatrix(GLuint location, mat4* value);
 		};
 	}
 }

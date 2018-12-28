@@ -101,13 +101,13 @@ namespace GameEngine
 			loadVector(location_skyColor, vec3{ r, g, b });
 		}
 
-		void StaticShader::loadProjectionMatrix(mat4* projection)
+		void StaticShader::loadProjectionMatrix(mat4 projection)
 		{
 			//this->loadMatrix(locations["projectionMatrix"], projection);
 			loadMatrix(location_projectionMatrix, projection);
 		}
 
-		void StaticShader::loadTransformationMatrix(mat4* matrix)
+		void StaticShader::loadTransformationMatrix(mat4 matrix)
 		{
 			loadMatrix(location_transformationMatrix, matrix);
 		}

@@ -16,7 +16,7 @@ namespace GameEngine
 			//createProjectionMatrix();
 		}
 
-		EntityRenderer::EntityRenderer(StaticShader* shader, mat4* projectionMatrix)
+		EntityRenderer::EntityRenderer(StaticShader* shader, mat4 projectionMatrix)
 		{
 			_shader = shader;
 
@@ -88,7 +88,7 @@ namespace GameEngine
 
 		void EntityRenderer::prepareInstance(Entity& entity)
 		{
-			mat4 *transformationMatrix = maths.createTransformationMatrix
+			mat4 transformationMatrix = maths.createTransformationMatrix
 			(
 				entity.position(),
 				entity.rx(),

@@ -23,6 +23,11 @@ namespace GameEngine
 			const float _TURN_SPEED = 160;
 			float _currentSpeed = 0;
 			float _currentTurnSpeed = 0;
+			float	GRAVITY = -10;
+			bool			isInAir = false;
+			float			upwardsSpeed = 0;
+			float	JUMP_POWER = 5;
+
 
 		protected:
 			void currentSpeed(float val) { _currentSpeed = val; }
@@ -35,7 +40,7 @@ namespace GameEngine
 			Player() = delete;
 			Player(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
 			~Player();
-
+			void jump();
 			float currentSpeed() const { return _currentSpeed; }
 			float currentTurnSpeed() const { return _currentTurnSpeed; }
 

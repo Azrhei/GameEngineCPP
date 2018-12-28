@@ -32,7 +32,7 @@ namespace GameEngine
 				return _inst_;
 			}
 
-			static mat4* createTransformationMatrix(
+			static mat4 createTransformationMatrix(
 				vec3 translation,
 				GLfloat rx,
 				GLfloat ry,
@@ -40,7 +40,7 @@ namespace GameEngine
 				GLfloat scale
 			);
 			static GLfloat barryCentric(vec3 p1, vec3 p2, vec3 p3, vec2 pos);
-			static mat4* createViewMatrix(Camera& camera);
+			static mat4 createViewMatrix(Camera& camera);
 		};
 		static Maths& maths = Maths::getInstance();
 	}

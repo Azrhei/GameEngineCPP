@@ -23,7 +23,7 @@ namespace GameEngine
 		public:
 			TerrainRenderer();
 			~TerrainRenderer();
-			TerrainRenderer(TerrainShader* shader, mat4* projectionMatrix);
+			TerrainRenderer(TerrainShader* shader, mat4 projectionMatrix);
 			void prepareTerrain(Terrain& terrain);
 			void unbindModel();
 			void loadModelMatrix(Terrain& terrain);

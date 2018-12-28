@@ -24,9 +24,9 @@ namespace GameEngine
 		class MasterRenderer
 		{
 		private:
-			const GLfloat FOV = 90;
-			const GLfloat N_Plane = 0.1f;
-			const GLfloat F_Plane = 1200;
+			const GLfloat FOV = 90;			// used for projection matrix....
+			const GLfloat N_Plane = 0.1f;	// used for projection matrix....
+			const GLfloat F_Plane = 1200;	// used for projection matrix....
 			const GLfloat RED = 0.5f;
 			const GLfloat GREEN = 0.5f;
 			const GLfloat BLUE = 0.5f;
@@ -37,14 +37,14 @@ namespace GameEngine
 			EntityRenderer* _entity_renderer;
 			TerrainRenderer* _terrain_renderer;
 
-			map<Model*, vector<Entity>>* _entities;
-			vector<Terrain>* _terrains;
+			map<Model*, vector<Entity>>* _entities; // goes into entity renderer class
+			vector<Terrain>* _terrains; // goes into terrain renderer class
 
-			mat4* projectionMatrix;
+			mat4 projectionMatrix; // do we need to keep this here? 
 			void prepare();
 
 		protected:
-			mat4* createProjectionMatrix();
+			mat4 createProjectionMatrix();
 
 		public:
 			MasterRenderer();

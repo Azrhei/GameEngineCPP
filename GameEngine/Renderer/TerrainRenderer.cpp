@@ -16,7 +16,7 @@ namespace GameEngine
 		{
 		}
 
-		TerrainRenderer::TerrainRenderer(TerrainShader* shader, mat4* projectionMatrix) {
+		TerrainRenderer::TerrainRenderer(TerrainShader* shader, mat4 projectionMatrix) {
 			_shader = shader;
 			_shader->start();
 			_shader->loadProjectionMatrix(projectionMatrix);
@@ -72,7 +72,7 @@ namespace GameEngine
 		}
 
 		void TerrainRenderer::loadModelMatrix(Terrain& terrain) {
-			mat4* transformationMatrix =
+			mat4 transformationMatrix =
 				maths.createTransformationMatrix(
 			{ terrain.x(), 0, terrain.z() },
 					0,

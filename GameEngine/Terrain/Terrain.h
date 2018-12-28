@@ -50,9 +50,9 @@ class Terrain
 {
 
 private:
-	GLint SIZE = 150;
-	GLint VERTEX_COUNT = 0;
-	GLfloat MAX_HEIGHT = 40;
+	GLint SIZE = 1024;
+	GLint VERTEX_COUNT = 128;
+	GLfloat MAX_HEIGHT = 640;
 	GLfloat MAX_PIXEL_COLOR = 256 * 256 * 256;
 	vector<vector<GLfloat>> heights;
 	GLfloat _x;
