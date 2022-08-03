@@ -22,7 +22,7 @@ namespace GameEngine
 			GLfloat _rz;
 			GLfloat _scale;
 
-		protected:
+		public:
 			void model(Model* model) { _model = model; }
 			void position(vec3 val) { _position = val; }
 			void rx(GLfloat val) { _rx = val; }
@@ -31,9 +31,10 @@ namespace GameEngine
 			void scale(GLfloat val) { _scale = val; }
 
 
-		public:
-			Entity() = delete;
+		/*public:*/
+			Entity();
 			Entity(Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale);
+			
 			~Entity();
 
 			// Getters
@@ -43,7 +44,6 @@ namespace GameEngine
 			GLfloat rx() { return _rx; }
 			GLfloat ry() { return _ry; }
 			GLfloat rz() { return _rz; }
-
 
 			// Mutators
 			virtual void increasePosition(GLfloat dx, GLfloat dy, GLfloat dz)

@@ -21,6 +21,12 @@ namespace GameEngine
 
 		public:
 			Animal();
+			Animal(string name, Model* model, vec3 position, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat scale)
+				:
+				EntityLiving(model, position, rx, ry, rz, scale)
+			{
+				this->_name = name;
+			}
 			~Animal();
 			string name() { return _name; }
 		};

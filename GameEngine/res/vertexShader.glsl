@@ -1,5 +1,5 @@
-#version 400
-
+#version 460
+// : general vertex shader : vertexShader.glsl
 in vec3 position;
 in vec2 textureCoords;
 in vec3 normals;

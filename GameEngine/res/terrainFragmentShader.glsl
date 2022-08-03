@@ -1,4 +1,5 @@
-#version 400
+#version 460
+// : Terrain Fragment Shader terrainFragmentShader.glsl
 
 in vec2 pass_textureCoordinates;
 in vec3 surfaceNormal;

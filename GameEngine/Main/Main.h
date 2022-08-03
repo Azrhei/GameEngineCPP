@@ -2,6 +2,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+
 #include <iostream>
 #include <random>
 #include <ctime>

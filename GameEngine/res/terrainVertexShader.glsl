@@ -1,5 +1,5 @@
-#version 400
-
+#version 460
+// : terrain vertex shader terrainVertexShader.glsl
 in vec3 position;
 in vec2 textureCoordinates;
 in vec3 normal;

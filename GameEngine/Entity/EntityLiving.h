@@ -24,7 +24,7 @@ namespace GameEngine
 			GLuint _satiation;
 			AGE _age;
 
-		protected:
+		public:
 			void doDamage(GLint damage) { _health -= damage; }
 			void doHeal(GLint heal) { _health += heal; }
 			void setHealth(GLuint h) { _health = h; }

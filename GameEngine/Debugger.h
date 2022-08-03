@@ -47,21 +47,21 @@ namespace GameEngine
 			Debugger() 
 			{
 #ifdef DEBUG
-				GLDEBUGPROC MessageCB = &(Debugger::DebugMessageCB);
-				if (glDebugMessageCallback) {
-					cout << "Register OpenGL debug callback " << endl;
-					glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-					glDebugMessageCallback(MessageCB, nullptr);
-					GLuint unusedIds = 0;
-					glDebugMessageControl(GL_DONT_CARE,
-						GL_DONT_CARE,
-						GL_DONT_CARE,
-						0,
-						&unusedIds,
-						true);
-				}
-				else
-					cout << "glDebugMessageCallback not available" << endl;
+				//GLDEBUGPROC MessageCB = &(Debugger::DebugMessageCB);
+				//if (glDebugMessageCallback) {
+				//	cout << "Register OpenGL debug callback " << endl;
+				//	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+				//	glDebugMessageCallback(MessageCB, nullptr);
+				//	GLuint unusedIds = 0;
+				//	glDebugMessageControl(GL_DONT_CARE,
+				//		GL_DONT_CARE,
+				//		GL_DONT_CARE,
+				//		0,
+				//		&unusedIds,
+				//		true);
+				//}
+				//else
+				//	cout << "glDebugMessageCallback not available" << endl;
 #endif
 			}
 		};

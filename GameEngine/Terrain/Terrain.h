@@ -36,14 +36,13 @@ typedef struct __height_map
 	GLint width = 0;
 	GLint channels = 0;
 
-	GLfloat getHeightAt(GLuint x, GLuint y);
+	GLfloat getHeightAt(const GLuint x, const GLuint y)
+	{
+		return _data[width * y + x];
+	}
 	//~__height_map() { SOIL_free_image_data(_data); }
 private:
-	union {
 		unsigned char * _data = NULL;
-		vec3 * _data_rgb;
-		GLfloat * _data_l;
-	};
 } HeightMap;
 
 class Terrain
@@ -65,7 +64,7 @@ private:
 	void writeTerrainData(string path, terrain_data& data);
 	void writeINTtoFile(ofstream* out, const char marker, vector<int>& t);
 	void writeFLOATtoFile(ofstream* out, const char marker, vector<float>& t);
-	vec3 calculateNormal(int x, int y);
+	vec3 calculateNormal(const GLuint x, const GLuint y);
 
 protected:
 	//Setters

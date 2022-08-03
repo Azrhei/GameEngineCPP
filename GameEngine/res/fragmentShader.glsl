@@ -1,4 +1,5 @@
-#version 400 core
+#version 460 core
+// : primary fragment shader fragmentShader.glsl
 
 in vec2 pass_textureCoords;
 in vec3 surfaceNormal;

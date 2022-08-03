@@ -3,6 +3,7 @@
 
 #include "Main.h"
 #include <memory>
+#include "../Entity/Animal.h"
 
 #ifdef RUN_TESTS
 #include "..\Tests\UnitTests.h"
@@ -90,16 +91,21 @@ int main(int argc, char ** argv, char ** argenv)
 	auto modelMeshBOX = objLoader.loadOBJ("bunny");
 	auto *modelTextureBOX = new ModelTexture{ loader.loadTexture("dirt") };
 	auto *modelBOX = new Model{ modelMeshBOX, modelTexture };
-	std::vector<Entity> entities;
+	std::vector<Entity*> entities;
+
+	auto animal = new Animal{ "Bunny", modelBOX, {0.0f,0.0f,0.06f}, 0.0f, 0.0f, 0.0f, 1.0f };
+	auto a = reinterpret_cast<Entity*>(animal);
+	entities.push_back(a);
+
 	for (int i = 0; i < 100; i++)
 	{
 		float x = randFloat(-500, 500);
 		float z = randFloat(-500, 500);
 		float y = t1.getHeightOfTerrain(x, z);
 
-		entities.push_back({ modelBOX, {x, y, z}, 0, randFloat(-360.0f,360.0f), 0, 0.9f });
+		entities.push_back( new Entity{ modelBOX, {x, y, z}, 0, randFloat(-360.0f,360.0f), 0, 0.9f });
 	}
-
+	
 /**
 //		Future feature:
 //		Adding unique renderers and shaders for different elements of the game, each will handle their own objects.
@@ -167,10 +173,19 @@ int main(int argc, char ** argv, char ** argenv)
 		handleKeyEvents();
 		/* Poll for and process events */
 		p1.move();
- 		camera.move(0.001);		
-		for (Entity e : entities)
+ 		camera.move(0.001);
+
+		// Testing entity updating 
+		a->ry(a->ry() + 1.3f);
+		a->rz(a->rz() - 1.3f);
+		a->rx(a->rx() + 1.0f);
+
+		if (a->scale() >= 5) a->scale(1);
+		else(a->scale(a->scale() + .2f));
+
+		for (Entity *e : entities)
 		{
-			renderer->processEntity(e);
+			renderer->processEntity(*e);
 		}
 		renderer->processEntity(p1);
 		renderer->processTerrain(t1);

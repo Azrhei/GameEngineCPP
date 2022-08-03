@@ -8,11 +8,6 @@ using namespace GameEngine;
 using namespace UtilityM;
 using namespace ModelM;
 
-GLfloat __height_map::getHeightAt(GLuint x, GLuint y)
-{
-	return _data[x + y * width];
-}
-
 __height_map::__height_map(string path)
 {
 	_data = SOIL_load_image(path.c_str(), &width, &height, &channels, SOIL_LOAD_L);
@@ -196,12 +191,26 @@ void Terrain::writeFLOATtoFile(ofstream* out, const char marker, vector<float>& 
 	delete th;
 }
 
-vec3 Terrain::calculateNormal(int x, int z) {
-	float heightL = _height_map->getHeightAt(x - 1, z);
-	float heightR = _height_map->getHeightAt(x + 1, z);
-	float heightD = _height_map->getHeightAt(x, z - 1);
-	float heightU = _height_map->getHeightAt(x, z + 1);
+vec3 Terrain::calculateNormal(GLuint x, GLuint z) {
+	GLfloat heightL = 0.0;
+	GLfloat heightR = 0.0;
+	GLfloat heightD = 0.0;
+	GLfloat heightU = 0.0;
+
+	if( x > 0)
+		heightL = _height_map->getHeightAt(x - 1, z); // out of bounds..... at 0 0 
+	
+	if ( x <= _height_map->height)
+		heightR = _height_map->getHeightAt(x + 1, z);
+	
+	if(z > 0)
+		heightD = _height_map->getHeightAt(x, z - 1);
+	
+	if(z <= _height_map->width)
+		heightU = _height_map->getHeightAt(x, z + 1);
+	
 	vec3 normal(heightL - heightR, 2.0f, heightD - heightU);
+	
 	normal = glm::normalize(normal);
 
 	return normal;
