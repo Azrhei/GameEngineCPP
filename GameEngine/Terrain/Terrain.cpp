@@ -16,29 +16,24 @@ __height_map::__height_map(string path)
 		std::cerr << "Couldn't Load " + path + " as a height map, exiting" << nl;
 	}
 
-	cerr << "Loaded height map total data size " << (width * height) << nl;
+	std::cerr << "Loaded height map total data size " << (width * height) << nl;
 }
-
-Terrain::~Terrain()
-{
-}
-
 
 Terrain::Terrain
 (
 	GLint gridX,
 	GLint gridZ,
-	TerrainTexturePack* texturePack,
+	TerrainTexturePack& texturePack,
 	TerrainTexture& blendMap,
-	__height_map* height_map
+	HeightMap& height_map
 )
 	:
 	_texturePack(texturePack),
 	_blendMap(blendMap),
 	_height_map(height_map)
 {
-	_x = static_cast<GLfloat>(gridX) * SIZE;
-	_z = static_cast<GLfloat>(gridZ) * SIZE;
+	_x = (GLfloat)(gridX) * SIZE;
+	_z = (GLfloat)(gridZ) * SIZE;
 	_mesh = generateTerrain();
 }
 
@@ -47,7 +42,7 @@ GLfloat Terrain::getHeightOfTerrain(GLfloat worldx, GLfloat worldz)
 	GLfloat terrainx = worldx - _x;
 	GLfloat terrainz = worldz - _z;
 
-	GLfloat gridSquareSize = SIZE / ((GLfloat)heights.size() - 1); // Can size be trusted?
+	GLfloat gridSquareSize = (GLfloat)SIZE / ((GLsizei)heights.size() - 1); // Can size be trusted?
 	GLint gridx = (GLint)floor(terrainx / gridSquareSize);
 	GLint gridz = (GLint)floor(terrainz / gridSquareSize);
 
@@ -82,7 +77,7 @@ GLfloat Terrain::getHeightOfTerrain(GLfloat worldx, GLfloat worldz)
 
 ModelMesh Terrain::generateTerrain() {
 
-	int VERTEX_COUNT = _height_map->height;
+	int VERTEX_COUNT = _height_map.height;
 	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
 
 
@@ -106,7 +101,7 @@ ModelMesh Terrain::generateTerrain() {
 	for (int i = 0; i < VERTEX_COUNT; i++) {
 		for (int j = 0; j<VERTEX_COUNT; j++) {
 			(vertices)[vertexPointer * 3] = (float)(j) / ((float)(VERTEX_COUNT - 1) * SIZE);
-			float height = _height_map->getHeightAt(j, i);
+			float height = _height_map.getHeightAt(j, i);
 			(vertices)[vertexPointer * 3 + 1] = height;
 			heights[j][i] = height;
 			(vertices)[vertexPointer * 3 + 2] = (float)(i) / ((float)(VERTEX_COUNT - 1) * SIZE);
@@ -140,7 +135,7 @@ ModelMesh Terrain::generateTerrain() {
 	// Write to a file for inspection.....
 	auto r = loader.loadToVao(vertices, textureCoords, normals, indices);
 	writeTerrainData("terrain" + std::to_string(r.id()), terrain_data{ vertices, textureCoords, normals, indices });
-	cerr << "Terrain mesh loaded into VAO id : " << (GLint)r.id() << (GLint)r.vertexCount() << nl;
+	cerr << "Terrain mesh loaded into VAO id : " << (GLuint)r.id() << (GLint)r.vertexCount() << nl;
 	return r;
 }
 
@@ -191,23 +186,23 @@ void Terrain::writeFLOATtoFile(ofstream* out, const char marker, vector<float>& 
 	delete th;
 }
 
-vec3 Terrain::calculateNormal(GLuint x, GLuint z) {
+vec3 Terrain::calculateNormal(GLint x, GLint z) {
 	GLfloat heightL = 0.0;
 	GLfloat heightR = 0.0;
 	GLfloat heightD = 0.0;
 	GLfloat heightU = 0.0;
 
 	if( x > 0)
-		heightL = _height_map->getHeightAt(x - 1, z); // out of bounds..... at 0 0 
+		heightL = _height_map.getHeightAt(x - 1, z); // out of bounds..... at 0 0 
 	
-	if ( x <= _height_map->height)
-		heightR = _height_map->getHeightAt(x + 1, z);
+	if ( x <= _height_map.height)
+		heightR = _height_map.getHeightAt(x + 1, z);
 	
 	if(z > 0)
-		heightD = _height_map->getHeightAt(x, z - 1);
+		heightD = _height_map.getHeightAt(x, z - 1);
 	
-	if(z <= _height_map->width)
-		heightU = _height_map->getHeightAt(x, z + 1);
+	if(z <= _height_map.width)
+		heightU = _height_map.getHeightAt(x, z + 1);
 	
 	vec3 normal(heightL - heightR, 2.0f, heightD - heightU);
 	

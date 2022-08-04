@@ -49,16 +49,16 @@ namespace GameEngine
 
 		void TerrainRenderer::bindTextures(Terrain& terrain)
 		{
-			TerrainTexturePack* texturePack = terrain.texturePack();
+			TerrainTexturePack& texturePack = terrain.texturePack();
 
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, texturePack->backgroundTexture()->textureId());
+			glBindTexture(GL_TEXTURE_2D, texturePack.backgroundTexture().textureId());
 			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, texturePack->rTexture()->textureId());
+			glBindTexture(GL_TEXTURE_2D, texturePack.rTexture().textureId());
 			glActiveTexture(GL_TEXTURE2);
-			glBindTexture(GL_TEXTURE_2D, texturePack->gTexture()->textureId());
+			glBindTexture(GL_TEXTURE_2D, texturePack.gTexture().textureId());
 			glActiveTexture(GL_TEXTURE3);
-			glBindTexture(GL_TEXTURE_2D, texturePack->bTexture()->textureId());
+			glBindTexture(GL_TEXTURE_2D, texturePack.bTexture().textureId());
 			glActiveTexture(GL_TEXTURE4);
 			glBindTexture(GL_TEXTURE_2D, terrain.blendMap().textureId());
 		}

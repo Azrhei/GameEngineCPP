@@ -36,7 +36,7 @@ typedef struct __height_map
 	GLint width = 0;
 	GLint channels = 0;
 
-	GLfloat getHeightAt(const GLuint x, const GLuint y)
+	GLfloat getHeightAt(const GLint x, const GLint y)
 	{
 		return _data[width * y + x];
 	}
@@ -47,7 +47,6 @@ private:
 
 class Terrain
 {
-
 private:
 	GLint SIZE = 1024;
 	GLint VERTEX_COUNT = 128;
@@ -56,43 +55,41 @@ private:
 	vector<vector<GLfloat>> heights;
 	GLfloat _x;
 	GLfloat _z;
-	HeightMap* _height_map;
+	HeightMap& _height_map;
 	ModelMesh _mesh;
-	TerrainTexturePack* _texturePack;
+	TerrainTexturePack& _texturePack;
 	TerrainTexture& _blendMap;
 
 	void writeTerrainData(string path, terrain_data& data);
 	void writeINTtoFile(ofstream* out, const char marker, vector<int>& t);
 	void writeFLOATtoFile(ofstream* out, const char marker, vector<float>& t);
-	vec3 calculateNormal(const GLuint x, const GLuint y);
+	vec3 calculateNormal(const GLint x, const GLint y);
 
 protected:
 	//Setters
 	void x(GLfloat val) { _x = val; }
 	void z(GLfloat val) { _z = val; }
 	void mesh(ModelMesh& val) { _mesh = val; }
-	void texturePack(TerrainTexturePack* val) { _texturePack = val; }
+	//void texturePack(TerrainTexturePack& val) { _texturePack = val; }
 	void blendMap(TerrainTexture& val) { _blendMap = val; }
-	void HeightMap(HeightMap* val) { _height_map = val; }
+	//void HeightMap(HeightMap& val) { _height_map = val; }
 public:
-	Terrain() = delete;
-	~Terrain();
 	Terrain
 	(
 		GLint gridX,
 		GLint gridZ,
-		TerrainTexturePack* texturePack,
+		TerrainTexturePack& texturePack,
 		TerrainTexture& blendMap,
-		__height_map* _height_map
+		HeightMap& _height_map
 	);
 
 	//Getters
 	GLfloat			x() { return _x; }
 	GLfloat			z() { return _z; }
 	ModelMesh&		mesh() { return _mesh; }
-	TerrainTexturePack*	texturePack() { return _texturePack; }
+	TerrainTexturePack&	texturePack() { return _texturePack; }
 	TerrainTexture& blendMap() { return _blendMap; }
-
+	HeightMap& heightMap() { return _height_map; }
 	ModelMesh		generateTerrain();
 	GLfloat getHeightOfTerrain(GLfloat worldx, GLfloat worldz);
 };

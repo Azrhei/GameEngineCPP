@@ -44,7 +44,7 @@ namespace GameEngine {
 			if (normals.size() > 0) storeDataInAttribList(2, 3, normals);
 
 
-			ModelMesh& mesh = *(new ModelMesh ( vaoID, indices.size() ));
+			ModelMesh& mesh = *(new ModelMesh ( vaoID, (GLsizei)indices.size() ));
 			unbindVAO();
 			return std::move(mesh);
 		}
@@ -64,7 +64,7 @@ namespace GameEngine {
 			glGenBuffers(1, &i);
 			_vbos.push_back(i);
 			glBindBuffer(GL_ARRAY_BUFFER, i);
-			glBufferData(GL_ARRAY_BUFFER, _data.size() * sizeof(GLfloat), (_data.data()), GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, (GLsizei)_data.size() * sizeof(GLfloat), (_data.data()), GL_STATIC_DRAW);
 			glVertexAttribPointer(attribNumber, coordinateSize, GL_FLOAT, false, 0, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
@@ -73,15 +73,15 @@ namespace GameEngine {
 		{
 			if (_vaos.size() > 0)
 			{
-				glDeleteVertexArrays(_vaos.size(), _vaos.data());
+				glDeleteVertexArrays((GLsizei)_vaos.size(), _vaos.data());
 			}
 			if (_vbos.size() > 0)
 			{
-				glDeleteBuffers(_vbos.size(), _vbos.data());
+				glDeleteBuffers((GLsizei)_vbos.size(), _vbos.data());
 			}
 			if (_textures.size() > 0)
 			{
-				glDeleteTextures(_textures.size(), _textures.data());
+				glDeleteTextures((GLsizei)_textures.size(), _textures.data());
 			}
 		}
 
@@ -96,7 +96,7 @@ namespace GameEngine {
 			glGenBuffers(1, &i);
 			_vbos.push_back(i);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, i);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), /*&(indices)[0]*/ (indices.data()), GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizei)indices.size() * sizeof(GLuint), /*&(indices)[0]*/ (indices.data()), GL_STATIC_DRAW);
 		}
 
 		GLint Loader::loadTexture(string fileName)

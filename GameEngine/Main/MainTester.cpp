@@ -38,7 +38,7 @@ int main(int argc, char ** argv, char ** argenv)
 	if (!display.exists())
 	{
 		wcerr << L"Could not start Display" << nl;
-		std::cin.get();
+		std::wcin.get();
 		glfwTerminate();
 		exit(EXIT_CODES::WINDOW_FAILED_TO_OPEN);
 	}
@@ -48,7 +48,7 @@ int main(int argc, char ** argv, char ** argenv)
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 		wcerr << L"Could not start GLEW" << nl;
-		std::cin.get();
+		std::wcin.get();
 		exit(EXIT_CODES::GLEW_INIT_FAILED);
 	}
 
@@ -59,16 +59,16 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
-	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
+	ModelTexture& mt = ModelTexture{ loader.loadTexture("grass") };
 
-	TerrainTexture* backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
-	TerrainTexture* rTexture = new TerrainTexture(loader.loadTexture("dirt"));
-	TerrainTexture* gTexture = new TerrainTexture(loader.loadTexture("pinkFlowers"));
-	TerrainTexture* bTexture = new TerrainTexture(loader.loadTexture("path"));
+	TerrainTexture& backgroundTexture = TerrainTexture(loader.loadTexture("grassy"));
+	TerrainTexture& rTexture = TerrainTexture(loader.loadTexture("dirt"));
+	TerrainTexture& gTexture = TerrainTexture(loader.loadTexture("pinkFlowers"));
+	TerrainTexture& bTexture = TerrainTexture(loader.loadTexture("path"));
 	TerrainTexture& blendMap = TerrainTexture(loader.loadTexture("blendMap"));
 
-	TerrainTexturePack* tp = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
-	__height_map* htmap = new __height_map("res/heightmap.png");
+	TerrainTexturePack& tp = TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, blendMap);
+	HeightMap& htmap =  HeightMap("res/heightmap.png");
 
 	Terrain& t1 = Terrain{ 0, -1, tp, blendMap, htmap };
 	Terrain& t2 = Terrain{ -1, -1, tp, blendMap, htmap };
