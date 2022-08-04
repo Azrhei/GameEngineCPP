@@ -60,7 +60,7 @@ namespace GameEngine
 			glActiveTexture(GL_TEXTURE3);
 			glBindTexture(GL_TEXTURE_2D, texturePack->bTexture()->textureId());
 			glActiveTexture(GL_TEXTURE4);
-			glBindTexture(GL_TEXTURE_2D, terrain.blendMap()->textureId());
+			glBindTexture(GL_TEXTURE_2D, terrain.blendMap().textureId());
 		}
 
 		void TerrainRenderer::unbindModel()

@@ -59,7 +59,7 @@ private:
 	HeightMap* _height_map;
 	ModelMesh _mesh;
 	TerrainTexturePack* _texturePack;
-	TerrainTexture* _blendMap;
+	TerrainTexture& _blendMap;
 
 	void writeTerrainData(string path, terrain_data& data);
 	void writeINTtoFile(ofstream* out, const char marker, vector<int>& t);
@@ -72,7 +72,7 @@ protected:
 	void z(GLfloat val) { _z = val; }
 	void mesh(ModelMesh& val) { _mesh = val; }
 	void texturePack(TerrainTexturePack* val) { _texturePack = val; }
-	void blendMap(TerrainTexture* val) { _blendMap = val; }
+	void blendMap(TerrainTexture& val) { _blendMap = val; }
 	void HeightMap(HeightMap* val) { _height_map = val; }
 public:
 	Terrain() = delete;
@@ -82,7 +82,7 @@ public:
 		GLint gridX,
 		GLint gridZ,
 		TerrainTexturePack* texturePack,
-		TerrainTexture* blendMap,
+		TerrainTexture& blendMap,
 		__height_map* _height_map
 	);
 
@@ -91,7 +91,7 @@ public:
 	GLfloat			z() { return _z; }
 	ModelMesh&		mesh() { return _mesh; }
 	TerrainTexturePack*	texturePack() { return _texturePack; }
-	TerrainTexture * blendMap() { return _blendMap; }
+	TerrainTexture& blendMap() { return _blendMap; }
 
 	ModelMesh		generateTerrain();
 	GLfloat getHeightOfTerrain(GLfloat worldx, GLfloat worldz);

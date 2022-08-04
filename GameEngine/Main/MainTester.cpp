@@ -65,7 +65,7 @@ int main(int argc, char ** argv, char ** argenv)
 	TerrainTexture* rTexture = new TerrainTexture(loader.loadTexture("dirt"));
 	TerrainTexture* gTexture = new TerrainTexture(loader.loadTexture("pinkFlowers"));
 	TerrainTexture* bTexture = new TerrainTexture(loader.loadTexture("path"));
-	TerrainTexture* blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+	TerrainTexture& blendMap = TerrainTexture(loader.loadTexture("blendMap"));
 
 	TerrainTexturePack* tp = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 	__height_map* htmap = new __height_map("res/heightmap.png");

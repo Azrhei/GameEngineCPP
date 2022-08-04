@@ -29,7 +29,7 @@ Terrain::Terrain
 	GLint gridX,
 	GLint gridZ,
 	TerrainTexturePack* texturePack,
-	TerrainTexture* blendMap,
+	TerrainTexture& blendMap,
 	__height_map* height_map
 )
 	:
