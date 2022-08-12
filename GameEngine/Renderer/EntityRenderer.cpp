@@ -62,19 +62,19 @@ namespace GameEngine
 			glEnableVertexAttribArray(1);
 			glEnableVertexAttribArray(2);
 
-			ModelTexture* texture = model->texture();
-			if (texture->hasTransparency())
+			ModelTexture& texture = model->texture();
+			if (texture.hasTransparency())
 			{
 				MasterRenderer::disableCulling();
 			}
-			if (texture->useFakeLighting())
+			if (texture.useFakeLighting())
 			{
 				_shader->loadFakeLighting(true);
 			}
-			_shader->loadShineVariables(texture->shineDampener(), texture->reflectivity());
+			_shader->loadShineVariables(texture.shineDampener(), texture.reflectivity());
 
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, model->texture()->id());
+			glBindTexture(GL_TEXTURE_2D, model->texture().id());
 		}
 
 		void EntityRenderer::unbindModel()

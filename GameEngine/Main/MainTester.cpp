@@ -76,12 +76,12 @@ int main(int argc, char ** argv, char ** argenv)
 	Terrain& t4 = Terrain{ 1, 1, tp, blendMap, htmap };
 	
 	auto modelMesh = objLoader.loadOBJ("person");
-	auto *modelTexture = new ModelTexture{ loader.loadTexture("playerTexture") };
+	auto &modelTexture = ModelTexture{ loader.loadTexture("playerTexture") };
 
 	auto *model = new Model{ modelMesh, modelTexture };
 
-	modelTexture->reflectivity(.5f);
-	modelTexture->shineDampener(.5f);
+	modelTexture.reflectivity(.5f);
+	modelTexture.shineDampener(.5f);
 
 	// Player* p1 ....
 	Player& p1 = Player( model , {0, 0, 0 }, 0, 0, 0, 1);
