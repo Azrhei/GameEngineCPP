@@ -2,12 +2,7 @@
 
 namespace GameEngine
 {
-	namespace InputM
+	Mouse::~Mouse()
 	{
-		Mouse::~Mouse()
-		{
-		}
-
-
 	}
 }

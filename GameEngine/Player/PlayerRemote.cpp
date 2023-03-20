@@ -1,5 +1,6 @@
 #include "PlayerRemote.h"
-
-PlayerRemote::~PlayerRemote()
-{
+namespace GameEngine {
+	PlayerRemote::~PlayerRemote()
+	{
+	}
 }

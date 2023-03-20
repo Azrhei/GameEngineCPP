@@ -2,15 +2,12 @@
 
 namespace GameEngine
 {
-	namespace CameraM
+	CameraFollow::CameraFollow()
 	{
-		CameraFollow::CameraFollow()
-		{
-		}
+	}
 
 
-		CameraFollow::~CameraFollow()
-		{
-		}
+	CameraFollow::~CameraFollow()
+	{
 	}
 }
