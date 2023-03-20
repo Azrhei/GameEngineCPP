@@ -1,5 +1,6 @@
 #include "PlayerLocal.h"
-
-PlayerLocal::~PlayerLocal()
-{
+namespace GameEngine {
+	PlayerLocal::~PlayerLocal()
+	{
+	}
 }

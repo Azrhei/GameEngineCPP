@@ -1,27 +1,26 @@
 #define DEBUG
 
-
-#include "Main.h"
+//#include "Main.h"
 #include <memory>
-#include "../Entity/Animal.h"
-
+#include "common.hpp"
+#include "Display.h"
+#include "Light.h"
+#include "Terrain.h"
+#include "TerrainTexture.h"
+#include "OBJLoader.h"
+#include "Model.h"
+#include "Animal.h"
+#include "ModelTexture.h"
+#include "MasterRenderer.h"
+#include "KeyEvents.h"
 #ifdef RUN_TESTS
-#include "..\Tests\UnitTests.h"
-#include "..\Tests\Tests.hpp"
+#include "UnitTests.h"
+#include "Tests.hpp"
 #else
 
 using namespace GameEngine;
-using namespace DisplayM;
-using namespace UtilityM;
-using namespace CameraM;
-using namespace PlayerM;
-using namespace EntityM;
-//using namespace TerrainM;
-using namespace ModelM;
-using namespace ShaderM;
-using namespace RenderM;
-using namespace InputM;
-using namespace Debugger;
+
+//GLFWerrorfun error_callback(int code, const char* description) {}
 
 int main(int argc, char ** argv, char ** argenv)
 {
@@ -31,26 +30,29 @@ int main(int argc, char ** argv, char ** argenv)
 	// settings.parse(gameManager, keyBindings, player, display->settings);
 
 	wcout << L"Starting Engine" << nl;
+	//glfwSetErrorCallback(error_callback);
 	glfwInit();
 	display.init();
 	wcout << L"Creating Display" << nl;
 
+	glewExperimental = GL_TRUE;
+	const GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		std::cout << "GLEW Error: " << glewGetErrorString(err) << std::endl;
+		// pause to read output
+		cin.get();
+		exit(1);
+	}
 	if (!display.exists())
 	{
 		wcerr << L"Could not start Display" << nl;
-		std::cin.get();
+		std::wcin.get();
 		glfwTerminate();
 		exit(EXIT_CODES::WINDOW_FAILED_TO_OPEN);
 	}
 	wcout << L"Showing Display" << nl;
 	display.showDisplay();
-
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		wcerr << L"Could not start GLEW" << nl;
-		std::cin.get();
-		exit(EXIT_CODES::GLEW_INIT_FAILED);
-	}
 
 	Light light
 	{
@@ -59,16 +61,16 @@ int main(int argc, char ** argv, char ** argenv)
 		1				// Itensity
 	};
 
-	ModelTexture* mt = new ModelTexture{ loader.loadTexture("grass") };
+	ModelTexture& mt = ModelTexture{ loader.loadTexture("grass") };
 
-	TerrainTexture* backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
-	TerrainTexture* rTexture = new TerrainTexture(loader.loadTexture("dirt"));
-	TerrainTexture* gTexture = new TerrainTexture(loader.loadTexture("pinkFlowers"));
-	TerrainTexture* bTexture = new TerrainTexture(loader.loadTexture("path"));
-	TerrainTexture* blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+	TerrainTexture& backgroundTexture = TerrainTexture(loader.loadTexture("grassy"));
+	TerrainTexture& rTexture = TerrainTexture(loader.loadTexture("dirt"));
+	TerrainTexture& gTexture = TerrainTexture(loader.loadTexture("pinkFlowers"));
+	TerrainTexture& bTexture = TerrainTexture(loader.loadTexture("path"));
+	TerrainTexture& blendMap = TerrainTexture(loader.loadTexture("blendMap"));
 
-	TerrainTexturePack* tp = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
-	__height_map* htmap = new __height_map("res/heightmap.png");
+	TerrainTexturePack& tp = TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, blendMap);
+	HeightMap& htmap =  HeightMap("res/heightmap.png");
 
 	Terrain& t1 = Terrain{ 0, -1, tp, blendMap, htmap };
 	Terrain& t2 = Terrain{ -1, -1, tp, blendMap, htmap };
@@ -76,12 +78,12 @@ int main(int argc, char ** argv, char ** argenv)
 	Terrain& t4 = Terrain{ 1, 1, tp, blendMap, htmap };
 	
 	auto modelMesh = objLoader.loadOBJ("person");
-	auto *modelTexture = new ModelTexture{ loader.loadTexture("playerTexture") };
+	auto &modelTexture = ModelTexture{ loader.loadTexture("playerTexture") };
 
 	auto *model = new Model{ modelMesh, modelTexture };
 
-	modelTexture->reflectivity(.5f);
-	modelTexture->shineDampener(.5f);
+	modelTexture.reflectivity(.5f);
+	modelTexture.shineDampener(.5f);
 
 	// Player* p1 ....
 	Player& p1 = Player( model , {0, 0, 0 }, 0, 0, 0, 1);
@@ -106,72 +108,85 @@ int main(int argc, char ** argv, char ** argenv)
 		entities.push_back( new Entity{ modelBOX, {x, y, z}, 0, randFloat(-360.0f,360.0f), 0, 0.9f });
 	}
 	
-/**
+	/*
 //		Future feature:
 //		Adding unique renderers and shaders for different elements of the game, each will handle their own objects.
 //		A master Renderer that will manage all renderers.
-	
-	auto EntityRenderer entityRender{ EntityShaders{} };
-	auto TerrainRenderer terrainRenderer{ TerrainShaders{} };
-	auto PlayerRenderer playerRenderer{ PlayerShaders{} };
+//	
+//	auto EntityRenderer entityRender{ EntityShaders{} };
+//	auto TerrainRenderer terrainRenderer{ TerrainShaders{} };
+//	auto PlayerRenderer playerRenderer{ PlayerShaders{} };
+//
+//	auto MasterRenderer masterRenderer{};
+//	masterRenderer.addRenderer(GameEngine::ENTITY_RENDERER, entityRenderer);
+//	masterRenderer.addRenderer(GameEngine::TERRAIN_RENDERER, terrainRenderer);
+//	masterRenderer.addRenderer(GameEngine::PLAYER_RENDERE, playerRenderer);
+//	// OR THIS?
+//	masterRender.addRenderer<EntityRenderer>(entityRenderer);
+//	
+//
+//
+//	
+// 
+////	Future feature:
+////	Upcoming revised loop
+//
+//// Game Loop, goes in GameController.mainLoop.run?
+//	double t_time = 0.0;
+//	double d_time = 0.001;
+//	
+//	auto c_time = time(0);
+//	double accumTime = 0.0;
+//
+//	double previousState, currentState;
+//
+//	while (!display.shouldClose())
+//	{
+//		double n_time = time(0);
+//		double frameTime = n_time - c_time;
+//		if (frameTime > 0.25) frameTime = .25;
+//		c_time = n_time;
+//		accumTime += frameTime;
+//		while (accumTime >= d_time)
+//		{
+//			previousState = currentState;
+//			update(currentState, t_time, d_time); //update logic/physics
+//			t_time += d_time;
+//			accumTime -= d_time;
+//		}
+//		const double a_ = accumTime / d_time;
+//
+//		double state = currentState * a_ + previousState * (1.0 - a_);
+//
+//		render(state)) // render graphics
+//	}
 
-	auto MasterRenderer masterRenderer{};
-	masterRenderer.addRenderer(GameEngine::RenderM::ENTITY_RENDERER, entityRenderer);
-	masterRenderer.addRenderer(GameEngine::RenderM::TERRAIN_RENDERER, terrainRenderer);
-	masterRenderer.addRenderer(GameEngine::RenderM::PLAYER_RENDERE, playerRenderer);
-	// OR THIS?
-	masterRender.addRenderer<EntityRenderer>(entityRenderer);
-	
 */
-
-	
-/** 
-//	Future feature:
-//	Upcoming revised loop
-
-
-	double t_time = 0.0;
-	double d_time = 0.001;
-	
-	auto c_time = time(0);
-	double accumTime = 0.0;
-
-	double previousState, currentState;
-
-	while (!display)
-	{
-		double n_time = time(0);
-		double frameTime = n_time - c_time;
-		if (frameTime > 0.25) frameTime = .25;
-		c_time = n_time;
-		accumTime += frameTime;
-		while (accumTime >= d_time)
-		{
-			previousState = currentState;
-			//update(currentState, t_time, d_time); //update logic/physics
-			t_time += d_time;
-			accumTime -= d_time;
-		}
-		const double a_ = accumTime / d_time;
-
-		double state = currentState * a_ + previousState * (1.0 - a_);
-
-		//render(state)) // render graphics
-	}
-*/	
-	
+	// One renderer to rule them all.....
 	MasterRenderer* renderer = new MasterRenderer;
+
+
 #ifdef DEBUG
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif
+
+	// Setup other callbacks...
 	glfwSetKeyCallback(display.window(), keyEvent_CallBack);
+
+
+	// setup mouse interfact/control...
+	// need to check for game state/mode
 	mouse.init();
+
+
 	wcout << L"Begining Game loop" << nl;
 	while (!display.shouldClose())
 	{
+		/* Poll for and process events */
 		glfwPollEvents();
 		handleKeyEvents();
-		/* Poll for and process events */
+
+		// need to check game state/mode
 		p1.move();
  		camera.move(0.001);
 
@@ -192,6 +207,8 @@ int main(int argc, char ** argv, char ** argenv)
 		renderer->processTerrain(t2);
 		renderer->processTerrain(t3);
 		renderer->processTerrain(t4);
+
+		// check game state/mode first?
 		renderer->render(light,camera);
 
 		display.updateDisplay();
@@ -205,7 +222,7 @@ int main(int argc, char ** argv, char ** argenv)
 	renderer->cleanUp();
 #ifdef DEBUG
 	glDebugMessageInsert(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_LOW, 16 & sizeof(GLchar), "This is a test.");
-	debug.GetFirstNMessages(10);
+	//debug.GetFirstNMessages(10);
 	std::cin.get();
 #endif
 }

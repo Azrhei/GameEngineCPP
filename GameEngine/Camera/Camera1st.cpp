@@ -2,15 +2,12 @@
 
 namespace GameEngine
 {
-	namespace CameraM
+	Camera1st::Camera1st()
 	{
-		Camera1st::Camera1st()
-		{
-		}
+	}
 
 
-		Camera1st::~Camera1st()
-		{
-		}
+	Camera1st::~Camera1st()
+	{
 	}
 }
